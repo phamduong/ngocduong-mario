@@ -11,7 +11,7 @@ CTurtle::CTurtle(int _id,D3DXVECTOR2 pos){
 void CTurtle::Init(){
 	CGameObject::Init();
 	m_status = Normal;
-	m_direct = 1;
+	m_direct = -1;
 	m_spriteTurtle= CResourceManager::GetInstance()->GetResouce(TURTLE_ID);
 	m_spriteTurtleShield= CResourceManager::GetInstance()->GetResouce(TURTLESHIELD_ID);
 	
@@ -31,12 +31,12 @@ void CTurtle::Init(){
 
 }
 void CTurtle::Update(CInput *_input,float _time,CCamera* _camera){
-	m_veloc.x = m_direct*10.0f;
+	//m_veloc.x = m_direct*10.0f;
 	UpdateAnimation(_input,_time);
 	CGameObject::Update(_input,_time,_camera);
-	if(m_pos.x<=875 || m_pos.x >=1463){
+	/*if(m_pos.x<=875 || m_pos.x >=1463){
 		m_direct = -1.0f * m_direct;
-	}
+	}*/
 }
 void CTurtle::UpdateAnimation(CInput *_input,float _time){
 	if(m_status == Normal){

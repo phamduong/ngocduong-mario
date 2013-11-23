@@ -11,11 +11,12 @@ void CMario::Init(){
 	m_pos = D3DXVECTOR2(50,600);
 	m_veloc = D3DXVECTOR2(0,0);
 	m_accel = D3DXVECTOR2(0,0);
-	m_maxVelocity = D3DXVECTOR2(100.0f,50.0f);
-	m_maxAccelemeter = D3DXVECTOR2(15.0f,240.0f);
+	m_maxVelocity = D3DXVECTOR2(25.0f,50.0f);
+	m_maxAccelemeter = D3DXVECTOR2(120.0f,550.0f);
 	m_action = normal;
 	m_start_status = mariobig;
 	m_direct = 1;
+	life = 1;
 	m_spriteBig = CResourceManager::GetInstance()->GetResouce(MARIOBIG_ID);
 	m_sriteSmall = CResourceManager::GetInstance()->GetResouce(MARIOSMALL_ID);
 	m_spriteGun = CResourceManager::GetInstance()->GetResouce(MARIOGUN_ID);
@@ -57,7 +58,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 
 #pragma region Nhap phim 
 
-	if(m_input->KeyDown(DIK_RIGHT)&&m_action != down&&m_pos.x<=g_widthMap-100)
+	if(m_input->KeyDown(DIK_RIGHT)&&m_action != down&&m_pos.x<=g_widthMap)
 	{
 
 		if(m_direct = -1){
@@ -65,14 +66,23 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 		}
 		m_direct = 1;
 		m_action = run;
-		m_veloc.x = VELOCNORMAL;
+		if(m_veloc.x < m_maxVelocity.x)
+		{
+			m_accel.x =m_maxAccelemeter.x ;
+		}
+		if (m_veloc.x >= m_maxVelocity.x)
+		{
+			m_accel.x = 0;
+			m_veloc.x = m_maxVelocity.x ;
+		}
+
 
 	}
 
 	else
 	{
 
-		if(m_input->KeyDown(DIK_LEFT)&& m_action != down&&m_pos.x>=50)
+		if(m_input->KeyDown(DIK_LEFT)&& m_action != down&&m_pos.x>=25)
 		{
 			if(m_direct = 1 )
 			{
@@ -80,7 +90,15 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 			}
 			m_direct = -1;
 			m_action = run;
-			m_veloc.x = -VELOCNORMAL;
+			if(m_veloc.x > m_direct* m_maxVelocity.x)
+			{
+				m_accel.x =m_direct* m_maxAccelemeter.x;
+			}
+			if (m_veloc.x <= m_direct*m_maxVelocity.x)
+			{
+				m_veloc.x = m_maxVelocity.x * m_direct;
+				m_accel.x = 0;
+			}
 
 		}
 
@@ -95,7 +113,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 			}
 			else {
 				if(m_veloc.x!=0){
-					m_accel.x =- 1.0f*m_direct*m_maxAccelemeter.x;
+					m_accel.x =- 1.0f*m_direct*(m_maxAccelemeter.x / 10);
 				}
 				if((m_direct*m_veloc.x) <=0){
 					m_veloc.x = 0;
@@ -111,20 +129,17 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 	int keydown = m_input ->GetKeyDown();
 	//mario ban
 	if(keydown == DIK_V){
-		CBullet *_bullet = new CBullet(D3DXVECTOR2(m_pos.x-10 + m_sprite->GetSpriteWidth()/2,m_pos.y + m_sprite->GetSpriteHeight()/2),m_direct);
+		CBullet *_bullet = new CBullet(D3DXVECTOR2(m_pos.x-10 + m_sprite->GetSpriteWidth()/2,m_pos.y -10 + m_sprite->GetSpriteHeight()/2),m_direct);
 		_bullet->Shotting();
-
-
 		m_bullet.push_back(_bullet);
 
 	}
-
 	//mario nhay
 	if(keydown==DIK_C){
 		if(m_action!=down && m_action!=Jump){
 			m_action = Jump;
 			if(m_pos.y <=GROUNDY)
-				m_veloc.y += 5*m_maxVelocity.y;
+				m_accel.y = m_maxAccelemeter.y;
 		}
 
 	}
@@ -139,7 +154,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera){
 void CMario ::UpdateAnimation(CInput *m_input,float _time){
 	///**********************************STatus la Big or Gun **************/
 
-
+#pragma region Mariobig and gun
 	if(m_status ==mariobig ||m_status==mariogun){
 		if(m_veloc.x==0 && m_veloc.y==0)//normal
 		{
@@ -188,7 +203,72 @@ void CMario ::UpdateAnimation(CInput *m_input,float _time){
 			}
 		}
 	}
+#pragma endregion
+#pragma region mario small
+	if(m_status ==mariosmall){
+		if(m_veloc.x==0 && m_veloc.y==0)//normal
+		{
+			if(m_direct==1){
+				m_sprite->SetCurrentSprite(0);
+				m_sprite->UpdateSprite();
+			}
+			if(m_direct==-1){
+				m_sprite->SetCurrentSprite(10);
+				m_sprite->UpdateSprite();
+			}
+		}
+		if(m_veloc.x!=0 && m_veloc.y==0 &&m_action !=down){//run
+			if(m_direct==1){
+				m_sprite->SetTimeAmination(TIMEAMINATION);
+				m_sprite->UpdateSprite(_time,0,1,1);
+			}
+			if(m_direct==-1){
 
+				m_sprite->SetTimeAmination(TIMEAMINATION);
+				m_sprite->UpdateSprite(_time,9,10,-1);
+			}
+		}
+		if(m_veloc.y!=0){//jump
+			if(m_direct==1){
+				m_sprite->SetCurrentSprite(2);
+				m_sprite->UpdateSprite();
+			}
+			if(m_direct==-1){
+
+				m_sprite->SetCurrentSprite(8);
+				m_sprite->UpdateSprite();
+			}
+		}
+		if(m_action ==down){//down
+			if(m_direct==1){
+				m_sprite->SetCurrentSprite(3);
+				m_sprite->SetTimeAmination(0);
+				m_sprite->UpdateSprite();
+			}
+			if(m_direct==-1){
+
+				m_sprite->SetCurrentSprite(7);
+				m_sprite->SetTimeAmination(0);
+				m_sprite->UpdateSprite();
+			}
+		}
+		//chet
+		if(life == 0)
+		{
+			if(m_direct==1){
+				m_sprite->SetCurrentSprite(4);
+				m_sprite->SetTimeAmination(0);
+				m_sprite->UpdateSprite();
+			}
+			if(m_direct==-1){
+
+				m_sprite->SetCurrentSprite(6);
+				m_sprite->SetTimeAmination(0);
+				m_sprite->UpdateSprite();
+			}
+		}
+	}
+#pragma endregion
 }
 
 void CMario::Draw(LPD3DXSPRITE _spriteHandler,CCamera* _camera){
@@ -202,7 +282,7 @@ void CMario::Draw(LPD3DXSPRITE _spriteHandler,CCamera* _camera){
 	CGameObject::Draw(_spriteHandler,_camera);
 
 
-	if (m_pos.y > GROUNDY) m_veloc.y -= 0.5 *m_maxVelocity.y;
+	if (m_pos.y > GROUNDY) m_accel.y = -20;
 	else 
 	{
 		m_pos.y = GROUNDY;

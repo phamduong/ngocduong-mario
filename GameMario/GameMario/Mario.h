@@ -1,6 +1,6 @@
 #ifndef MARIO_H_
 #define MARIO_H_
-#define VELOCNORMAL  40.0f
+#define VELOCNORMAL  30.0f
 #define GROUNDY  95
 
 #include"Object.h"
@@ -33,6 +33,8 @@ private:
 	StatusMario m_start_status;
 	//
 	vector<CBullet*> m_bullet;
+	// bo sung ngay 17/11/2013
+	int life;// so mang song small = 1, big and gun =2; die = 0
 	public:
 	int g_widthMap,g_heightMap;
 	CMario();
