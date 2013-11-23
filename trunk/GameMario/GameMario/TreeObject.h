@@ -23,10 +23,14 @@ public:
 	map<int,CQNode*> LoadTreeInSTLMap(char* filePath);
 	CQNode *  LoadTree(char *);
 	CQNode *m_NodeRoot;
+	//  tao node cha( day la cai cay se su dung)
 	void CreateTree(CQNode*,map<int,CQNode*>);
+	// nhug node giao voi man hjnh
 	vector<CQNode*> GetListNodeIntersectViewport(CQNode*,RECT Viewport);
+	// lay id cua doi tuong game
 	vector<int> GetIDObjectInViewPort(CQNode*,RECT);
 	bool CheckCollision(RECT ,RECT);
+	// lam rong ListNodeInViewport truoc khi goi ham GetListNodeIntersectViewport();
 	void ClearListNodeInViewport(){
 		ListNodeInViewport.clear();
 	}

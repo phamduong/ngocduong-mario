@@ -426,8 +426,15 @@ namespace MapEditor_v10
 
         private void ptbContain_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.X >= ptbContain.Width - 300)
+            {
+                int x = ptbContain.Width + 300;
+                this.ptbContain.Size = new System.Drawing.Size(x, 2000);
+            }
+
             if (e.Button == MouseButtons.Left)
             {
+
                 if (CheckDraw == true)
                 {
                     currentPos = startPos = e.Location;

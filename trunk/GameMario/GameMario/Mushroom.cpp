@@ -10,18 +10,19 @@ CMushroom::CMushroom(int _id,D3DXVECTOR2 pos){
 }
 void CMushroom::Init(){
 	CGameObject::Init();
-	m_direct = 1;
+	m_direct = -1;
 	m_spriteMushroom = CResourceManager::GetInstance()->GetResouce(MUSHROOM_ID);
 	m_sprite = m_spriteMushroom;
 	
 }
 void CMushroom::Update(CInput *_input,float _time,CCamera* _camera){
-	m_veloc.x = m_direct*10.f;
+	//m_veloc.x = m_direct*10.f;
+	//m_accel.x = m_direct* 0.1;
 	UpdateAnimation(_input,_time);
 	CGameObject::Update(_input,_time,_camera);
-	if(m_pos.x<=1 || m_pos.x >=763){
+	/*if(m_pos.x<=1 || m_pos.x >=5000){
 		m_direct = -1.0f * m_direct;
-	}
+	}*/
 }
 void CMushroom::UpdateAnimation(CInput *_input,float _time){
 	//m_sprite->SetCurrentSprite(0);
