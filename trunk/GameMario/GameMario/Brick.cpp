@@ -10,7 +10,7 @@ CBrick::CBrick(int _id,D3DXVECTOR2 pos){
 }
 void CBrick::Init(){
 	CGameObject::Init();
-	
+
 	m_spriteBrick = CResourceManager::GetInstance()->GetResouce(BRICK_ID);
 	m_sprite = m_spriteBrick;
 }

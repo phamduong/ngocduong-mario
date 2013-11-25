@@ -24,6 +24,8 @@ public:
 	bool CheckCollision(RECT ,RECT);
 	float CheckAABBCollision(CGameObject*,CGameObject*,float);
 	DirectCollision GetDirectCollision(){return m_direct;}
+	bool CheckCollisionFrameNext(CGameObject*,CGameObject*,float);// da va cham roi, huong di chuyen tranh di su va cham
+	bool checkCollisionObject(CGameObject*,CGameObject*);
 };
 
 #endif

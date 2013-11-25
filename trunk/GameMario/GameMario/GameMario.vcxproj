@@ -72,7 +72,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
-    <ClInclude Include="CollisionDetected.h" />
+    <ClInclude Include="AABBCollisionDetected.h" />
     <ClInclude Include="DxGraPhic.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameApp.h" />
@@ -103,7 +103,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="CollisionDetected.cpp" />
+    <ClCompile Include="AABBCollisionDetected.cpp" />
     <ClCompile Include="DxGraPhic.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameApp.cpp" />
