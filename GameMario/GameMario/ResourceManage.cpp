@@ -12,7 +12,7 @@ CResourceManager::CResourceManager(void){
 	m_pipesmall = new CSprite(1,1,75,100);
 	m_pipemedium = new CSprite(1,1,75,150);
 	m_pipebig = new CSprite(1,1,72,200);
-	m_bigtree = new CSprite(1,1,31,100);
+	m_bigtree = new CSprite(1,1,30,100);
 	m_smalltree = new CSprite(1,1,27,60);
 	m_grass = new CSprite(2,2,128,30);
 	m_mountain = new CSprite(1,1,300,100);

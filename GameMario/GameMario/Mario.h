@@ -8,6 +8,7 @@
 #include"Texture.h"
 #include"LoadMap.h"
 #include"Bullet.h"
+#include"AABBCollisionDetected.h"
 #define TIMEAMINATION  1.6f
 enum ActionMario
 {
@@ -31,20 +32,26 @@ private:
 	ActionMario m_action;
 	StatusMario m_status;
 	StatusMario m_start_status;
+	DirectCollision  m_directCollion;//xem dang va cham theo huong nao
+	D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
 	//
+
 	vector<CBullet*> m_bullet;
 	// bo sung ngay 17/11/2013
 	int life;// so mang song small = 1, big and gun =2; die = 0
-	public:
+	//22/11/2013
+	CAABBCollision* m_collision;
+	D3DXVECTOR2 m_lastPos;
+public:
 	int g_widthMap,g_heightMap;
 	CMario();
 	~CMario();
-	 void Init();
-	 void Update(CInput*,float,CCamera*);
-	 void Draw(LPD3DXSPRITE,CCamera*);
-	 void UpdateAnimation(CInput*,float);
-	 bool CanCollision() {return true;}
-	 void UpdateCollison(CGameObject* , CInput* , float);
+	void Init();
+	void Update(CInput*,float,CCamera*);
+	void Draw(LPD3DXSPRITE,CCamera*);
+	void UpdateAnimation(CInput*,float);
+	bool CanCollision() {return true;}
+	void UpdateCollison(CGameObject* , CInput* , float);
 
 };
 

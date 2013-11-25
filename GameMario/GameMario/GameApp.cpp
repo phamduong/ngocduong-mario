@@ -34,12 +34,12 @@ int CGameApp::GameInit(HINSTANCE _hInstance){
 	/**********************************************************************/
 	m_map = new CMap();
 
-	object = m_map->GetObjectFromFile("Resource//map//Map2.txt");
+	object = m_map->GetObjectFromFile("Resource//map//Mapp.txt");
 	m_mario->g_widthMap = m_map->m_widthmap;
 	m_mario->g_heightMap = m_map->m_heightmap;
 	// quad tree
 	m_Tobject = new CTreeObject();
-	m_nodeRoot = m_Tobject->LoadTree("Resource//map//Map2Tree.txt"); 
+	m_nodeRoot = m_Tobject->LoadTree("Resource//map//MappTree.txt"); 
 
 }
 int CGameApp::GameRun(){
@@ -66,12 +66,14 @@ int CGameApp::GameRun(){
 			if (m_time->GetTime () < 1.0f)
 			{
 				m_time->EndCount();
-				DrawWorld();
+				m_input->ProcessKeyBoard();
 				UpdateWorld(m_time->GetDeltaTime());
+				DrawWorld();
+
 			}	
 		}
 		//
-		m_input->ProcessKeyBoard();
+
 
 	}
 	return (int) msg.wParam;
@@ -103,17 +105,22 @@ int CGameApp::GameEnd(){
 }
 void CGameApp::UpdateWorld(float time){
 	// update the gioi cac doi tuong
-
 	m_mario->Update(m_input,time,m_camera);
-
-	for (int i = 0; i < object.size(); i++)
-	{
-		object[i]->Update(m_input,time,m_camera);
-	}
-	// update cac doi tuong trong camera
 	m_ListIdObjectInViewport.clear();
 	m_ListIdObjectInViewport = m_Tobject->GetIDObjectInViewPort(m_nodeRoot,m_camera->GetBoundCamera());
+	for (int i = 0; i < object.size(); i++)
+	{
+		for (int j = 0; j < m_ListIdObjectInViewport.size(); j++)
+		{
+			if(object[i]->GetId() == m_ListIdObjectInViewport[j])
+			{
+				object[i]->Update(m_input,time,m_camera);
+				m_mario->UpdateCollison(object[i],m_input,time);
+			}
 
+		}
+	}
+	// update cac doi tuong trong camera
 }
 void CGameApp::DrawWorld(){
 	m_graphic->BeginRender();

@@ -16,14 +16,14 @@ bool CAABBCollision::CheckCollision(RECT Node,RECT orther)
 		return false;
 	else if (orther.bottom > Node.top)
 		return false;
-	return true;
+	else
+		return true;
 }
 float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,float _time)
 {
 	/*---------------------------------------------------------*/
 	//tinh so pixels di duoc trong 1 frame
 	D3DXVECTOR2 VelecOb1 = _Ob1->GetVelocity() * _time;
-	D3DXVECTOR2 VelecOb2 = _Ob2->GetVelocity() * _time; 
 	//Loai bo truong hop hien nhien  khong va cham
 	RECT bound;//hcn bao quanh 2 fram lien tiep
 	if(VelecOb1.x >= 0)
@@ -64,7 +64,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		}
 		else if(VelecOb1.x < 0)// di chuyen qua trai
 		{
-			DEntry.x = _Ob2->GetBound().right - _Ob1->GetBound().left;
+			DEntry.x =_Ob2->GetBound().right - _Ob1->GetBound().left;
 			DExit.x = _Ob2->GetBound().left - _Ob1->GetBound().right;
 		}
 		//Xet theo phuong Y
@@ -76,7 +76,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		else if(VelecOb1.y < 0)// di chuyen qua xuong
 		{
 			DEntry.y = _Ob2->GetBound().top - _Ob1->GetBound().bottom;
-			DExit.y = _Ob2->GetBound().bottom - _Ob1->GetBound().top;
+			DExit.y =  _Ob2->GetBound().bottom - _Ob1->GetBound().top;
 		}
 		//Tinh thoi gian va cham && di qua
 		if(VelecOb1.x == 0){
@@ -140,6 +140,62 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 	else
 	{
 		return 1.0f;
+	}
+
+}
+
+bool CAABBCollision::CheckCollisionFrameNext(CGameObject* _Ob1,CGameObject* _Ob2,float _time)
+{
+	D3DXVECTOR2 VelecOb1 = _Ob1->GetVelocity() * _time;
+	RECT Bound; // khung chua frame ke tiep
+
+	if (VelecOb1.x >= 0)
+	{
+		Bound.left = _Ob1->GetBound().left +VelecOb1.x;
+		Bound.right = Bound.left + _Ob1->GetSprite()->GetSpriteWidth();
+	}
+	else
+	{
+		Bound.right = _Ob1->GetBound().right + VelecOb1.x;
+		Bound.left = Bound.right  - _Ob1->GetSprite()->GetSpriteWidth();
+	}
+	if (VelecOb1.y >= 0)
+	{
+		Bound.bottom = _Ob1->GetBound().bottom +VelecOb1.y;
+		Bound.top = Bound.bottom + _Ob1->GetSprite()->GetSpriteHeight();
+	}
+	else
+	{
+		Bound.top = _Ob1->GetBound().top + VelecOb1.y;
+		Bound.bottom = Bound.top  - _Ob1->GetSprite()->GetSpriteHeight();
+	}
+	//
+	if(CheckCollision(Bound,_Ob2->GetBound()))
+	{
+		return true;
+	}
+
+}
+
+bool CAABBCollision::checkCollisionObject(CGameObject * Ob1,CGameObject * Ob2)
+{
+	RECT r1,r2,rkq;
+	r1.left = Ob1->GetBound().left;
+	r1.right = Ob1->GetBound().right;
+	r1.top= Ob1->GetBound().bottom;
+	r1.bottom = Ob1->GetBound().top;
+	r2.left = Ob2->GetBound().left;
+	r2.right = Ob2->GetBound().right;
+	r2.top= Ob2->GetBound().bottom;
+	r2.bottom = Ob2->GetBound().top;
+	if(IntersectRect(&rkq,&r1,&r2))
+	{
+		return true;
+
+	}
+	else
+	{
+		return false;
 	}
 
 }

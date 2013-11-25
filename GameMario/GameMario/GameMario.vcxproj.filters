@@ -72,9 +72,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionDetected.h">
-      <Filter>Collison</Filter>
-    </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Game Object</Filter>
     </ClInclude>
@@ -132,6 +129,9 @@
     <ClInclude Include="TreeObject.h">
       <Filter>QuadTree</Filter>
     </ClInclude>
+    <ClInclude Include="AABBCollisionDetected.h">
+      <Filter>Collison</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -163,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionDetected.cpp">
-      <Filter>Collison</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
       <Filter>Game Object</Filter>
@@ -223,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="TreeObject.cpp">
       <Filter>QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBCollisionDetected.cpp">
+      <Filter>Collison</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
