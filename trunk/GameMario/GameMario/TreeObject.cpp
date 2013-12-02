@@ -170,3 +170,29 @@ vector<int>CTreeObject::xoatrung(vector<int> list)
 		}
 		return Listkq;
 }
+void CTreeObject::Draw(vector<CGameObject*> ListObjectInViewport,LPD3DXSPRITE _spriteHandle, CCamera* _camera)
+{
+	for (int i = 0; i < ListObjectInViewport.size(); i++)
+	{
+		ListObjectInViewport[i]->Draw(_spriteHandle,_camera);
+	}
+}
+void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _input, CCamera* _camera, float _time)
+{
+	for (int i = 0; i < ListObjectInViewport.size(); i++)
+	{
+		ListObjectInViewport[i]->SetBound();
+		if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+		{
+			if (ListObjectInViewport[i]->GetType()==MUSHROOMBIGTYPE || ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE ||ListObjectInViewport[i]->GetType()==MUSHROOMTYPE
+				|| ListObjectInViewport[i]->GetType()==TURTLETYPE)
+			{
+				ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+			}
+			else
+			{
+				ListObjectInViewport[i]->Update(_input,_time,_camera);
+			}
+		}
+	}
+}

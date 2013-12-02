@@ -16,10 +16,11 @@ CQuestion::CQuestion(int _id,D3DXVECTOR2 _pos,ItemName _name){
 }
 void CQuestion::Init(){
 	CGameObject::Init();
+	m_type = COINQUESTIONTYPE;
 	m_IsShow =true;//hjen thj dau hoi(?)
 	m_spritequestion = CResourceManager::GetInstance()->GetResouce(QUESTION_ID);
 	m_sprite = m_spritequestion;
-	m_statusitem = STATUSITEM_RUNNING;
+	m_statusitem = STATUSITEM_START;
 	switch (m_itemname)
 	{
 	case ITEM_FLOWER:
@@ -57,38 +58,38 @@ void CQuestion::Init(){
 		break;
 	}
 }
-void CQuestion::Update(CInput *_input,float _time,CCamera* _camera){
+void CQuestion::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*> list){
+	if (m_GrowUp == true)
+	{
+		m_statusitem = STATUSITEM_RUNNING;
+	}
 	if(m_statusitem == STATUSITEM_RUNNING){
 		if(m_itemname==ITEM_COIN){
 			m_object->SetAcceleration(D3DXVECTOR2(0,10.0f));
 			if(m_object->GetPosition().y >= m_pos.y + 150){
 				m_object->SetIsShow(false);
 			}
-			
+
 		}
 		else if(m_itemname==ITEM_STAR){
 			m_object->SetVelocity(m_object->GetMaxVelocity());
-			
+
 			if(m_object->GetPosition().y >= m_pos.y + 150){
 				m_object->SetAccelerationY(-100.0f);
 				m_object->SetMaxVelocity(D3DXVECTOR2(0,0));
 			}
-				
-			
-					
+
+
+
 		}
 		else{
-			m_object->SetAcceleration(D3DXVECTOR2(0,1.0f));
-			if(m_object->GetPosition().y >= m_pos.y + m_sprite->GetSpriteHeight()){
-				m_object->SetAcceleration(D3DXVECTOR2(0,0));
-				m_object->SetVelocity(D3DXVECTOR2(0,0));
-			}
+			m_object->m_GrowUp = true;
 		}
 	}
 
 	UpdateAnimation(_input,_time);
-	m_object->Update(_input,_time,_camera);
-	CGameObject::Update(_input,_time,_camera);
+	m_object->Update(_input,_time,_camera,list);
+	CGameObject::Update(_input,_time,_camera,list);
 
 }
 void CQuestion::UpdateAnimation(CInput *_input,float _time){
@@ -103,9 +104,8 @@ void CQuestion::UpdateAnimation(CInput *_input,float _time){
 	}
 }
 void CQuestion::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
-	
+
 	CGameObject::Draw(_spritehandle,_camera);
 	m_object->Draw(_spritehandle,_camera);
-
 }
 

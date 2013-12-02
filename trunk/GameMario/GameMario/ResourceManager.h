@@ -19,7 +19,7 @@
 #define HOUSE "Resource//Images//house.png"
 #define MUSHROOM "Resource//Images//Mushroom.png"
 #define TURTLE "Resource//Images//Turtle.png"
-#define TURTLESHIELD "Resource//Images//TurtleShield.png"
+#define TURTLESHIELD "Resource//Images//TurtuleShield.png"
 #define BULLET "Resource//Images//Bullet.png"
 #define ITEM "Resource//Images//item.png"
 #define BRICKBREAK "Resource//Images//BrickBreak.png"

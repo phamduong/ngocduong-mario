@@ -23,7 +23,7 @@ CResourceManager::CResourceManager(void){
 	m_house = new CSprite(1,1,300,400);
 	m_mushroom = new CSprite(4,4,200,50);
 	m_turtle = new CSprite(4,2,95,142);
-	m_turtleshield = new CSprite(3,3,149,44);
+	m_turtleshield = new CSprite(4,4,188,44);
 	m_bullet = new CSprite(10,10,340,34);
 	m_item = new CSprite(8,4,200,100);
 	m_brickbreak = new CSprite(1,1,25,25);

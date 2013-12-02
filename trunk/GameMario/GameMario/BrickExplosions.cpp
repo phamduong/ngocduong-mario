@@ -22,22 +22,26 @@ void CBrickExplosions::Init(){
 	m_brickBreak.push_back(righttop);
 	CBrickBreak *rightbotom = new CBrickBreak(D3DXVECTOR2(m_pos.x+25,m_pos.y ),D3DXVECTOR2(_veclocBrickBreak.x ,_veclocBrickBreak.y),D3DXVECTOR2(_accelBrickBreak.x ,_accelBrickBreak.y));
 	m_brickBreak.push_back(rightbotom);
+	m_type = BRICKTYPE;
 }
 void CBrickExplosions::Update(CInput *_input,float _time,CCamera* _camera){
-	/* test  thu hieu ung no gach thoi, khi nao fai xet o va cham*/
-	m_TimeShow += _time;
-	if(m_TimeShow>=30.0f){
-		m_IsShow= false;
-	}
 	/***********************************************************/
+	CGameObject::Update(_input,_time,_camera);
+	if (m_pos.y < StartPostion.y)
+	{
+		m_maxAccelemeter.y = 0;
+		m_veloc.y=0;
+		m_pos.y = StartPostion.y;
+	}
+	UpdateAnimation(_input,_time);
 	if(m_IsShow == false){
 		for (int i = 0; i < m_brickBreak.size(); i++)
 		{
 			m_brickBreak[i]->Update(_input,_time,_camera);
 		}
+
+		SetBound(new RECT ());
 	}
-	UpdateAnimation(_input,_time);
-	CGameObject::Update(_input,_time,_camera);
 }
 void CBrickExplosions::UpdateAnimation(CInput *_input,float _time){
 	m_sprite->SetCurrentSprite(1);

@@ -1,4 +1,5 @@
 #include"AABBCollisionDetected.h"
+#include "Object.h"
 CAABBCollision::CAABBCollision()
 {
 
@@ -23,7 +24,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 {
 	/*---------------------------------------------------------*/
 	//tinh so pixels di duoc trong 1 frame
-	D3DXVECTOR2 VelecOb1 = _Ob1->GetVelocity() * _time;
+	D3DXVECTOR2 VelecOb1 = (_Ob1->GetVelocity() - _Ob2->GetVelocity()) * _time;
 	//Loai bo truong hop hien nhien  khong va cham
 	RECT bound;//hcn bao quanh 2 fram lien tiep
 	if(VelecOb1.x >= 0)
@@ -109,7 +110,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		{
 			if (TEntry.x > TEntry.y) 
 			{
-				if (DEntry.x < 0.0f) 
+				if (VelecOb1.x < 0.0f) 
 				{
 					//MessageBox(NULL,"LEFT","THONG BAO",MB_OK);
 					m_direct = LEFT;
@@ -122,7 +123,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 			}
 			else 
 			{
-				if (DEntry.y < 0.0f) 
+				if (VelecOb1.y < 0.0f) 
 				{
 					m_direct = BOTTOM;
 					//MessageBox(NULL,"BOTTOM","THONG BAO",MB_OK);
@@ -197,5 +198,42 @@ bool CAABBCollision::checkCollisionObject(CGameObject * Ob1,CGameObject * Ob2)
 	{
 		return false;
 	}
+
+}
+float CAABBCollision::intersectX(CGameObject* a,CGameObject *b,float _time)
+{
+	a->SetBound();
+	b->SetBound();
+	if (a->GetBound().left >= b->GetBound().left && a->GetBound().left <= b->GetBound().right && a->GetBound().right >= b->GetBound().right)
+	{
+		return b->GetBound().right - a->GetBound().left;
+	}
+	else if (a->GetBound().left >= b->GetBound().left && a->GetBound().left <= b->GetBound().right && a->GetBound().right <= b->GetBound().right)
+	{
+		return a->GetBound().right - a->GetBound().left;
+	}
+	else if (a->GetBound().left <= b->GetBound().left && a->GetBound().right >= b->GetBound().left && a->GetBound().right <= b->GetBound().right)
+	{
+		return a->GetBound().right - b->GetBound().left;
+	}
+	else if (a->GetBound().left <= b->GetBound().left && a->GetBound().right >= b->GetBound().right)
+	{
+		return b->GetBound().right - b->GetBound().left;
+	}
+}
+
+bool CAABBCollision::SortObject(CGameObject * a, CGameObject*b)
+{
+
+	if (a->m_TimeCollision!= b->m_TimeCollision)
+	{
+		return a->m_TimeCollision < b->m_TimeCollision;
+
+	}
+	else
+	{
+		return a->m_intetsect > b->m_intetsect;
+	}
+
 
 }

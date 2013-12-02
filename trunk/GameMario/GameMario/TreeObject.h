@@ -35,6 +35,8 @@ public:
 		ListNodeInViewport.clear();
 	}
 	vector<int> xoatrung(vector<int> list);
+	void Update(vector<CGameObject*>,CInput*, CCamera*, float);
+	void Draw(vector<CGameObject*>,LPD3DXSPRITE, CCamera*);
 };
 
 #endif
