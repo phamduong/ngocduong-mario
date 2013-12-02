@@ -28,7 +28,6 @@ private:
 	CSprite *m_spriteBig;
 	CSprite *m_sriteSmall;
 	CSprite *m_spriteGun;
-	int m_direct;
 	ActionMario m_action;
 	StatusMario m_status;
 	StatusMario m_start_status;
@@ -38,7 +37,7 @@ private:
 
 	vector<CBullet*> m_bullet;
 	// bo sung ngay 17/11/2013
-	int life;// so mang song small = 1, big and gun =2; die = 0
+
 	//22/11/2013
 	CAABBCollision* m_collision;
 	D3DXVECTOR2 m_lastPos;
@@ -47,11 +46,13 @@ public:
 	CMario();
 	~CMario();
 	void Init();
-	void Update(CInput*,float,CCamera*);
+	//void Update(CInput*,float,CCamera*);
+	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void UpdateAnimation(CInput*,float);
 	bool CanCollision() {return true;}
 	void UpdateCollison(CGameObject* , CInput* , float);
+	void ChangeStatus();
 
 };
 

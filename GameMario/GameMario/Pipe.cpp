@@ -23,7 +23,7 @@ void CPipe::Init(){
 	else 
 		m_sprite = m_pipemedium;
 
-	m_type = PIPE;
+	m_type = PIPETYPE;
 }
 void CPipe::Update(CInput *_input,float _time,CCamera* _camera){
 	UpdateAnimation(_input,_time);

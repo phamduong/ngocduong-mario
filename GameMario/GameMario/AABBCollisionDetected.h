@@ -3,9 +3,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <windows.h>
-#include"Object.h"
 #include<stdlib.h>
-
+class CGameObject;
 enum DirectCollision
 {
 	NONE,
@@ -26,6 +25,8 @@ public:
 	DirectCollision GetDirectCollision(){return m_direct;}
 	bool CheckCollisionFrameNext(CGameObject*,CGameObject*,float);// da va cham roi, huong di chuyen tranh di su va cham
 	bool checkCollisionObject(CGameObject*,CGameObject*);
+	static bool SortObject(CGameObject* a,CGameObject* b);
+	float intersectX(CGameObject* ,CGameObject*,float);
 };
 
 #endif

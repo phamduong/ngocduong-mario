@@ -6,22 +6,24 @@
 #include"Texture.h"
 #include"Input.h"
 #include"Camera.h"
-
+#include<vector>
+#include<algorithm>
+#include"AABBCollisionDetected.h"
 // la doi tuong gi de xet va cham 24/11/2013
 enum ObjectType
 {
-	OBJECT,
-	LAND,
-	BRICK,
-	PIPE,
-	COIN,
-	FLOWER,
-	MUSHROOMBIG,
-	MUSHROOMLIFE,
-	MUSHROOM,
-	TURTLE,
-	STAR,
-	COINQUESTION
+	OBJECTTYPE,
+	LANDTYPE,
+	BRICKTYPE,
+	PIPETYPE,
+	COINTYPE,
+	FLOWERTYPE,
+	MUSHROOMBIGTYPE,
+	MUSHROOMLIFETYPE,
+	MUSHROOMTYPE,
+	TURTLETYPE,
+	STARTYPE,
+	COINQUESTIONTYPE
 };
 
 class CGameObject{
@@ -36,23 +38,29 @@ protected :
 	D3DXVECTOR2 m_maxVelocity;
 	D3DXVECTOR2 m_maxAccelemeter;
 	//
-	bool m_Islife;//con song hay chet
-	float m_TimeShow;//thoi gian hien thj
-	bool m_IsShow;// co hien thi hay ko
+	D3DXVECTOR2 StartPostion;
 
 	//Bo sung them Id cho cac doi tuong game 14/11 /2013
 	int m_Id;
 	//bo sung loai doi tuong  24/11/2013
 	ObjectType m_type;
-
-
+	CAABBCollision * m_collision;
 public:
+	int m_direct;
+	int life;// so mang de quan ly status
+	bool m_Islife;//con song hay chet
+	bool m_EatBulet;// bi ban dan vao hay chua
+	float m_TimeShow;//thoi gian hien thj
+	bool m_IsShow;// co hien thi hay ko
+	bool m_GrowUp;//moc item
+	float m_TimeCollision;//de xem cai nao va cham truoc, cai nao sau
+	float m_intetsect;//phan x giao nhau, giao x nheiu thi xu ly truoc
 	CGameObject(void);
 	CGameObject(int,D3DXVECTOR2);
 	~CGameObject(void);
 	virtual void Init();
 	virtual void Update(CInput*,float,CCamera*);//update vi tri cua object va sprite tuong ung
-	//virtual void Update(CInput*,float,CCamera*,CGameObject*);
+	virtual	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	virtual void UpdatePosition(CInput*,float);
 	virtual void UpdateAnimation(CInput*,float);
 	virtual void Draw(LPD3DXSPRITE,CCamera*);
@@ -71,6 +79,7 @@ public:
 	//set
 
 	void SetBound();
+	void SetBound(RECT *);
 	void SetPosition(D3DXVECTOR2 _pos) { m_pos = _pos;}
 	void SetVelocity(D3DXVECTOR2 _velocity) { m_veloc = _velocity;}
 	void SetAcceleration(D3DXVECTOR2 _accleration) { m_accel = _accleration;}
@@ -87,6 +96,7 @@ public:
 	void SetMaxVelocityY(float _vY) {m_maxVelocity.y = _vY;}
 	void SetMaxAcceleration(D3DXVECTOR2 _accleration) { m_maxAccelemeter = _accleration;}
 	void SetId(int _id){m_Id = _id;}
+	void Stop();
 
 };
 
