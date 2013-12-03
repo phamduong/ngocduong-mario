@@ -10,6 +10,8 @@
 #include"Bullet.h"
 #include"AABBCollisionDetected.h"
 #define TIMEAMINATION  1.6f
+#define TIMESHOWPROTECTED  0.5f
+#define TIMEPROTECTED  25.0f
 enum ActionMario
 {
 	normal,
@@ -41,7 +43,14 @@ private:
 	//22/11/2013
 	CAABBCollision* m_collision;
 	D3DXVECTOR2 m_lastPos;
+	bool m_isProtected;
+	float m_timeProtected;
+	float m_timeShowProtected;
+	//Item
+	int CountCoin;
+	bool m_eatStar;
 public:
+	vector<CGameObject*> ListItem;
 	int g_widthMap,g_heightMap;
 	CMario();
 	~CMario();

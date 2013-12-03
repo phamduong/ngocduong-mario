@@ -32,6 +32,7 @@ private :
 	CTreeObject *m_Tobject;
 	vector<int> m_ListIdObjectInViewport;
 	vector<CGameObject*> m_ListObjectInViewport;
+	
 public:
 	LPD3DXSPRITE m_spriteHandler;
 	CGameApp();

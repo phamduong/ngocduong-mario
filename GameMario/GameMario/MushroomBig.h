@@ -9,7 +9,7 @@ class CMushroomBig:public CGameObject
 {
 private:
 	CSprite *m_spriteLife;
-	CAABBCollision *m_collision;
+	bool GrowUpFinish;
 public:
 	CMushroomBig();
 	CMushroomBig(int _id,D3DXVECTOR2);

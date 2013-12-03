@@ -185,7 +185,7 @@ void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _inpu
 		if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
 		{
 			if (ListObjectInViewport[i]->GetType()==MUSHROOMBIGTYPE || ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE ||ListObjectInViewport[i]->GetType()==MUSHROOMTYPE
-				|| ListObjectInViewport[i]->GetType()==TURTLETYPE)
+				|| ListObjectInViewport[i]->GetType()==TURTLETYPE|| ListObjectInViewport[i]->GetType()==COINTYPE)
 			{
 				ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
 			}
@@ -194,5 +194,6 @@ void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _inpu
 				ListObjectInViewport[i]->Update(_input,_time,_camera);
 			}
 		}
+
 	}
 }

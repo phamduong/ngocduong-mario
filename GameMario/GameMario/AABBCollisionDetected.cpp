@@ -22,6 +22,8 @@ bool CAABBCollision::CheckCollision(RECT Node,RECT orther)
 }
 float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,float _time)
 {
+	_Ob1->SetBound();
+	_Ob2->SetBound();
 	/*---------------------------------------------------------*/
 	//tinh so pixels di duoc trong 1 frame
 	D3DXVECTOR2 VelecOb1 = (_Ob1->GetVelocity() - _Ob2->GetVelocity()) * _time;
@@ -58,7 +60,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		D3DXVECTOR2 DExit;//khoang cach  de 1 thoat khoai 2
 		float TimeEntry,TimeExit;
 		//Xet theo phuong X
-		if(VelecOb1.x >0)//dt 1 dang di chuyen qua ben phai
+		if(VelecOb1.x >=0)//dt 1 dang di chuyen qua ben phai
 		{
 			DEntry.x = _Ob2->GetBound().left - _Ob1->GetBound().right;
 			DExit.x = _Ob2->GetBound().right - _Ob1->GetBound().left;
@@ -69,7 +71,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 			DExit.x = _Ob2->GetBound().left - _Ob1->GetBound().right;
 		}
 		//Xet theo phuong Y
-		if(VelecOb1.y >0)//dt 1 dang di chuyen len
+		if(VelecOb1.y >=0)//dt 1 dang di chuyen len
 		{	
 			DEntry.y = _Ob2->GetBound().bottom - _Ob1->GetBound().top;
 			DExit.y = _Ob2->GetBound().top - _Ob1->GetBound().bottom;
@@ -103,21 +105,21 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		//if there are no collision
 		if (TimeEntry > TimeExit || TEntry.x < 0.0f && TEntry.y < 0.0f  || TEntry.x > 1.0f||TEntry.y > 1.0f )
 		{			
-			return 1.0f;
+			return 2.0f;
 		}
 		//there are collision
 		else 
 		{
-			if (TEntry.x > TEntry.y) 
+			if (TEntry.x >= TEntry.y) 
 			{
 				if (VelecOb1.x < 0.0f) 
 				{
 					//MessageBox(NULL,"LEFT","THONG BAO",MB_OK);
-					m_direct = LEFT;
+					m_directCollision = LEFT;
 				}
 				else 
 				{
-					m_direct = RIGHT;
+					m_directCollision = RIGHT;
 					//MessageBox(NULL,"RIGHT","THONG BAO",MB_OK);
 				}        
 			}
@@ -125,12 +127,12 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 			{
 				if (VelecOb1.y < 0.0f) 
 				{
-					m_direct = BOTTOM;
+					m_directCollision = BOTTOM;
 					//MessageBox(NULL,"BOTTOM","THONG BAO",MB_OK);
 				} 
 				else 
 				{
-					m_direct =TOP;
+					m_directCollision =TOP;
 					//MessageBox(NULL,"TOP","THONG BAO",MB_OK);
 				}
 			}
@@ -140,7 +142,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 	}
 	else
 	{
-		return 1.0f;
+		return 2.0f;
 	}
 
 }
@@ -236,4 +238,108 @@ bool CAABBCollision::SortObject(CGameObject * a, CGameObject*b)
 	}
 
 
+}
+RECT CAABBCollision::CLip(CGameObject * a,CGameObject * b)
+{
+	a->SetBound();
+	b->SetBound();
+
+	RECT Object ;
+	RECT Node ;
+	Object.left = a->GetBound().left;
+	Object.right = a->GetBound().right;
+	Object.top= a->GetBound().bottom;
+	Object.bottom = a->GetBound().top;
+	Node.left = b->GetBound().left;
+	Node.right = b->GetBound().right;
+	Node.top= b->GetBound().bottom;
+	Node.bottom = b->GetBound().top;
+	RECT rect ;
+	rect.top = rect.bottom = rect.right = rect.left = 0;
+	if (CheckCollision(Object, Node) == true)
+	{
+
+		if (Object.left <= Node.left && Object.right >= Node.left && Object.right <= Node.right)
+		{
+			rect.left = Node.left;
+			rect.right = Object.right;
+
+		}
+		else if (Object.left >= Node.left && Object.left <= Node.right && Object.right >= Node.left && Object.right <= Node.right)
+		{
+			rect.left = Object.left;
+			rect.right = Object.right;
+		}
+		else if (Object.left >= Node.left && Object.left <= Node.right && Object.right >= Node.right)
+		{
+			rect.left = Object.left;
+			rect.right = Node.right;
+		}
+		else // (Object.left <= Node.left && Object.right >= Object.right)
+		{
+			rect.left = Node.left;
+			rect.right = Node.right;
+		}
+		// xet theo truc y
+
+		if (Object.bottom <= Node.bottom && Object.top >= Node.bottom && Object.top <= Node.top)
+		{
+			rect.bottom = Node.bottom;
+			rect.top = Object.top;
+
+		}
+		else if (Object.bottom >= Node.bottom && Object.bottom <= Node.top && Object.top >= Node.bottom && Object.top <= Node.top)
+		{
+			rect.bottom = Object.bottom;
+			rect.top = Object.top;
+		}
+		else if (Object.bottom >= Node.bottom && Object.bottom <= Node.top && Object.top >= Node.top)
+		{
+			rect.bottom = Object.bottom;
+			rect.top = Node.top;
+		}
+		else 
+		{
+			rect.bottom = Node.bottom;
+			rect.top = Node.top;
+		}
+
+		return rect;
+	}
+	return rect;//co huong =0
+}
+DirectCollision CAABBCollision::GetDirectCollisionNormal(CGameObject* a,CGameObject* b)
+{
+	RECT rect =  CLip(a,b);
+	if (rect.left != 0 && rect.right != 0 &&rect.top != 0&&rect.bottom != 0)
+	{
+		float x = rect.right - rect.left ;
+		float y = rect.top - rect.bottom;
+		if (x<y)
+		{
+			if (a->GetVelocity().x >= 0)
+			{
+				return RIGHT;
+			}
+			else
+			{
+				return LEFT;
+			}
+		}
+		else
+		{
+			if (a->GetVelocity().y >= 0)
+			{
+				return TOP;
+			}
+			else
+			{
+				return BOTTOM;
+			}
+		}
+	}
+	else
+	{
+		return NONE;
+	}
 }

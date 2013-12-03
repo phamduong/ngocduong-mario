@@ -7,14 +7,15 @@ CCoin::CCoin(int _id,D3DXVECTOR2 pos){
 	m_Id = _id;
 	m_pos = pos;
 	Init();
+	
 }
 void CCoin::Init(){
 	CGameObject::Init();
-
+	m_type = COINTYPE;
 	m_spriteCoin = CResourceManager::GetInstance()->GetResouce(COIN_ID);
 	m_sprite = m_spriteCoin;
 }
-void CCoin::Update(CInput *_input,float _time,CCamera* _camera){
+void CCoin::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*>){
 	UpdateAnimation(_input,_time);
 	CGameObject::Update(_input,_time,_camera);
 }
