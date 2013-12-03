@@ -20,6 +20,7 @@ void CGameObject::Init(){
 	StartPostion = m_pos;
 	m_GrowUp = false;
 	m_EatBulet = false;
+	m_IsShow = true;
 	m_collision  =  new CAABBCollision();
 }
 void CGameObject::SetBound(){
@@ -45,7 +46,7 @@ void CGameObject::Update(CInput *m_input,float _time,CCamera* _camera){
 }
 void CGameObject::Update(CInput *m_input,float _time,CCamera* _camera,vector<CGameObject*> ListObjectInViewPort){
 	UpdatePosition(m_input,_time);
-	if (m_Islife)
+	if (m_Islife == true)
 	{
 		vector<CGameObject*> ListObjectCollision;
 		for (int i = 0; i < ListObjectInViewPort.size(); i++)

@@ -4,9 +4,9 @@ LPDIRECT3DDEVICE9 CResourceManager::m_pd3device = NULL;
 HWND CResourceManager::m_wndHandle = NULL;
 
 CResourceManager::CResourceManager(void){
-	m_marioBig = new CSprite( 10,5, 235, 180);
-	m_marioSmall = new CSprite(12 ,6, 282 , 120 );
-	m_marioGun = new CSprite(10,5, 235, 180);
+	m_marioBig = new CSprite( 10,5, 235, 184);
+	m_marioSmall = new CSprite(12 ,6, 282 , 138 );
+	m_marioGun = new CSprite(10,5, 235, 184);
 	m_brick = new CSprite(2,2,100,50);
 	m_question = new CSprite(3,3,150,50);
 	m_pipesmall = new CSprite(1,1,75,100);

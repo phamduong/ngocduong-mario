@@ -9,15 +9,16 @@ class CFlower:public CGameObject
 {
 private:
 	CSprite *m_spriteFlower;
-	 
+	bool GrowUpFinish;
 public:
 	CFlower();
 	CFlower(int _id,D3DXVECTOR2);
 	~CFlower();
 	void Init();
-	void Update(CInput*,float,CCamera*);//update vi tri cua object va sprite tuong ung
+	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void UpdateAnimation(CInput*,float);
+	void UpdateCollison(CGameObject* , CInput* , float);
 };
 
 #endif

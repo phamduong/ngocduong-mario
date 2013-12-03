@@ -17,9 +17,10 @@ public:
 	CBullet(D3DXVECTOR2,int);
 	~CBullet();
 	void Init();
-	void Update(CInput*,float,CCamera*);
+	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void UpdateAnimation(CInput*,float);
+	void UpdateCollison(CGameObject* , CInput* , float);
 	void ChangeStatus();
 	void Shotting();
 	void Explosion();

@@ -28,10 +28,10 @@ class CQuestion:public CGameObject
 {
 private:
 	CSprite *m_spritequestion;
-	ItemName m_itemname;
 	StatusItem m_statusitem;
-	CGameObject * m_object;// de khoi tao cac item
 public:
+	CGameObject * m_object;// de khoi tao cac item
+	ItemName m_itemname;
 	CQuestion();
 	CQuestion(int _id,D3DXVECTOR2);
 	CQuestion(int _id,D3DXVECTOR2,ItemName);

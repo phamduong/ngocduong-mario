@@ -13,7 +13,7 @@ void CTurtle::Init(){
 	life = 2;
 	m_status = TurtleNormal;
 	m_direct = -1;
-	m_maxVelocity = D3DXVECTOR2(10.0f,65.0f);
+	m_maxVelocity = D3DXVECTOR2(15.0f,65.0f);
 	m_maxAccelemeter = D3DXVECTOR2(5.0f,-10.0f);
 	m_spriteTurtle= CResourceManager::GetInstance()->GetResouce(TURTLE_ID);
 	m_spriteTurtleShield= CResourceManager::GetInstance()->GetResouce(TURTLESHIELD_ID);
@@ -159,6 +159,17 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 				break;
 			}
 		case MUSHROOMTYPE:
+			{
+				if (m_GrowUp==true)
+				{
+					_orther->m_EatBulet = true;
+					_orther->m_Islife = false;
+					_orther->m_direct = m_direct;
+					_orther->SetVelocityY(40.0f);
+				}
+
+				break;
+			}
 		case TURTLETYPE:
 			{
 				if (m_GrowUp==true)
@@ -169,6 +180,32 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 					_orther->SetVelocityY(40.0f);
 				}
 
+				if (_orther->life ==1)
+				{
+
+					if(m_collision->GetDirectCollision() == BOTTOM)
+					{
+						m_pos.y += GetVelocity().y*_time*time +2;
+						m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
+						SetVelocityY(0);
+						SetBound();
+					}
+					if(m_collision->GetDirectCollision()== TOP)
+					{
+
+					}
+					if(m_collision->GetDirectCollision() == LEFT)
+					{
+						m_direct = 1;
+					}
+
+					if(m_collision->GetDirectCollision() == RIGHT)
+					{
+						m_direct = -1;
+
+					}
+
+				}
 				break;
 			}
 		default:

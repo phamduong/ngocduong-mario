@@ -41,6 +41,7 @@ int CGameApp::GameInit(HINSTANCE _hInstance){
 	m_Tobject = new CTreeObject();
 	m_nodeRoot = m_Tobject->LoadTree("Resource//map//Map6Tree.txt"); 
 
+
 }
 int CGameApp::GameRun(){
 	m_time->StartCount();
@@ -105,9 +106,7 @@ int CGameApp::GameEnd(){
 }
 void CGameApp::UpdateWorld(float time){
 	// update the gioi cac doi tuong
-	m_mario->Update(m_input,time,m_camera,m_ListObjectInViewport);
 	m_ListObjectInViewport.clear();
-//	m_ListIdObjectInViewport.clear();
 	m_ListIdObjectInViewport = m_Tobject->GetIDObjectInViewPort(m_nodeRoot,m_camera->GetBoundCamera());
 	for (int i = 0; i < object.size(); i++)
 	{
@@ -120,16 +119,8 @@ void CGameApp::UpdateWorld(float time){
 
 		}
 	}
-	//if (m_ListObjectInViewport.size() >= 100)
-	//{
-	//	char ha[10];
-	//itoa(m_ListObjectInViewport.size(),ha,10);
-	//MessageBox(NULL,ha,"",MB_OK);
-	//}
-	
-
 	m_Tobject->Update(m_ListObjectInViewport,m_input,m_camera,time);
-	
+	m_mario->Update(m_input,time,m_camera,m_ListObjectInViewport);
 
 }
 void CGameApp::DrawWorld(){
@@ -137,7 +128,6 @@ void CGameApp::DrawWorld(){
 	m_spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	m_Tobject->Draw(m_ListObjectInViewport,m_spriteHandler,m_camera);
 	m_mario->Draw(m_spriteHandler,m_camera);
-	//ve cac doi tuong can ve o day
 	m_spriteHandler->End();
 	m_graphic->EndRender();
 }

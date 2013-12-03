@@ -14,7 +14,7 @@ void CMushroom::Init(){
 	m_spriteMushroom = CResourceManager::GetInstance()->GetResouce(MUSHROOM_ID);
 	m_sprite = m_spriteMushroom;
 	m_collision = new CAABBCollision();
-	m_maxVelocity = D3DXVECTOR2(8.0f,65.0f);
+	m_maxVelocity = D3DXVECTOR2(10.0f,65.0f);
 	m_maxAccelemeter = D3DXVECTOR2(5.0f,-10.0f);
 	m_type = MUSHROOMTYPE;
 	m_status = MushRoomLife;
@@ -119,6 +119,35 @@ void CMushroom::UpdateCollison(CGameObject* _orther, CInput* _input , float _tim
 
 				}
 				break;
+			}
+		case TURTLETYPE:
+			{
+				if (_orther->life ==1)
+				{
+					
+					if(m_collision->GetDirectCollision() == BOTTOM)
+					{
+						m_pos.y += GetVelocity().y*_time*time +2;
+						m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
+						SetVelocityY(0);
+						SetBound();
+					}
+					if(m_collision->GetDirectCollision()== TOP)
+					{
+
+					}
+					if(m_collision->GetDirectCollision() == LEFT)
+					{
+						m_direct = 1;
+					}
+
+					if(m_collision->GetDirectCollision() == RIGHT)
+					{
+						m_direct = -1;
+
+					}
+					break;
+				}
 			}
 		default:
 			break;

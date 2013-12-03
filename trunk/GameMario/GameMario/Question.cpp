@@ -64,33 +64,27 @@ void CQuestion::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameO
 		m_statusitem = STATUSITEM_RUNNING;
 	}
 	if(m_statusitem == STATUSITEM_RUNNING){
-		if(m_itemname==ITEM_COIN){
-			m_object->SetAcceleration(D3DXVECTOR2(0,10.0f));
+		if (m_itemname == ITEM_COIN)
+		{
+			m_object->SetAcceleration(D3DXVECTOR2(0,20.0f));
 			if(m_object->GetPosition().y >= m_pos.y + 150){
-				m_object->SetIsShow(false);
+				m_object->SetIsShow(false); //ko ve tien nua
 			}
-
 		}
-		else if(m_itemname==ITEM_STAR){
-			m_object->SetVelocity(m_object->GetMaxVelocity());
-
-			if(m_object->GetPosition().y >= m_pos.y + 150){
-				m_object->SetAccelerationY(-100.0f);
-				m_object->SetMaxVelocity(D3DXVECTOR2(0,0));
-			}
-
-
-
-		}
-		else{
+		else
+		{
 			m_object->m_GrowUp = true;
 		}
 	}
-
 	UpdateAnimation(_input,_time);
 	m_object->Update(_input,_time,_camera,list);
 	CGameObject::Update(_input,_time,_camera,list);
-
+	if (m_pos.y < StartPostion.y)
+	{
+		m_maxAccelemeter.y = 0;
+		m_veloc.y=0;
+		m_pos.y = StartPostion.y;
+	}
 }
 void CQuestion::UpdateAnimation(CInput *_input,float _time){
 	//m_sprite->SetCurrentSprite(1);
@@ -104,8 +98,9 @@ void CQuestion::UpdateAnimation(CInput *_input,float _time){
 	}
 }
 void CQuestion::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
-
-	CGameObject::Draw(_spritehandle,_camera);
 	m_object->Draw(_spritehandle,_camera);
+	CGameObject::Draw(_spritehandle,_camera);
+	
+
 }
 
