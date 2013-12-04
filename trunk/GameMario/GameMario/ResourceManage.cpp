@@ -4,9 +4,9 @@ LPDIRECT3DDEVICE9 CResourceManager::m_pd3device = NULL;
 HWND CResourceManager::m_wndHandle = NULL;
 
 CResourceManager::CResourceManager(void){
-	m_marioBig = new CSprite( 10,5, 235, 184);
-	m_marioSmall = new CSprite(12 ,6, 282 , 138 );
-	m_marioGun = new CSprite(10,5, 235, 184);
+	m_marioBig = new CSprite( 10,5, 240, 184);
+	m_marioSmall = new CSprite(12 ,6, 280 , 140 );
+	m_marioGun = new CSprite(10,5, 240, 184);
 	m_brick = new CSprite(2,2,100,50);
 	m_question = new CSprite(3,3,150,50);
 	m_pipesmall = new CSprite(1,1,75,100);
@@ -22,13 +22,19 @@ CResourceManager::CResourceManager(void){
 	m_coin = new CSprite(7,7,315,50);
 	m_house = new CSprite(1,1,300,400);
 	m_mushroom = new CSprite(4,4,200,50);
-	m_turtle = new CSprite(4,2,95,142);
+	m_turtle = new CSprite(4,2,100,140);
 	m_turtleshield = new CSprite(4,4,188,44);
 	m_bullet = new CSprite(10,10,340,34);
 	m_item = new CSprite(8,4,200,100);
 	m_brickbreak = new CSprite(1,1,25,25);
-	
-
+	m_loading = new CSprite(1,1,800,800);
+	m_backgroundmenu = new CSprite(1,1,800,800);
+	m_menunewgame = new CSprite(2,2,428,50);
+	m_menuabout = new CSprite(2,2,302,50);
+	m_menuoption = new CSprite(2,2,374,50);
+	m_menucontinue = new CSprite(2,2,420,50);
+	m_menuexit = new CSprite(2,2,218,50);
+	m_select = new CSprite(1,1,50,50);
 }
 bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_pd3device = _pd3device;
@@ -62,7 +68,15 @@ bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_mountain->Init(m_texture->GetTexture(MOUNTAIN));
 	m_fence->Init(m_texture->GetTexture(FENCE));
 	m_house->Init(m_texture->GetTexture(HOUSE));
-	
+	//menu
+	m_loading->Init(m_texture->GetTexture(LOADING));
+	m_backgroundmenu->Init(m_texture->GetTexture(BACKGROUNDMENU));
+	m_menuabout->Init(m_texture->GetTexture(MENUABOUT));
+	m_menunewgame->Init(m_texture->GetTexture(MENUNEWGAME));
+	m_menucontinue->Init(m_texture->GetTexture(MENUCONTINUE));
+	m_menuexit->Init(m_texture->GetTexture(MENUEXIT));
+	m_menuoption->Init(m_texture->GetTexture(MENUOPTION));
+	m_select->Init(m_texture->GetTexture(SELECT));
 	return true;
 }
 CSprite* CResourceManager::GetResouce(ResourceId _id){
@@ -184,7 +198,47 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 			return new CSprite(*m_brickbreak);
 			break;
 		}
-	
+		//menu
+	case LOADING_ID:
+		{
+			return new CSprite(*m_loading);
+			break;
+		}
+	case BACKGROUNDMENU_ID:
+		{
+			return new CSprite(*m_backgroundmenu);
+			break;
+		}
+	case MENUNEWGAME_ID:
+		{
+			return new CSprite(*m_menunewgame);
+			break;
+		}
+	case MENUCONTINUE_ID:
+		{
+			return new CSprite(*m_menucontinue);
+			break;
+		}
+	case MENUABOUT_ID:
+		{
+			return new CSprite(*m_menuabout);
+			break;
+		}
+	case MENUOPTION_ID:
+		{
+			return new CSprite(*m_menuoption);
+			break;
+		}
+	case MENUEXIT_ID:
+		{
+			return new CSprite(*m_menuexit);
+			break;
+		}
+	case SELECT_ID:
+		{
+			return new CSprite(*m_select);
+			break;
+		}
 	default:
 		{
 			return NULL;

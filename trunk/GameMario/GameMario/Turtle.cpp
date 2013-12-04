@@ -196,12 +196,19 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 					}
 					if(m_collision->GetDirectCollision() == LEFT)
 					{
-						m_direct = 1;
+						if (m_GrowUp==false)
+						{
+							m_direct = 1;
+						}
+						
 					}
 
 					if(m_collision->GetDirectCollision() == RIGHT)
 					{
-						m_direct = -1;
+						if (m_GrowUp==false)
+						{
+							m_direct = -1;
+						}
 
 					}
 

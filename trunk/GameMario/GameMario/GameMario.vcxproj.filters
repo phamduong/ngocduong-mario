@@ -43,6 +43,12 @@
     <Filter Include="QuadTree">
       <UniqueIdentifier>{ca356c29-7366-4035-a27f-2b9f10c450e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game State">
+      <UniqueIdentifier>{a8168664-b58e-4e69-9ade-e06e5b46f4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DrawText">
+      <UniqueIdentifier>{e3cc2cf9-e155-4fcb-8bfa-c7e9708763ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -131,6 +137,24 @@
     </ClInclude>
     <ClInclude Include="AABBCollisionDetected.h">
       <Filter>Collison</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="GamestateManager.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="PLayingGameState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>DrawText</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +247,24 @@
     </ClCompile>
     <ClCompile Include="AABBCollisionDetected.cpp">
       <Filter>Collison</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingGameState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>DrawText</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

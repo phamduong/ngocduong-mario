@@ -47,9 +47,11 @@ private:
 	float m_timeProtected;
 	float m_timeShowProtected;
 	//Item
-	int CountCoin;
 	bool m_eatStar;
 public:
+	int CountCoin;//an tien
+	bool EatLife;//an nam mang
+	int Score;//diem cong them vao
 	vector<CGameObject*> ListItem;
 	int g_widthMap,g_heightMap;
 	CMario();
