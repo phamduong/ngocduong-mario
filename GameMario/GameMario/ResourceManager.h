@@ -23,7 +23,15 @@
 #define BULLET "Resource//Images//Bullet.png"
 #define ITEM "Resource//Images//item.png"
 #define BRICKBREAK "Resource//Images//BrickBreak.png"
-
+#define LOADING "Resource//Images//Loading.png"
+// menu
+#define BACKGROUNDMENU "Resource//Images//BackGroundMenu.png"
+#define MENUABOUT "Resource//Images//MENU_ABOUT.png"
+#define MENUEXIT "Resource//Images//MENU_EXIT.png"
+#define MENUCONTINUE "Resource//Images//MENU_CONTINUE.png"
+#define MENUNEWGAME "Resource//Images//MENU_NEWGAME.png"
+#define MENUOPTION "Resource//Images//MENU_OPTIONS.png"
+#define SELECT "Resource//Images//Select.png"
 
 
 #include<d3d9.h>
@@ -54,8 +62,15 @@ enum ResourceId {
 	TURTLESHIELD_ID,
 	BULLET_ID,
 	ITEM_ID,
-	BRICKBREAK_ID
-	
+	BRICKBREAK_ID,
+	LOADING_ID,
+	BACKGROUNDMENU_ID,
+	MENUABOUT_ID,
+	MENUNEWGAME_ID,
+	MENUCONTINUE_ID,
+	MENUEXIT_ID,
+	MENUOPTION_ID,
+	SELECT_ID
 };
 
 class CResourceManager{
@@ -83,7 +98,16 @@ public:
 	CSprite *m_bullet;
 	CSprite *m_item;
 	CSprite *m_brickbreak;;
-	
+	//menu
+	CSprite *m_loading;
+	CSprite *m_backgroundmenu;
+	CSprite *m_menunewgame;
+	CSprite *m_menuabout;
+	CSprite *m_menuexit;
+	CSprite *m_menuoption;
+	CSprite *m_menucontinue;
+	CSprite *m_select;
+
 	CTexture *m_texture;
 	static CResourceManager *m_resource;
 	static LPDIRECT3DDEVICE9 m_pd3device;

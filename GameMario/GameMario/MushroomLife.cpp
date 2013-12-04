@@ -49,7 +49,11 @@ void CMushroomLife::UpdateAnimation(CInput *_input,float _time){
 	m_sprite->UpdateSprite();
 }
 void CMushroomLife::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
-	CGameObject::Draw(_spritehandle,_camera);
+	if (m_IsShow)
+	{
+		CGameObject::Draw(_spritehandle,_camera);
+	}
+	
 }
 void CMushroomLife::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 {

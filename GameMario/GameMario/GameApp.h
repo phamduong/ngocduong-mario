@@ -12,27 +12,17 @@
 #include"LoadMap.h"
 #include"QNode.h"
 #include"TreeObject.h"
-
+#include"GamestateManager.h"
 class CGameApp
 {
 private :
 	CWindown * m_windown;
 	CGraphic *m_graphic;
-	CMario *m_mario;
 	CInput *m_input;
 	CTimer *m_time;
 	CCamera *m_camera;
 	//
-
-	CMap *m_map;
-
-	vector<CGameObject*> object;
-	//quad  tree
-	CQNode *m_nodeRoot;
-	CTreeObject *m_Tobject;
-	vector<int> m_ListIdObjectInViewport;
-	vector<CGameObject*> m_ListObjectInViewport;
-	
+	CGameStateManager *m_engine;
 public:
 	LPD3DXSPRITE m_spriteHandler;
 	CGameApp();

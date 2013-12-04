@@ -37,6 +37,7 @@ void CGameObject::SetBound(RECT *r){
 	m_bound.top = r->top;//(LONG)(m_bound.bottom + m_sprite->GetSpriteHeight());
 }
 void CGameObject::UpdatePosition(CInput *m_input,float _time){
+	
 	m_veloc += m_accel * _time;
 	m_pos += m_veloc * _time + 1.0f/2 *m_accel*_time*_time;
 	SetBound();
@@ -55,7 +56,7 @@ void CGameObject::Update(CInput *m_input,float _time,CCamera* _camera,vector<CGa
 			{
 				ListObjectInViewPort[i]->m_TimeCollision = m_collision->CheckAABBCollision(this,ListObjectInViewPort[i],_time);
 				//int timecollision = m_collision->CheckAABBCollision(this,ListObjectInViewPort[i],_time);
-				if (ListObjectInViewPort[i]->m_TimeCollision<1.0f)
+				if (ListObjectInViewPort[i]->m_TimeCollision<=1.0f)
 				{
 					ListObjectInViewPort[i]->m_intetsect = m_collision->intersectX(this,ListObjectInViewPort[i],_time);
 					ListObjectCollision.push_back(ListObjectInViewPort[i]);

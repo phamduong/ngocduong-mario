@@ -29,25 +29,14 @@ int CGameApp::GameInit(HINSTANCE _hInstance){
 	}
 	m_time = new CTimer();
 	m_time->SetMaxFps(60.0f);
-	m_mario = new CMario();
 	m_camera = new CCamera();
 	/**********************************************************************/
-	m_map = new CMap();
-
-	object = m_map->GetObjectFromFile("Resource//map//Map6.txt");
-	m_mario->g_widthMap = m_map->m_widthmap;
-	m_mario->g_heightMap = m_map->m_heightmap;
-	// quad tree
-	m_Tobject = new CTreeObject();
-	m_nodeRoot = m_Tobject->LoadTree("Resource//map//Map6Tree.txt"); 
-
-
+	m_engine = new CGameStateManager();
+	m_engine->Init(_hInstance, m_windown->Get_Handle() , m_graphic, m_input);
+	m_engine ->InitFirstState(new CLoadingState(m_engine));
 }
 int CGameApp::GameRun(){
 	m_time->StartCount();
-	/*DWORD frame_start = GetTickCount();
-
-	DWORD tick_per_frame = 100 / 60;*/
 	MSG msg;
 	ZeroMemory(&msg,sizeof(msg));
 	int done=0;
@@ -93,41 +82,20 @@ int CGameApp::GameEnd(){
 		m_input->Kill_Keyboard();
 		delete m_input;
 	}
-	if (m_mario!=NULL)
+	if (m_engine!=NULL)
 	{
-
-		delete m_mario;
-	}
-	for (int i = 0; i < object.size(); i++)
-	{
-		delete object[i];
+		delete m_engine;
 	}
 	return 1;
 }
 void CGameApp::UpdateWorld(float time){
 	// update the gioi cac doi tuong
-	m_ListObjectInViewport.clear();
-	m_ListIdObjectInViewport = m_Tobject->GetIDObjectInViewPort(m_nodeRoot,m_camera->GetBoundCamera());
-	for (int i = 0; i < object.size(); i++)
-	{
-		for (int j = 0; j < m_ListIdObjectInViewport.size(); j++)
-		{
-			if(object[i]->GetId() == m_ListIdObjectInViewport[j])
-			{
-				m_ListObjectInViewport.push_back(object[i]);
-			}
-
-		}
-	}
-	m_Tobject->Update(m_ListObjectInViewport,m_input,m_camera,time);
-	m_mario->Update(m_input,time,m_camera,m_ListObjectInViewport);
-
+	m_engine->Update(m_time->GetDeltaTime(),m_camera);
 }
 void CGameApp::DrawWorld(){
 	m_graphic->BeginRender();
 	m_spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-	m_Tobject->Draw(m_ListObjectInViewport,m_spriteHandler,m_camera);
-	m_mario->Draw(m_spriteHandler,m_camera);
+	m_engine->Draw(m_spriteHandler,m_camera);
 	m_spriteHandler->End();
 	m_graphic->EndRender();
 }

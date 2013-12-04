@@ -60,7 +60,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		D3DXVECTOR2 DExit;//khoang cach  de 1 thoat khoai 2
 		float TimeEntry,TimeExit;
 		//Xet theo phuong X
-		if(VelecOb1.x >=0)//dt 1 dang di chuyen qua ben phai
+		if(VelecOb1.x >0)//dt 1 dang di chuyen qua ben phai
 		{
 			DEntry.x = _Ob2->GetBound().left - _Ob1->GetBound().right;
 			DExit.x = _Ob2->GetBound().right - _Ob1->GetBound().left;
@@ -71,7 +71,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 			DExit.x = _Ob2->GetBound().left - _Ob1->GetBound().right;
 		}
 		//Xet theo phuong Y
-		if(VelecOb1.y >=0)//dt 1 dang di chuyen len
+		if(VelecOb1.y >0)//dt 1 dang di chuyen len
 		{	
 			DEntry.y = _Ob2->GetBound().bottom - _Ob1->GetBound().top;
 			DExit.y = _Ob2->GetBound().top - _Ob1->GetBound().bottom;

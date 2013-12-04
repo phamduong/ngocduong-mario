@@ -19,6 +19,8 @@ void CMario::Init(){
 	m_direct = 1;
 	life = 1;
 	CountCoin = 0;
+	EatLife = false;
+	Score =0;
 	m_isProtected = false;
 	m_eatStar = false;
 	m_timeProtected =0;
@@ -411,8 +413,14 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 	{
 
 		float time = m_collision->CheckAABBCollision(this,_orther,_time);
-		if(time<1.0f)
+		if(time<=1.0f)
 		{
+			if (time<0)
+			{
+				MessageBox(NULL,"khac","",MB_OK);
+			}
+
+
 			//ListObjectColision
 			switch (_orther->GetType())
 			{
@@ -529,7 +537,7 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 						SetVelocityY(0);
 						m_accel.y = 0;
 						_orther->m_IsShow = false;//chuyen ve ko co dau hoi
-						_orther->m_GrowUp = true; //moc item len
+						
 						SetBound();
 						//
 						CQuestion * Item = (CQuestion*) _orther;
@@ -537,7 +545,16 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 						{
 							ListItem.push_back(Item->m_object);
 						}
+						else
+						{
+							if (!Item->m_GrowUp)
+							{
+								CountCoin++;
+								Score+=100;
+							}
 
+						}
+						_orther->m_GrowUp = true; //moc item len
 					}
 					if(m_collision->GetDirectCollision() == LEFT)
 					{
@@ -569,6 +586,7 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 							m_accel.y = 0;
 							_orther->m_Islife = false;
 							_orther->SetVelocity(D3DXVECTOR2(0,0));
+							Score+=100;
 							SetBound();
 						}
 						if((m_collision->GetDirectCollision()== TOP || m_collision->GetDirectCollision() == RIGHT||m_collision->GetDirectCollision() == LEFT) && (m_isProtected ==false))
@@ -602,19 +620,37 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 						_orther->m_Islife = false;
 						_orther->m_direct = m_direct;
 						_orther->SetVelocityY(40.0f);
+						Score+=400;
 					}
 					else
 					{
 						if(m_collision->GetDirectCollision() == BOTTOM)
 						{
-							_orther->m_GrowUp = false;
-							m_pos.y = (int)m_pos.y;
-							SetVelocityY(80); //xet theo thoi gian con lai
-							m_accel.y = 0;
-							_orther->life = 1; 
-							_orther->m_TimeShow = 0;
-							SetBound();
+							if (_orther->life == 1 && _orther->m_GrowUp == false && (GetPosition().x < _orther->GetPosition().x ||(GetPosition().x > _orther->GetPosition().x)) )
+							{
+								_orther->m_GrowUp = true;
+								if (GetPosition().x < _orther->GetPosition().x)
+								{
+									_orther->m_direct = 1;
+								}
+								else
+								{
+									_orther->m_direct = -1;
+								}
+								
+							}
+							else
+							{
+								_orther->m_GrowUp = false;
+								m_pos.y = (int)m_pos.y;
+								SetVelocityY(80); //xet theo thoi gian con lai
+								m_accel.y = 0;
+								_orther->life = 1; 
+								_orther->m_TimeShow = 0;
+								SetBound();
+							}
 						}
+
 						if((m_collision->GetDirectCollision()== TOP)&& (m_isProtected ==false))
 						{
 							if (_orther->life == 2)
@@ -684,7 +720,8 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 				}
 			case COINTYPE:
 				{
-					CountCoin++;
+					CountCoin+=1;
+					Score += 100;
 					_orther->m_IsShow= false;
 					_orther->m_Islife = false;
 					break;
@@ -693,6 +730,7 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 				{
 					_orther->m_IsShow =  false;
 					_orther->m_Islife = false;
+					Score+=1000;
 					m_isProtected = true;
 					if (life ==1)
 					{
@@ -711,6 +749,16 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 					_orther->m_Islife = false;
 					m_isProtected = true;
 					life++;
+					Score+=1000;
+					break;
+				}
+			case MUSHROOMLIFETYPE:
+				{
+					_orther->m_IsShow =  false;
+					_orther->m_Islife = false;
+					m_isProtected = true;
+					EatLife = true;
+					Score+=1000;
 					break;
 				}
 			case STARTYPE:
@@ -719,6 +767,7 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 					_orther->m_Islife = false;
 					m_isProtected = true;
 					m_eatStar = true;
+					Score+=1000;
 					break;
 				}
 			default:
