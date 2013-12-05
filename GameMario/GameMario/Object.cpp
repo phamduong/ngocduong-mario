@@ -37,7 +37,6 @@ void CGameObject::SetBound(RECT *r){
 	m_bound.top = r->top;//(LONG)(m_bound.bottom + m_sprite->GetSpriteHeight());
 }
 void CGameObject::UpdatePosition(CInput *m_input,float _time){
-	
 	m_veloc += m_accel * _time;
 	m_pos += m_veloc * _time + 1.0f/2 *m_accel*_time*_time;
 	SetBound();
@@ -86,7 +85,7 @@ void CGameObject::Draw(LPD3DXSPRITE _spriteHandler,CCamera* _camera){
 	D3DXMatrixTransformation2D(&Scale, &D3DXVECTOR2(m_pos.x, m_pos.y), 0.0f, &D3DXVECTOR2(1.f, -1.f),NULL, 0.f, NULL);
 	D3DXMatrixMultiply(&Scale,&Scale, &_camera->Get_ViewPort());
 	_spriteHandler->SetTransform(&Scale);
-	m_sprite->DrawSprite(_spriteHandler,D3DXVECTOR2(m_pos.x - m_sprite->GetSpriteWidth()/2 ,m_pos.y - m_sprite->GetSpriteHeight()/2));
+	m_sprite->DrawSprite(_spriteHandler,D3DXVECTOR2(m_pos.x,m_pos.y));
 }
 void CGameObject::UpdateAnimation(CInput *m_input,float _time)
 {

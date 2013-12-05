@@ -32,6 +32,8 @@
 #define MENUNEWGAME "Resource//Images//MENU_NEWGAME.png"
 #define MENUOPTION "Resource//Images//MENU_OPTIONS.png"
 #define SELECT "Resource//Images//Select.png"
+#define ABOUT "Resource//Images//about.png"
+#define OPTION "Resource//Images//option.png"
 
 
 #include<d3d9.h>
@@ -70,7 +72,9 @@ enum ResourceId {
 	MENUCONTINUE_ID,
 	MENUEXIT_ID,
 	MENUOPTION_ID,
-	SELECT_ID
+	SELECT_ID,
+	ABOUT_ID,
+	OPTION_ID
 };
 
 class CResourceManager{
@@ -107,6 +111,8 @@ public:
 	CSprite *m_menuoption;
 	CSprite *m_menucontinue;
 	CSprite *m_select;
+	CSprite *m_about;
+	CSprite *m_option;
 
 	CTexture *m_texture;
 	static CResourceManager *m_resource;

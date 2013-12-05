@@ -4,14 +4,11 @@
 class CLoadingState:public CGameState
 {
 private:
-	
+
 public:
 	CLoadingState();
 	~CLoadingState();
-	CLoadingState::CLoadingState(CGameStateManager* _game):CGameState(_game)
-	{
-		this->m_game = _game;
-	}
+	CLoadingState(CGameStateManager* _game);	
 	void Init();
 	void CleanUp();
 	void Pause();

@@ -49,12 +49,14 @@ private:
 	//Item
 	bool m_eatStar;
 public:
+	int keydown;
 	int CountCoin;//an tien
 	bool EatLife;//an nam mang
 	int Score;//diem cong them vao
 	vector<CGameObject*> ListItem;
 	int g_widthMap,g_heightMap;
 	CMario();
+	CMario(int,D3DXVECTOR2);
 	~CMario();
 	void Init();
 	//void Update(CInput*,float,CCamera*);
@@ -64,7 +66,7 @@ public:
 	bool CanCollision() {return true;}
 	void UpdateCollison(CGameObject* , CInput* , float);
 	void ChangeStatus();
-
+	void ExecuteCollision(CGameObject*,DirectCollision,float,float);//tiem game chay, va time va cham
 };
 
 #endif

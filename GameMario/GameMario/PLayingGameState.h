@@ -9,7 +9,7 @@
 class CPLayingGameState:public CGameState
 {
 private:
-	CMario * m_mario;
+
 	CQNode *m_nodeRoot;
 	CTreeObject *m_Tobject;
 	vector<CGameObject*> object;
@@ -19,19 +19,26 @@ private:
 	CText *m_text;
 	RECT m_textpostion;
 	//
-	int m_life;//so  mang
-	int m_coin;//so tien
-	int m_mapWorld;// man  choi
-	int m_timePLay ;//thoi gian choi
-	int Score;
+
 	float m_timePlayCount;// dung de giam m_timePlay
+	LPD3DXSPRITE m_reset;//reset vi khi vao game playing no bi quay
+	CMario * m_mario; 
 public:
+	
+	static int m_life;//so  mang
+	static int m_coin;//so tien
+	static int m_mapWorld;// man  choi
+	static int m_timePLay ;//thoi gian choi
+	static int Score;
+	static int status;
+	static float m_posmarioX;
+	static float m_posmarioY;
+	//
+
 	CPLayingGameState();
 	~CPLayingGameState();
-	CPLayingGameState::CPLayingGameState(CGameStateManager* _game):CGameState(_game)
-	{
-		this->m_game = _game;
-	}
+	CPLayingGameState(CGameStateManager* _game);
+	CPLayingGameState(CGameStateManager* _game,int _status,D3DXVECTOR2 _pos,int _live,int _score,int _coin,int _time ,int _mapworld);
 	void Init();
 	void CleanUp();
 	void Pause();

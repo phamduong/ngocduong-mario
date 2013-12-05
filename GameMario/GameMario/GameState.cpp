@@ -9,6 +9,7 @@ CGameState::CGameState(void)
 CGameState::CGameState(CGameStateManager* _game)
 {
 	this->m_game = _game;
+	Init();
 }
 void CGameState::Init()
 {

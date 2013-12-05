@@ -2,13 +2,21 @@
 #include <stdlib.h>
 CMario::CMario()
 {
+	m_pos = D3DXVECTOR2(100,600);
+	life = 1;
 	Init();
+}
+CMario::CMario(int _life,D3DXVECTOR2 _pos)
+{
+	Init();
+	m_pos = _pos;
+	life = _life;
+
 }
 CMario::~CMario(){
 }
 void CMario::Init(){
 	CGameObject::Init();
-	m_pos = D3DXVECTOR2(100,600);
 	m_veloc = D3DXVECTOR2(0,0);
 	m_accel = D3DXVECTOR2(0,0);
 	m_maxVelocity = D3DXVECTOR2(40.0f,120.0f);
@@ -17,7 +25,6 @@ void CMario::Init(){
 	m_action = Jump;
 	m_start_status = mariosmall;
 	m_direct = 1;
-	life = 1;
 	CountCoin = 0;
 	EatLife = false;
 	Score =0;
@@ -175,7 +182,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 	}
 
 	/**********************************KEY DOWN**************************************************/
-	int keydown = m_input ->GetKeyDown();
+	keydown = m_input ->GetKeyDown();
 	//mario ban
 	if(keydown == DIK_C && m_action!=down && m_status == mariogun){
 		if (m_veloc.x<=10 && m_veloc.x>=-10)
@@ -213,7 +220,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 	}
 	//mario nhay
 	if(keydown==DIK_V){
-		if(m_action!=down && m_action!=Jump && m_action==normal){
+		if(m_veloc.y==0&& m_action==normal){
 			m_action = Jump;
 			m_veloc.y = m_MaxVeloc.y;
 		}
@@ -258,7 +265,7 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 	// va cham voi ITem
 	for (int i = 0; i < ListItem.size(); i++)
 	{
-		if (ListItem[i]->m_IsShow == false)
+		if (ListItem[i]->m_IsShow == false || ListItem[i]->GetPosition().y<  0)
 		{
 			ListItem.erase(ListItem.begin() + i);
 		}
@@ -411,187 +418,263 @@ void CMario::Draw(LPD3DXSPRITE _spriteHandler,CCamera* _camera){
 void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 	if (_orther->GetType()!=MARIOTYPE)
 	{
-
 		float time = m_collision->CheckAABBCollision(this,_orther,_time);
-		if(time<=1.0f)
+		m_directCollion = m_collision->GetDirectCollision();
+		if (time <=1.0f)
 		{
-			if (time<0)
-			{
-				MessageBox(NULL,"khac","",MB_OK);
-			}
+			ExecuteCollision(_orther,m_directCollion,_time,time);
+		}
 
 
-			//ListObjectColision
-			switch (_orther->GetType())
+
+	}
+}
+
+void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directCollion,float _time,float time)
+{
+
+	if(time<=1.0f)
+	{	
+		//ListObjectColision
+		switch (_orther->GetType())
+		{
+		case PIPETYPE:
+		case LANDTYPE:
 			{
-			case PIPETYPE:
-			case LANDTYPE:
+				if( m_directCollion== BOTTOM)
 				{
-					if(m_collision->GetDirectCollision() == BOTTOM)
+					m_action = normal;
+					if (time!=0)
 					{
-						m_action = normal;
 						m_pos.y += GetVelocity().y*_time*time +2;
 						m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
-						SetVelocityY(0);
-						m_accel.y = 0;
-						SetBound();
+					}
+					else
+					{
+						m_pos.y = _orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
+					}
+					SetVelocityY(0);
+					m_accel.y = 0;
+					SetBound();
 
-					}
-					if(m_collision->GetDirectCollision()== TOP)
-					{
-						m_pos.y += GetVelocity().y*_time*time-2;
-						m_pos.y = (int)m_pos.y;
-						SetVelocityY(0);
-						SetBound();
-					}
-					if(m_collision->GetDirectCollision() == LEFT)
-					{
-						m_pos.x += GetVelocity().x*_time*time+2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-						SetBound();
-						//MessageBox(NULL,"BOTTOM","",MB_OK);
-					}
-
-					if(m_collision->GetDirectCollision() == RIGHT)
-					{
-						m_pos.x += GetVelocity().x*_time*time-2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-						SetBound();
-						//MessageBox(NULL,"BOTTOM","",MB_OK);
-					}
-					break;
 				}
-			case BRICKTYPE:
+				if(m_directCollion== TOP)
 				{
-					if(m_collision->GetDirectCollision() == BOTTOM)
-					{
-						m_action = normal;
-						m_pos.y += GetVelocity().y*_time*time + 2;
-						m_pos.y = (int)m_pos.y;
-						SetVelocityY(0);
-						m_accel.y = 0;
-						SetBound();
-					}
-					if(m_collision->GetDirectCollision()== TOP)
-					{
-						m_pos.y += GetVelocity().y*_time*time-2;
-						m_pos.y = (int)m_pos.y;
-						SetVelocityY(0);
-						m_accel.y = 0;
-						SetBound();
-						if(m_status!=mariosmall)
-						{
-							_orther->m_IsShow = false;
-							_orther->m_Islife = false;
-						}
-						else
-						{
-							_orther->SetVelocityY(15);
-							_orther->SetAccelerationY(-10.0f );
-
-						}
-					}
-					if(m_collision->GetDirectCollision() == LEFT)
-					{
-						m_pos.x += GetVelocity().x*_time*time+2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-						SetBound();
-					}
-
-					if(m_collision->GetDirectCollision() == RIGHT)
-					{
-						m_pos.x += GetVelocity().x*_time*time -2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-					}
-					break;
+					m_pos.y += GetVelocity().y*_time*time-2;
+					m_pos.y = (int)m_pos.y;
+					SetVelocityY(0);
+					SetBound();
 				}
-			case COINQUESTIONTYPE:
+				if(m_directCollion == LEFT)
 				{
-					if(m_collision->GetDirectCollision() == BOTTOM)
+					m_pos.x += GetVelocity().x*_time*time+2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+					SetBound();
+					//MessageBox(NULL,"BOTTOM","",MB_OK);
+				}
+
+				if(m_directCollion== RIGHT)
+				{
+					m_pos.x += GetVelocity().x*_time*time-2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+					SetBound();
+					//MessageBox(NULL,"BOTTOM","",MB_OK);
+				}
+				break;
+			}
+		case BRICKTYPE:
+			{
+				if(m_directCollion == BOTTOM)
+				{
+					m_action = normal;
+					m_pos.y += GetVelocity().y*_time*time + 2;
+					m_pos.y = (int)m_pos.y;
+					SetVelocityY(0);
+					m_accel.y = 0;
+					SetBound();
+				}
+				if(m_directCollion== TOP)
+				{
+					m_pos.y += GetVelocity().y*_time*time-2;
+					m_pos.y = (int)m_pos.y;
+					SetVelocityY(0);
+					m_accel.y = 0;
+					SetBound();
+					if(m_status!=mariosmall)
 					{
-						m_action = normal;
-						m_pos.y += GetVelocity().y*_time*time + 2;
-						m_pos.y = (int)m_pos.y;
-						SetVelocityY(0);
-						m_accel.y = 0;
-						SetBound();
+						_orther->m_IsShow = false;
+						_orther->m_Islife = false;
 					}
-					if(m_collision->GetDirectCollision()== TOP)
+					else
 					{
-						// neu con la dau hoi 
-						/*if (_orther->m_IsShow ==true)
-						{
 						_orther->SetVelocityY(15);
 						_orther->SetAccelerationY(-10.0f );
-						}*/
-						m_pos.y += GetVelocity().y*_time*time-2;
-						m_pos.y = (int)m_pos.y;
-						SetVelocityY(0);
-						m_accel.y = 0;
-						_orther->m_IsShow = false;//chuyen ve ko co dau hoi
-						
-						SetBound();
-						//
-						CQuestion * Item = (CQuestion*) _orther;
-						if (Item->m_itemname!=ITEM_COIN)
+
+					}
+				}
+				if(m_directCollion == LEFT)
+				{
+					m_pos.x += GetVelocity().x*_time*time+2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+					SetBound();
+				}
+
+				if(m_directCollion == RIGHT)
+				{
+					m_pos.x += GetVelocity().x*_time*time -2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+				}
+				break;
+			}
+		case COINQUESTIONTYPE:
+			{
+				if(m_directCollion == BOTTOM)
+				{
+					m_action = normal;
+					m_pos.y += GetVelocity().y*_time*time + 2;
+					m_pos.y = (int)m_pos.y;
+					SetVelocityY(0);
+					m_accel.y = 0;
+					SetBound();
+				}
+				if(m_directCollion== TOP)
+				{
+					// neu con la dau hoi 
+					/*if (_orther->m_IsShow ==true)
+					{
+					_orther->SetVelocityY(15);
+					_orther->SetAccelerationY(-10.0f );
+					}*/
+					m_pos.y += GetVelocity().y*_time*time-2;
+					m_pos.y = (int)m_pos.y;
+					SetVelocityY(0);
+					m_accel.y = 0;
+					_orther->m_IsShow = false;//chuyen ve ko co dau hoi
+
+					SetBound();
+					//
+					CQuestion * Item = (CQuestion*) _orther;
+					if (Item->m_itemname!=ITEM_COIN)
+					{
+						ListItem.push_back(Item->m_object);
+					}
+					else
+					{
+						if (!Item->m_GrowUp)
 						{
-							ListItem.push_back(Item->m_object);
+							CountCoin++;
+							Score+=100;
 						}
-						else
+
+					}
+					_orther->m_GrowUp = true; //moc item len
+				}
+				if(m_directCollion == LEFT)
+				{
+					m_pos.x += GetVelocity().x*_time*time+2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+					SetBound();
+				}
+
+				if(m_directCollion== RIGHT)
+				{
+					m_pos.x += GetVelocity().x*_time*time-2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+				}
+				break;
+			}
+		case MUSHROOMTYPE:
+			{
+				if (m_eatStar== false)
+				{
+					if(m_directCollion == BOTTOM)
+					{
+						m_pos.y = (int)m_pos.y;
+						SetVelocityY(80);
+						m_accel.y = 0;
+						_orther->m_Islife = false;
+						_orther->SetVelocity(D3DXVECTOR2(0,0));
+						Score+=100;
+						SetBound();
+					}
+					if((m_directCollion== TOP || m_directCollion == RIGHT||m_directCollion == LEFT) && (m_isProtected ==false))
+					{
+
+						life--;
+						m_isProtected = true;
+						if (life < 1)
 						{
-							if (!Item->m_GrowUp)
+							m_veloc.x = 0;
+							m_veloc.y = 120.0f;
+							m_maxAccelemeter.x = 0;
+						}
+					}
+				}
+				else
+				{
+					_orther->m_EatBulet = true;
+					_orther->m_Islife = false;
+					_orther->m_direct = m_direct;
+					_orther->SetVelocityY(40.0f);
+				}
+
+				break;
+			}
+		case TURTLETYPE:
+			{
+				if (m_eatStar ==true)
+				{
+					_orther->m_EatBulet = true;
+					_orther->m_Islife = false;
+					_orther->m_direct = m_direct;
+					_orther->SetVelocityY(40.0f);
+					Score+=400;
+				}
+				else
+				{
+					if(m_directCollion == BOTTOM)
+					{
+						if (_orther->life == 1 && _orther->m_GrowUp == false && (GetPosition().x < _orther->GetPosition().x ||(GetPosition().x > _orther->GetPosition().x)) )
+						{
+							_orther->m_GrowUp = true;
+							if (GetPosition().x < _orther->GetPosition().x)
 							{
-								CountCoin++;
-								Score+=100;
+								_orther->m_direct = 1;
+							}
+							else
+							{
+								_orther->m_direct = -1;
 							}
 
 						}
-						_orther->m_GrowUp = true; //moc item len
-					}
-					if(m_collision->GetDirectCollision() == LEFT)
-					{
-						m_pos.x += GetVelocity().x*_time*time+2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-						SetBound();
-					}
-
-					if(m_collision->GetDirectCollision() == RIGHT)
-					{
-						m_pos.x += GetVelocity().x*_time*time-2;
-						m_pos.x = (int)m_pos.x;
-						m_veloc.x = 0;
-						m_accel.x = 0;
-					}
-					break;
-				}
-			case MUSHROOMTYPE:
-				{
-					if (m_eatStar== false)
-					{
-						if(m_collision->GetDirectCollision() == BOTTOM)
+						else
 						{
+							_orther->m_GrowUp = false;
 							m_pos.y = (int)m_pos.y;
-							//SetVelocityY(-(GetVelocity().y *(1.0f - time))); //xet theo thoi gian con lai
-							SetVelocityY(80);
+							SetVelocityY(80); //xet theo thoi gian con lai
 							m_accel.y = 0;
-							_orther->m_Islife = false;
-							_orther->SetVelocity(D3DXVECTOR2(0,0));
-							Score+=100;
+							_orther->life = 1; 
+							_orther->m_TimeShow = 0;
 							SetBound();
 						}
-						if((m_collision->GetDirectCollision()== TOP || m_collision->GetDirectCollision() == RIGHT||m_collision->GetDirectCollision() == LEFT) && (m_isProtected ==false))
-						{
+					}
 
+					if((m_directCollion== TOP)&& (m_isProtected ==false))
+					{
+						if (_orther->life == 2)
+						{
 							life--;
 							m_isProtected = true;
 							if (life < 1)
@@ -601,60 +684,16 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 								m_maxAccelemeter.x = 0;
 							}
 						}
-					}
-					else
-					{
-						_orther->m_EatBulet = true;
-						_orther->m_Islife = false;
-						_orther->m_direct = m_direct;
-						_orther->SetVelocityY(40.0f);
-					}
 
-					break;
-				}
-			case TURTLETYPE:
-				{
-					if (m_eatStar ==true)
-					{
-						_orther->m_EatBulet = true;
-						_orther->m_Islife = false;
-						_orther->m_direct = m_direct;
-						_orther->SetVelocityY(40.0f);
-						Score+=400;
-					}
-					else
-					{
-						if(m_collision->GetDirectCollision() == BOTTOM)
-						{
-							if (_orther->life == 1 && _orther->m_GrowUp == false && (GetPosition().x < _orther->GetPosition().x ||(GetPosition().x > _orther->GetPosition().x)) )
-							{
-								_orther->m_GrowUp = true;
-								if (GetPosition().x < _orther->GetPosition().x)
-								{
-									_orther->m_direct = 1;
-								}
-								else
-								{
-									_orther->m_direct = -1;
-								}
-								
-							}
-							else
-							{
-								_orther->m_GrowUp = false;
-								m_pos.y = (int)m_pos.y;
-								SetVelocityY(80); //xet theo thoi gian con lai
-								m_accel.y = 0;
-								_orther->life = 1; 
-								_orther->m_TimeShow = 0;
-								SetBound();
-							}
-						}
 
-						if((m_collision->GetDirectCollision()== TOP)&& (m_isProtected ==false))
+					}
+					if(m_directCollion == LEFT)
+					{
+						//rua dang di chuyen
+						if ((_orther->life == 2 || _orther->m_GrowUp == true) )
 						{
-							if (_orther->life == 2)
-							{
+							if  (m_isProtected ==false)
+							{				
 								life--;
 								m_isProtected = true;
 								if (life < 1)
@@ -664,119 +703,97 @@ void CMario::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 									m_maxAccelemeter.x = 0;
 								}
 							}
-
-
 						}
-						if(m_collision->GetDirectCollision() == LEFT)
+						// rua dang nam Im
+						else
 						{
-							//rua dang di chuyen
-							if ((_orther->life == 2 || _orther->m_GrowUp == true) )
-							{
-								if  (m_isProtected ==false)
-								{				
-									life--;
-									m_isProtected = true;
-									if (life < 1)
-									{
-										m_veloc.x = 0;
-										m_veloc.y = 120.0f;
-										m_maxAccelemeter.x = 0;
-									}
+							_orther->m_GrowUp = true;
+							_orther->m_direct = this->m_direct;
+						}
+					}
+
+					if(m_directCollion == RIGHT)
+					{
+						if ((_orther->life == 2 ||  _orther->m_GrowUp == true))
+						{
+							if ((m_isProtected ==false))
+							{						
+								life--;
+								m_isProtected = true;
+								if (life < 1)
+								{
+									m_veloc.x = 0;
+									m_accel.x = 0;
+									m_maxAccelemeter.x = 0;
+									m_veloc.y = 120.0f;
 								}
 							}
-							// rua dang nam Im
-							else
-							{
-								_orther->m_GrowUp = true;
-								_orther->m_direct = this->m_direct;
-							}
 						}
-
-						if(m_collision->GetDirectCollision() == RIGHT)
+						else
 						{
-							if ((_orther->life == 2 ||  _orther->m_GrowUp == true))
-							{
-								if ((m_isProtected ==false))
-								{						
-									life--;
-									m_isProtected = true;
-									if (life < 1)
-									{
-										m_veloc.x = 0;
-										m_accel.x = 0;
-										m_maxAccelemeter.x = 0;
-										m_veloc.y = 120.0f;
-									}
-								}
-							}
-							else
-							{
-								_orther->m_GrowUp = true;
-								_orther->m_direct = this->m_direct;
-							}
+							_orther->m_GrowUp = true;
+							_orther->m_direct = this->m_direct;
 						}
 					}
-					break;
 				}
-			case COINTYPE:
-				{
-					CountCoin+=1;
-					Score += 100;
-					_orther->m_IsShow= false;
-					_orther->m_Islife = false;
-					break;
-				}
-			case MUSHROOMBIGTYPE:
-				{
-					_orther->m_IsShow =  false;
-					_orther->m_Islife = false;
-					Score+=1000;
-					m_isProtected = true;
-					if (life ==1)
-					{
-						m_pos.y+=20;
-					}
-					if (life <= 2)
-					{
-						life = 2;
-					}
-
-					break;
-				}
-			case FLOWERTYPE:
-				{
-					_orther->m_IsShow =  false;
-					_orther->m_Islife = false;
-					m_isProtected = true;
-					life++;
-					Score+=1000;
-					break;
-				}
-			case MUSHROOMLIFETYPE:
-				{
-					_orther->m_IsShow =  false;
-					_orther->m_Islife = false;
-					m_isProtected = true;
-					EatLife = true;
-					Score+=1000;
-					break;
-				}
-			case STARTYPE:
-				{
-					_orther->m_IsShow =  false;
-					_orther->m_Islife = false;
-					m_isProtected = true;
-					m_eatStar = true;
-					Score+=1000;
-					break;
-				}
-			default:
 				break;
+			}
+		case COINTYPE:
+			{
+				CountCoin+=1;
+				Score += 100;
+				_orther->m_IsShow= false;
+				_orther->m_Islife = false;
+				break;
+			}
+		case MUSHROOMBIGTYPE:
+			{
+				_orther->m_IsShow =  false;
+				_orther->m_Islife = false;
+				Score+=1000;
+				m_isProtected = true;
+				if (life ==1)
+				{
+					m_pos.y+=20;
+				}
+				if (life <= 2)
+				{
+					life = 2;
+				}
 
+				break;
+			}
+		case FLOWERTYPE:
+			{
+				_orther->m_IsShow =  false;
+				_orther->m_Islife = false;
+				m_isProtected = true;
+				life++;
+				Score+=1000;
+				break;
+			}
+		case MUSHROOMLIFETYPE:
+			{
+				_orther->m_IsShow =  false;
+				_orther->m_Islife = false;
+				m_isProtected = true;
+				EatLife = true;
+				Score+=1000;
+				break;
+			}
+		case STARTYPE:
+			{
+				_orther->m_IsShow =  false;
+				_orther->m_Islife = false;
+				m_isProtected = true;
+				m_eatStar = true;
+				Score+=1000;
+				break;
+			}
+		default:
+			break;
 
-			}	
+		}
+	}	
 
-		}	
-
-	}
-}
+}	

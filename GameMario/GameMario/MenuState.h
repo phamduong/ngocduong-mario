@@ -1,6 +1,7 @@
 #ifndef MENUSTATE_H_
 #define MENUSTATE_H_
 #include"GameState.h"
+#include"PLayingGameState.h"
 class CMuneState:public CGameState
 {
 private:
@@ -12,14 +13,11 @@ private:
 	CSprite *m_menucontinue;
 	CSprite *m_select;
 	D3DXVECTOR2 m_posSelect;// vi tri ve  select 
-	
+
 public:
 	CMuneState();
 	~CMuneState();
-	CMuneState::CMuneState(CGameStateManager* _game):CGameState(_game)
-	{
-		this->m_game = _game;
-	}
+	CMuneState(CGameStateManager* _game);
 	void Init();
 	void CleanUp();
 	void Pause();

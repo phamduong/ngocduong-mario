@@ -16,6 +16,7 @@ void CMushroom::Init(){
 	m_collision = new CAABBCollision();
 	m_maxVelocity = D3DXVECTOR2(10.0f,65.0f);
 	m_maxAccelemeter = D3DXVECTOR2(5.0f,-10.0f);
+
 	m_type = MUSHROOMTYPE;
 	m_status = MushRoomLife;
 
@@ -79,11 +80,11 @@ void CMushroom::UpdateAnimation(CInput *_input,float _time){
 
 }
 void CMushroom::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
+	//chet ko ve nua
 	if (m_TimeShow <= 5.0f)
 	{
 		CGameObject::Draw(_spritehandle,_camera);
 	}
-
 }
 void CMushroom::UpdateCollison(CGameObject* _orther, CInput* _input , float _time){
 
@@ -124,7 +125,7 @@ void CMushroom::UpdateCollison(CGameObject* _orther, CInput* _input , float _tim
 			{
 				if (_orther->life ==1)
 				{
-					
+
 					if(m_collision->GetDirectCollision() == BOTTOM)
 					{
 						m_pos.y += GetVelocity().y*_time*time +2;
@@ -151,8 +152,6 @@ void CMushroom::UpdateCollison(CGameObject* _orther, CInput* _input , float _tim
 			}
 		default:
 			break;
-
-
 		}	
 
 	}	

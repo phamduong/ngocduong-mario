@@ -5,6 +5,11 @@ CLoadingState::CLoadingState()
 {
 	Init();
 }
+CLoadingState::CLoadingState(CGameStateManager* _game)
+{
+	this->m_game = _game;
+	Init();
+}
 void CLoadingState::Init()
 {
 	CGameState::Init();
@@ -37,7 +42,7 @@ void CLoadingState::Update(CInput* _input,float _time,CCamera* _camera)
 }
 void CLoadingState::Draw(LPD3DXSPRITE _spriteHandle,CCamera* _camera)
 {
-	m_background->DrawSprite(_spriteHandle,D3DXVECTOR2(0,0));
+	m_background->DrawSprite(_spriteHandle,D3DXVECTOR2(400,400));
 	//CGameState::Draw(_spriteHandle);
 }
 CLoadingState::~CLoadingState()

@@ -36,7 +36,7 @@ void CGameStateManager::ChangeState(CGameState* _nextState)
 	}
 	//khoi tao cai moi'
 	m_gameState.push_back(m_nextState);
-	m_gameState.back()->Init();
+	/*m_gameState.back()->Init();*/
 }
 //them vao  xu dung khi pause
 void CGameStateManager::AddState(CGameState* _nextState)
@@ -47,7 +47,7 @@ void CGameStateManager::AddState(CGameState* _nextState)
 		m_gameState.back()->Pause();
 	}
 	m_gameState.push_back(m_nextState);
-	m_gameState.back()->Init();
+	//m_gameState.back()->Init();
 }
 //xoa di
 void CGameStateManager::DeleteState()
