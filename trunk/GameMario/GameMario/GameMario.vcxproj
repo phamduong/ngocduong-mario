@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AboutState.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBreak.h" />
     <ClInclude Include="BrickExplosions.h" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="AABBCollisionDetected.h" />
+    <ClInclude Include="ContinueState.h" />
     <ClInclude Include="DxGraPhic.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameApp.h" />
@@ -88,6 +90,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectStatic.h" />
+    <ClInclude Include="OptionState.h" />
     <ClInclude Include="pipe.h" />
     <ClInclude Include="PLayingGameState.h" />
     <ClInclude Include="QNode.h" />
@@ -103,6 +106,7 @@
     <ClInclude Include="Turtle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aboutstatecpp.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBreak.cpp" />
     <ClCompile Include="BrickExplosions.cpp" />
@@ -110,6 +114,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="AABBCollisionDetected.cpp" />
+    <ClCompile Include="ContinueState.cpp" />
     <ClCompile Include="DxGraPhic.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameApp.cpp" />
@@ -126,6 +131,7 @@
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectStatic.cpp" />
+    <ClCompile Include="OptionState.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayingGameState.cpp" />
     <ClCompile Include="QNode.cpp" />

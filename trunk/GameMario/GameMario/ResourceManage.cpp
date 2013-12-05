@@ -35,6 +35,8 @@ CResourceManager::CResourceManager(void){
 	m_menucontinue = new CSprite(2,2,420,50);
 	m_menuexit = new CSprite(2,2,218,50);
 	m_select = new CSprite(1,1,50,50);
+	m_about = new CSprite(1,1,800,800);
+	m_option = new CSprite(1,1,800,800);
 }
 bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_pd3device = _pd3device;
@@ -77,6 +79,8 @@ bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_menuexit->Init(m_texture->GetTexture(MENUEXIT));
 	m_menuoption->Init(m_texture->GetTexture(MENUOPTION));
 	m_select->Init(m_texture->GetTexture(SELECT));
+	m_about->Init(m_texture->GetTexture(ABOUT));
+	m_option->Init(m_texture->GetTexture(OPTION));
 	return true;
 }
 CSprite* CResourceManager::GetResouce(ResourceId _id){
@@ -237,6 +241,16 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 	case SELECT_ID:
 		{
 			return new CSprite(*m_select);
+			break;
+		}
+	case ABOUT_ID:
+		{
+			return new CSprite(*m_about);
+			break;
+		}
+	case OPTION_ID:
+		{
+			return new CSprite(*m_option);
 			break;
 		}
 	default:

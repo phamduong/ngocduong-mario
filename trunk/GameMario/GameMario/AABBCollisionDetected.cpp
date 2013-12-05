@@ -146,62 +146,6 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 	}
 
 }
-
-bool CAABBCollision::CheckCollisionFrameNext(CGameObject* _Ob1,CGameObject* _Ob2,float _time)
-{
-	D3DXVECTOR2 VelecOb1 = _Ob1->GetVelocity() * _time;
-	RECT Bound; // khung chua frame ke tiep
-
-	if (VelecOb1.x >= 0)
-	{
-		Bound.left = _Ob1->GetBound().left +VelecOb1.x;
-		Bound.right = Bound.left + _Ob1->GetSprite()->GetSpriteWidth();
-	}
-	else
-	{
-		Bound.right = _Ob1->GetBound().right + VelecOb1.x;
-		Bound.left = Bound.right  - _Ob1->GetSprite()->GetSpriteWidth();
-	}
-	if (VelecOb1.y >= 0)
-	{
-		Bound.bottom = _Ob1->GetBound().bottom +VelecOb1.y;
-		Bound.top = Bound.bottom + _Ob1->GetSprite()->GetSpriteHeight();
-	}
-	else
-	{
-		Bound.top = _Ob1->GetBound().top + VelecOb1.y;
-		Bound.bottom = Bound.top  - _Ob1->GetSprite()->GetSpriteHeight();
-	}
-	//
-	if(CheckCollision(Bound,_Ob2->GetBound()))
-	{
-		return true;
-	}
-
-}
-
-bool CAABBCollision::checkCollisionObject(CGameObject * Ob1,CGameObject * Ob2)
-{
-	RECT r1,r2,rkq;
-	r1.left = Ob1->GetBound().left;
-	r1.right = Ob1->GetBound().right;
-	r1.top= Ob1->GetBound().bottom;
-	r1.bottom = Ob1->GetBound().top;
-	r2.left = Ob2->GetBound().left;
-	r2.right = Ob2->GetBound().right;
-	r2.top= Ob2->GetBound().bottom;
-	r2.bottom = Ob2->GetBound().top;
-	if(IntersectRect(&rkq,&r1,&r2))
-	{
-		return true;
-
-	}
-	else
-	{
-		return false;
-	}
-
-}
 float CAABBCollision::intersectX(CGameObject* a,CGameObject *b,float _time)
 {
 	a->SetBound();
@@ -308,38 +252,40 @@ RECT CAABBCollision::CLip(CGameObject * a,CGameObject * b)
 	}
 	return rect;//co huong =0
 }
-DirectCollision CAABBCollision::GetDirectCollisionNormal(CGameObject* a,CGameObject* b)
-{
-	RECT rect =  CLip(a,b);
-	if (rect.left != 0 && rect.right != 0 &&rect.top != 0&&rect.bottom != 0)
-	{
-		float x = rect.right - rect.left ;
-		float y = rect.top - rect.bottom;
-		if (x<y)
-		{
-			if (a->GetVelocity().x >= 0)
-			{
-				return RIGHT;
-			}
-			else
-			{
-				return LEFT;
-			}
-		}
-		else
-		{
-			if (a->GetVelocity().y >= 0)
-			{
-				return TOP;
-			}
-			else
-			{
-				return BOTTOM;
-			}
-		}
-	}
-	else
-	{
-		return NONE;
-	}
-}
+//DirectCollision CAABBCollision::GetDirectCollisionNormal(CGameObject* a,CGameObject* b)
+//{
+//	a->SetBound();
+//	b->SetBound();
+//	RECT rect =  CLip(a,b);
+//	if (rect.left != 0 && rect.right != 0 &&rect.top != 0&&rect.bottom != 0)
+//	{
+//		float x = rect.right - rect.left ;
+//		float y = rect.top - rect.bottom;
+//		if (x < y)
+//		{
+//			if (a->GetVelocity().x >= 0)
+//			{
+//				return RIGHT;
+//			}
+//			else
+//			{
+//				return LEFT;
+//			}
+//		}
+//		else
+//		{
+//			if (a->GetVelocity().y >= 0)
+//			{
+//				return TOP;
+//			}
+//			else
+//			{
+//				return BOTTOM;
+//			}
+//		}
+//	}
+//	else
+//	{
+//		return NONE;
+//	}
+//}

@@ -1,8 +1,16 @@
 #include"MenuState.h"
 #include"GamestateManager.h"
 #include"PLayingGameState.h"
+#include"AboutState.h"
+#include"OptionState.h"
+#include"ContinueState.h"
 CMuneState::CMuneState()
 {
+	Init();
+}
+CMuneState::CMuneState(CGameStateManager* _game):CGameState(_game)
+{
+	this->m_game = _game;
 	Init();
 }
 void CMuneState::Init()
@@ -90,24 +98,26 @@ void CMuneState::Update(CInput* _input,float _time,CCamera* _camera)
 		case 1:
 			{
 				m_game->ChangeState( new CPLayingGameState(this->m_game));
+				//m_game->ChangeState( new CPLayingGameState(this->m_game,2,D3DXVECTOR2(100,600),3,3,3,344,1));
 				m_isQuit = true;
 				break;
 			}
 		case 2:
 			{
-				m_game->ChangeState( new CLoadingState(this->m_game));
+				//m_game->ChangeState( new CPLayingGameState(this->m_game,CPLayingGameState::status,D3DXVECTOR2(CPLayingGameState::m_posmarioX,CPLayingGameState::m_posmarioY + 5),CPLayingGameState::m_life,CPLayingGameState::Score,CPLayingGameState::m_coin,CPLayingGameState::m_timePLay,CPLayingGameState::m_mapWorld));
+				m_game->ChangeState( new CContinueState(this->m_game));
 				m_isQuit = true;
 				break;
 			}
 		case 3:
 			{
-				m_game->ChangeState( new CLoadingState(this->m_game));
+				m_game->ChangeState( new COptionState(this->m_game));
 				m_isQuit = true;
 				break;
 			}
 		case 4:
 			{
-				m_game->ChangeState( new CLoadingState(this->m_game));
+				m_game->ChangeState( new CAboutState(this->m_game));
 				m_isQuit = true;
 				break;
 			}
@@ -135,13 +145,13 @@ void CMuneState::Update(CInput* _input,float _time,CCamera* _camera)
 }
 void CMuneState::Draw(LPD3DXSPRITE _spriteHandle,CCamera* _camera)
 {
-	m_background->DrawSprite(_spriteHandle,D3DXVECTOR2(0,0));
+	m_background->DrawSprite(_spriteHandle,D3DXVECTOR2(400,400));
 	m_select->DrawSprite(_spriteHandle,m_posSelect);
-	m_menunewgame->DrawSprite(_spriteHandle,D3DXVECTOR2(400- m_menunewgame->GetSpriteWidth()/2,300));
-	m_menucontinue->DrawSprite(_spriteHandle,D3DXVECTOR2(400- m_menucontinue->GetSpriteWidth()/2,380));
-	m_menuoption->DrawSprite(_spriteHandle,D3DXVECTOR2(400- m_menuoption->GetSpriteWidth()/2,460));
-	m_menuabout->DrawSprite(_spriteHandle,D3DXVECTOR2(400- m_menuabout->GetSpriteWidth()/2,540));
-	m_menuexit->DrawSprite(_spriteHandle,D3DXVECTOR2(400- m_menuexit->GetSpriteWidth()/2,620));
+	m_menunewgame->DrawSprite(_spriteHandle,D3DXVECTOR2(400,300));
+	m_menucontinue->DrawSprite(_spriteHandle,D3DXVECTOR2(400,380));
+	m_menuoption->DrawSprite(_spriteHandle,D3DXVECTOR2(400,460));
+	m_menuabout->DrawSprite(_spriteHandle,D3DXVECTOR2(400,540));
+	m_menuexit->DrawSprite(_spriteHandle,D3DXVECTOR2(400,620));
 }
 CMuneState::~CMuneState()
 {

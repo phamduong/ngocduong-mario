@@ -118,7 +118,9 @@ void CTurtle::UpdateAnimation(CInput *_input,float _time){
 	}
 }
 void CTurtle::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
+
 	CGameObject::Draw(_spritehandle,_camera);
+
 }
 void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 {
@@ -200,7 +202,7 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 						{
 							m_direct = 1;
 						}
-						
+
 					}
 
 					if(m_collision->GetDirectCollision() == RIGHT)

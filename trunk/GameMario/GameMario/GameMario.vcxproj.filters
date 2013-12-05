@@ -156,6 +156,15 @@
     <ClInclude Include="Text.h">
       <Filter>DrawText</Filter>
     </ClInclude>
+    <ClInclude Include="AboutState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinueState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -265,6 +274,15 @@
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>DrawText</Filter>
+    </ClCompile>
+    <ClCompile Include="Aboutstatecpp.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinueState.cpp">
+      <Filter>Game State</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
