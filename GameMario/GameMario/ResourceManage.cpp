@@ -2,10 +2,10 @@
 CResourceManager* CResourceManager::m_resource = NULL;
 LPDIRECT3DDEVICE9 CResourceManager::m_pd3device = NULL;
 HWND CResourceManager::m_wndHandle = NULL;
-
+CAudio* CResourceManager::m_audio = NULL;
 CResourceManager::CResourceManager(void){
 	m_marioBig = new CSprite( 10,5, 240, 184);
-	m_marioSmall = new CSprite(12 ,6, 280 , 140 );
+	m_marioSmall = new CSprite(10 ,5, 230 , 140 );
 	m_marioGun = new CSprite(10,5, 240, 184);
 	m_brick = new CSprite(2,2,100,50);
 	m_question = new CSprite(3,3,150,50);
@@ -37,12 +37,20 @@ CResourceManager::CResourceManager(void){
 	m_select = new CSprite(1,1,50,50);
 	m_about = new CSprite(1,1,800,800);
 	m_option = new CSprite(1,1,800,800);
+	m_win = new CSprite(1,1,40,60);
+	m_score = new CSprite(3,3,150,30);
+	m_gameover = new CSprite(1,1,800,800);
 }
 bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_pd3device = _pd3device;
 	m_wndHandle = _wndHandle;
 	m_texture = new CTexture(m_pd3device);
+	m_audio = new CAudio(m_wndHandle);
 	if (m_texture == NULL)
+	{
+		return false;
+	}
+	if (m_audio == NULL)
 	{
 		return false;
 	}
@@ -81,6 +89,36 @@ bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_select->Init(m_texture->GetTexture(SELECT));
 	m_about->Init(m_texture->GetTexture(ABOUT));
 	m_option->Init(m_texture->GetTexture(OPTION));
+	m_win->Init(m_texture->GetTexture(WIN));
+	m_score->Init(m_texture->GetTexture(SCORE));
+	m_gameover->Init(m_texture->GetTexture(GAMEOVER));
+
+	//sounds
+	m_soundAbout = m_audio->LoadSound(SOUND_ABOUT);
+	m_soundBrickBreak = m_audio->LoadSound(SOUND_BRICKBREAK);
+	m_soundBrickSlide = m_audio->LoadSound(SOUND_BRICKSLIDE);
+	m_soundCoin = m_audio->LoadSound(SOUND_COIN);
+	m_soundDeath = m_audio->LoadSound(SOUND_DEATH);
+	m_soundItemUp = m_audio->LoadSound(SOUND_ITEMUP);
+	m_soundJump = m_audio->LoadSound(SOUND_JUMP);
+	m_soundLifeUp = m_audio->LoadSound(SOUND_LIFEUP);
+	m_soundLoading = m_audio->LoadSound(SOUND_LOADING);
+	m_soundLose = m_audio->LoadSound(SOUND_LOSE);
+	m_soundMap1 = m_audio->LoadSound(SOUND_MAP1);
+	m_soundMap2 = m_audio->LoadSound(SOUND_MAP2);
+	m_soundMarioGrow = m_audio->LoadSound(SOUND_MARIOGROW);
+	m_soundMarioKick = m_audio->LoadSound(SOUND_MARIOKICK);
+	m_soundMenu = m_audio->LoadSound(SOUND_MENU);
+	m_soundMushroomDie = m_audio->LoadSound(SOUND_MUSHROOMDIE);
+	m_soundOptions = m_audio->LoadSound(SOUND_OPTIONS);
+	m_soundPowerUp  = m_audio->LoadSound(SOUND_POWERUP);
+	m_soundShotted  = m_audio->LoadSound(SOUND_SHOTTED);
+	m_soundSlidePipe = m_audio->LoadSound(SOUND_SLIDEPIPE);
+	m_soundStartGame = m_audio->LoadSound(SOUND_STARTGAME);
+	m_soundTurtleHead = m_audio->LoadSound(SOUND_TURTLEHEAD);
+	m_soundWin = m_audio->LoadSound(SOUND_WIN);
+	m_stage_clear = m_audio->LoadSound(STAGE_CLEAR);
+	m_soundGameOver = m_audio->LoadSound(SOUND_GAMEOVER);
 	return true;
 }
 CSprite* CResourceManager::GetResouce(ResourceId _id){
@@ -253,6 +291,21 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 			return new CSprite(*m_option);
 			break;
 		}
+	case WIN_ID:
+		{
+			return new CSprite(*m_win);
+			break;
+		}
+	case SCORE_ID:
+		{
+			return new CSprite(*m_score);
+			break;
+		}
+	case GAMEOVER_ID:
+		{
+			return new CSprite(*m_gameover);
+			break;
+		}
 	default:
 		{
 			return NULL;
@@ -260,6 +313,147 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 		}
 	}
 
+}
+CSound* CResourceManager::GetSound(ResourceId _resourceId)
+{
+	switch (_resourceId)
+	{
+	case SOUND_ABOUT_ID:
+		{
+			return new CSound( *m_soundAbout);
+			break;
+		}
+	case SOUND_BRICKBREAK_ID:
+		{
+			return new CSound( *m_soundBrickBreak);
+			break;
+		}
+	case SOUND_BRICKSLIDE_ID:
+		{
+			return new CSound( *m_soundBrickSlide);
+			break;
+		}
+	case SOUND_COIN_ID:
+		{
+			return new CSound( *m_soundCoin);
+			break;
+		}
+	case SOUND_DEATH_ID:
+		{
+			return new CSound( *m_soundDeath);
+			break;
+		}
+	case SOUND_ITEMUP_ID:
+		{
+			return new CSound( *m_soundItemUp);
+			break;
+		}
+	case SOUND_JUMP_ID:
+		{
+			return new CSound( *m_soundJump);
+			break;
+		}
+	case SOUND_LIFEUP_ID:
+		{
+			return new CSound( *m_soundLifeUp);
+			break;
+		}
+	case SOUND_LOADING_ID:
+		{
+			return new CSound( *m_soundLoading);
+			break;
+		}
+	case SOUND_LOSE_ID:
+		{
+			return new CSound( *m_soundLose);
+			break;
+		}
+	case SOUND_MAP1_ID:
+		{
+			return new CSound( *m_soundMap1);
+			break;
+		}
+	case SOUND_MAP2_ID:
+		{
+			return new CSound( *m_soundMap2);
+			break;
+		}
+	case SOUND_MARIOGROW_ID:
+		{
+			return new CSound( *m_soundMarioGrow);
+			break;
+		}
+	case SOUND_MARIOKICK_ID:
+		{
+			return new CSound(* m_soundMarioKick);
+			break;
+		}
+	case SOUND_MENU_ID:
+		{
+			return new CSound( *m_soundMenu);
+			break;
+		}
+	case SOUND_MUSHROOMDIE_ID:
+		{
+			return new CSound( *m_soundMushroomDie);
+			break;
+		}
+	case SOUND_OPTIONS_ID:
+		{
+			return new CSound( *m_soundOptions);
+			break;
+		}
+	case SOUND_POWERUP_ID:
+		{
+			return new CSound( *m_soundPowerUp);
+			break;
+		}
+	case SOUND_SHOTTED_ID:
+		{
+			return new CSound( *m_soundShotted);
+			break;
+		}
+	case SOUND_SLIDEPIPE_ID:
+		{
+			return new CSound( *m_soundSlidePipe);
+			break;
+		}
+	case SOUND_STARTGAME_ID:
+		{
+			return new CSound( *m_soundStartGame);
+			break;
+		}
+	case SOUND_TURTLEHEAD_ID:
+		{
+			return new CSound( *m_soundTurtleHead);
+			break;
+		}
+	case SOUND_WIN_ID:
+		{
+			return new CSound( *m_soundWin);
+			break;
+		}
+	case SOUND_STAGECLEAR_ID:
+		{
+			return new CSound( *m_stage_clear);
+			break;
+		}
+	case SOUND_GAMEOVER_ID:
+		{
+			return new CSound( *m_soundGameOver);
+			break;
+		}
+	default:
+		break;
+	}
+}
+CAudio * CResourceManager::GetAudio()
+{
+	if(m_audio == NULL)
+	{
+		m_audio = new CAudio(m_wndHandle);
+	}
+	return m_audio;
 }
 CResourceManager* CResourceManager::GetInstance()
 {

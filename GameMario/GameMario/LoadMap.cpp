@@ -17,7 +17,7 @@ vector<string> CMap::SplitString(std::string str, char ch)
 	}
 	return result;
 }
-vector<CGameObject*> CMap::GetObjectFromFile(char* filePath)//co the hieu la tao map o day
+vector<CGameObject*> CMap::ObjectFromFile(char* filePath)//co the hieu la tao map o day
 {
 	vector<CGameObject*> object;
 	ifstream f(filePath);
@@ -128,8 +128,39 @@ vector<CGameObject*> CMap::GetObjectFromFile(char* filePath)//co the hieu la tao
 				CObjectStatic *_objectstatic = new CObjectStatic(_idObject,D3DXVECTOR2((float)_pos.x,(float)_pos.y),NAMEHOUSE);
 				object.push_back(_objectstatic);
 			}
-			
+
 		}
+	}
+	// back groud ve truoc tranh de hinh
+
+	return object;
+}
+vector<CGameObject*> CMap::GetObjectFromFile(char* filePath)//co the hieu la tao map o day
+{	
+	//doi background ve truoc cac doi tuong game
+	vector<CGameObject*> object;
+	object = ObjectFromFile(filePath);
+	vector<CGameObject*> listBackground;
+	vector<CGameObject*> listObject;
+	for (int i = 0; i < object.size(); i++)
+	{
+		if (object[i]->GetType()==OBJECTTYPE)
+		{
+			listBackground.push_back(object[i]);
+		}
+		else
+		{		
+			listObject.push_back(object[i]);
+		}
+	}
+	object.clear();
+	for (int i = 0; i < listBackground.size(); i++)
+	{
+		object.push_back(listBackground[i]);
+	}
+	for (int i = 0; i < listObject.size(); i++)
+	{
+		object.push_back(listObject[i]);
 	}
 	return object;
 }

@@ -21,14 +21,7 @@ void COptionState::CleanUp()
 {
 	CGameState::CleanUp();
 }
-void COptionState::Resume()
-{
-	CGameState::Resume();
-}
-void COptionState::Pause()
-{
-	CGameState::Pause();
-}
+
 void COptionState::Update(CInput* _input,float _time,CCamera* _camera)
 {
 	m_background->SetCurrentSprite(0);
@@ -38,8 +31,7 @@ void COptionState::Update(CInput* _input,float _time,CCamera* _camera)
 	if (keydown==DIK_RETURN)
 	{
 		m_game->ChangeState( new CMuneState(this->m_game));
-		m_isQuit = true;
-	}
+		}
 }
 void COptionState::Draw(LPD3DXSPRITE _spriteHandle,CCamera* _camera)
 {

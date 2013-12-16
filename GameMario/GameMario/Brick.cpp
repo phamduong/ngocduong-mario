@@ -14,7 +14,7 @@ void CBrick::Init(){
 	m_spriteBrick = CResourceManager::GetInstance()->GetResouce(BRICK_ID);
 	m_sprite = m_spriteBrick;
 }
-void CBrick::Update(CInput *_input,float _time,CCamera* _camera){
+void CBrick::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*>){
 	UpdateAnimation(_input,_time);
 	CGameObject::Update(_input,_time,_camera);
 }
@@ -26,5 +26,6 @@ void CBrick::UpdateAnimation(CInput *_input,float _time){
 void CBrick::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
 	CGameObject::Draw(_spritehandle,_camera);
 }
+
 CBrick::~CBrick(){}
 

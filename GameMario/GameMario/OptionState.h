@@ -11,10 +11,7 @@ public:
 	COptionState(CGameStateManager* _game);
 	void Init();
 	void CleanUp();
-	void Pause();
-	void Resume();
 	void Update(CInput* ,float,CCamera*);
 	void Draw(LPD3DXSPRITE,CCamera*);
-	//GameStateId GetGameStateId();
 };
 #endif

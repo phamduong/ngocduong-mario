@@ -9,6 +9,7 @@
 #include"LoadMap.h"
 #include"Bullet.h"
 #include"AABBCollisionDetected.h"
+#include"Score.h"
 #define TIMEAMINATION  1.6f
 #define TIMESHOWPROTECTED  0.5f
 #define TIMEPROTECTED  25.0f
@@ -48,13 +49,16 @@ private:
 	float m_timeShowProtected;
 	//Item
 	bool m_eatStar;
+	
 public:
+	static CScore *sc;
 	int keydown;
 	int CountCoin;//an tien
 	bool EatLife;//an nam mang
-	int Score;//diem cong them vao
+	static int Score;//diem cong them vao
+	bool WinState;// va cham voi house bao hieu het man
 	vector<CGameObject*> ListItem;
-	int g_widthMap,g_heightMap;
+	static int g_widthMap,g_heightMap;
 	CMario();
 	CMario(int,D3DXVECTOR2);
 	~CMario();

@@ -1,4 +1,5 @@
 #include"Bullet.h"
+#include"Mario.h"
 CBullet::CBullet(){
 	m_pos = D3DXVECTOR2(0,0);
 	Init();
@@ -16,7 +17,7 @@ void CBullet::Init(){
 	m_nextBulletStatus = BULLET_NONE;
 	m_maxVelocity = D3DXVECTOR2(70.0f,0);
 	m_maxAccelemeter = D3DXVECTOR2(0, -10.0f);
-
+	m_sound = CResourceManager::GetAudio();
 }
 void CBullet::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*> ListObjectInViewPort){
 	if(m_BulletStatus == BULLET_EXPLOSION){
@@ -33,6 +34,7 @@ void CBullet::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObj
 	{
 		m_Islife =false;
 	}
+
 }
 void CBullet::UpdateAnimation(CInput *_input,float _time){
 	if(m_BulletStatus==BULLET_SHOT){
@@ -58,6 +60,8 @@ void CBullet::Explosion(){
 	m_nextBulletStatus=BULLET_EXPLOSION;
 	m_veloc = D3DXVECTOR2(0.0f,0);
 	m_maxAccelemeter = D3DXVECTOR2(0.0f,0);
+	if(!CAudio::m_isSoundOff)
+					m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_BRICKSLIDE_ID));
 }
 void CBullet::ChangeStatus(){
 	if(m_BulletStatus == BULLET_NONE &&m_nextBulletStatus == BULLET_SHOT){
@@ -81,6 +85,7 @@ void CBullet::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 		case COINQUESTIONTYPE:
 		case BRICKTYPE:
 			{
+				
 				if(m_collision->GetDirectCollision() == BOTTOM)
 				{
 					m_pos.y += GetVelocity().y*_time*time +2;
@@ -109,6 +114,18 @@ void CBullet::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 		case MUSHROOMTYPE:
 		case TURTLETYPE:
 			{
+				if(!CAudio::m_isSoundOff)
+					m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
+				if (_orther->GetType()==MUSHROOMTYPE)
+				{
+					CMario::Score+=100;
+					CMario::sc = new CScore(_orther->GetPosition(),MOTTRAM);
+				}
+				else
+				{
+					CMario::Score+=300;
+					CMario::sc = new CScore(_orther->GetPosition(),BATRAM);
+				}
 				_orther->m_EatBulet = true;
 				_orther->m_Islife = false;
 				_orther->m_direct = m_direct;

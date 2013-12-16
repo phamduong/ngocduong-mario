@@ -11,7 +11,7 @@ int CInput::InitKeyboard(HINSTANCE _hInstance,HWND _wndhandle){
 	if (hr!=DI_OK) return 0;
 	hr = m_Keyboard->SetDataFormat(&c_dfDIKeyboard);
 	if (hr!=DI_OK) return 0;
-	hr = m_Keyboard->SetCooperativeLevel(_wndhandle, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE); 
+	hr = m_Keyboard->SetCooperativeLevel(_wndhandle, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE); 
 	if (hr!=DI_OK) return 0;
 	DIPROPDWORD dipdw;
 	dipdw.diph.dwSize       = sizeof(DIPROPDWORD);

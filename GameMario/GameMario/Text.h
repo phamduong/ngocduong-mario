@@ -7,6 +7,7 @@ public:
 
 	CText(LPDIRECT3DDEVICE9);
 	CText(LPDIRECT3DDEVICE9,int _fontSize,CHAR _m_fontFace);
+	CText(LPDIRECT3DDEVICE9 _device,int _fontSize);
 	virtual ~CText(void);
 	void Draw(LPCSTR,RECT,UINT,D3DCOLOR);
 	void Init();

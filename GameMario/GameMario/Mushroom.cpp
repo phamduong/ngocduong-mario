@@ -98,28 +98,34 @@ void CMushroom::UpdateCollison(CGameObject* _orther, CInput* _input , float _tim
 		case BRICKTYPE:
 		case COINQUESTIONTYPE:
 			{
-				if(m_collision->GetDirectCollision() == BOTTOM)
-				{
-					m_pos.y += GetVelocity().y*_time*time +2;
-					m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
-					SetVelocityY(0);
-					SetBound();
-				}
-				if(m_collision->GetDirectCollision()== TOP)
+				if (_orther->GetVelocity().y ==0)
 				{
 
-				}
-				if(m_collision->GetDirectCollision() == LEFT)
-				{
-					m_direct = 1;
-				}
 
-				if(m_collision->GetDirectCollision() == RIGHT)
-				{
-					m_direct = -1;
+					if(m_collision->GetDirectCollision() == BOTTOM)
+					{
+						m_pos.y += GetVelocity().y*_time*time +2;
+						m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
+						SetVelocityY(0);
+						SetBound();
+					}
+					if(m_collision->GetDirectCollision()== TOP)
+					{
 
+					}
+					if(m_collision->GetDirectCollision() == LEFT)
+					{
+						m_direct = 1;
+					}
+
+					if(m_collision->GetDirectCollision() == RIGHT)
+					{
+						m_direct = -1;
+
+					}
+
+					break;
 				}
-				break;
 			}
 		case TURTLETYPE:
 			{

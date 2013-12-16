@@ -12,7 +12,7 @@ private:
 
 	CQNode *m_nodeRoot;
 	CTreeObject *m_Tobject;
-	vector<CGameObject*> object;
+
 	vector<int> m_ListIdObjectInViewport;
 	vector<CGameObject*> m_ListObjectInViewport;
 	CMap *m_map;
@@ -21,10 +21,12 @@ private:
 	//
 
 	float m_timePlayCount;// dung de giam m_timePlay
+	float m_timeCount;//thoi gian chuyen ve khi mario chet
 	LPD3DXSPRITE m_reset;//reset vi khi vao game playing no bi quay
-	CMario * m_mario; 
+
 public:
-	
+	static vector<CGameObject*> object;
+	static CMario * m_mario; 
 	static int m_life;//so  mang
 	static int m_coin;//so tien
 	static int m_mapWorld;// man  choi
@@ -38,11 +40,10 @@ public:
 	CPLayingGameState();
 	~CPLayingGameState();
 	CPLayingGameState(CGameStateManager* _game);
-	CPLayingGameState(CGameStateManager* _game,int _status,D3DXVECTOR2 _pos,int _live,int _score,int _coin,int _time ,int _mapworld);
+	CPLayingGameState(CGameStateManager* _game,CMario* mario,int _live,int _score,int _coin,int _time ,int _mapworld);
+	CPLayingGameState(CGameStateManager* _game,int status,D3DXVECTOR2 pos,int _live,int _score,int _coin,int _time ,int _mapworld);
 	void Init();
 	void CleanUp();
-	void Pause();
-	void Resume();
 	void Update(CInput* ,float,CCamera*);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void DrawTextGame();

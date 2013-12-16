@@ -16,11 +16,12 @@ class CGameStateManager
 {
 private:
 	HINSTANCE m_hInstance;
-	HWND m_wndHandle;
+
 	//CResourceManager *m_resource;
 	LPD3DXSPRITE m_spriteHandle;
 	vector<CGameState*> m_gameState;
 public:
+	HWND m_wndHandle;
 	CInput* m_input;
 	CGraphic*m_graphic;
 	CGameState* m_nextState;
@@ -30,15 +31,8 @@ public:
 	void CleanUp();
 	void InitFirstState(CGameState*);
 	void ChangeState(CGameState*);
-	void AddState(CGameState* );
-	void DeleteState();
 	void Update(float,CCamera*);
 	void Draw(LPD3DXSPRITE,CCamera*);
-	void Quit();
-	//19/12/2012
-	int GetScreenWidth();
-	int GetScreenHeight();
-	
 };
 #endif
 

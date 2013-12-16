@@ -6,10 +6,10 @@ CQNode::CQNode(){
 	NodeRightTop = NULL;
 	NodeRightBottom = NULL;
 }
-CQNode::CQNode(int _idnode,RECT _bound,vector<int> _list){
+CQNode::CQNode(int _idnode,RECT _bound,vector<CGameObject*> _list){
 	m_IdNode = _idnode;
 	m_boundNode = _bound;
-	m_ListIdGameObject = _list;
+	m_ListGameObject = _list;
 }
 CQNode::~CQNode(){
 }

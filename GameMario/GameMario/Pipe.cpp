@@ -25,7 +25,7 @@ void CPipe::Init(){
 
 	m_type = PIPETYPE;
 }
-void CPipe::Update(CInput *_input,float _time,CCamera* _camera){
+void CPipe::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*>){
 	UpdateAnimation(_input,_time);
 	CGameObject::Update(_input,_time,_camera);
 }

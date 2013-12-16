@@ -18,6 +18,7 @@ void CObjectStatic::Init(){
 	m_mountain = CResourceManager::GetInstance()->GetResouce(MOUNTAIN_ID);
 	m_fence = CResourceManager::GetInstance()->GetResouce(FENCE_ID);
 	m_house = CResourceManager::GetInstance()->GetResouce(HOUSE_ID);
+	m_type = OBJECTTYPE;
 	switch (m_name)
 	{
 	case NAMEBIGTREE:

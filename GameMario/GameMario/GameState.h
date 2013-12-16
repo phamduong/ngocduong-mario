@@ -19,19 +19,15 @@ protected:
 	CGameStateManager* m_game;
 	CSprite* m_background;
 	float m_time;
-	bool m_isQuit;
+	CAudio* m_sound;
 public:
 	CGameState(void);
 	~CGameState(void);
 	CGameState(CGameStateManager*);
 	virtual void Init();
 	virtual void CleanUp();
-	virtual void Pause();
-	virtual void Resume();
 	virtual void Update(CInput* ,float,CCamera*);
 	virtual void Draw(LPD3DXSPRITE,CCamera*);
-
-	////19-12-2012
-	//virtual GameStateId GetGameStateId();
+	void StopSoundBackGound();
 };
 #endif
