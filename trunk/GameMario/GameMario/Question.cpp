@@ -25,32 +25,32 @@ void CQuestion::Init(){
 	{
 	case ITEM_FLOWER:
 		{
-			m_object = new CFlower(m_Id,m_pos);
+			m_object = new CFlower(-1,m_pos);
 			m_object->Init();
 			break;
 		}
 	case ITEM_COIN:
 		{
-			m_object = new CCoin(m_Id,m_pos);
+			m_object = new CCoin(-1,m_pos);
 			m_object->Init();
 			break;
 		}
 	case ITEM_MUSHROOMBIG:
 		{
-			m_object = new CMushroomBig(m_Id,D3DXVECTOR2(m_pos.x,m_pos.y));
+			m_object = new CMushroomBig(-1,D3DXVECTOR2(m_pos.x,m_pos.y));
 			m_object->Init();
 			break;
 		}
 
 	case ITEM_MIUSHROOMLIFE:
 		{
-			m_object = new CMushroomLife(m_Id,m_pos);
+			m_object = new CMushroomLife(-1,m_pos);
 			m_object->Init();
 			break;
 		}
 	case ITEM_STAR:
 		{
-			m_object = new CStar(m_Id,m_pos);
+			m_object = new CStar(-1,m_pos);
 			m_object->Init();
 			break;
 		}

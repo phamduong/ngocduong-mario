@@ -49,6 +49,9 @@
     <Filter Include="DrawText">
       <UniqueIdentifier>{e3cc2cf9-e155-4fcb-8bfa-c7e9708763ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{25c5dbc1-36de-4ac6-ae75-ae293f6843ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -164,6 +167,24 @@
     </ClInclude>
     <ClInclude Include="ContinueState.h">
       <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="WinState.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>DrawText</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Game State</Filter>
+    </ClInclude>
+    <ClInclude Include="CAudio.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +304,21 @@
     </ClCompile>
     <ClCompile Include="ContinueState.cpp">
       <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="WinState.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>DrawText</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Game State</Filter>
+    </ClCompile>
+    <ClCompile Include="CAudio.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,25 +13,16 @@ CGameState::CGameState(CGameStateManager* _game)
 }
 void CGameState::Init()
 {
-	m_isQuit = false;
 	m_time = 0.0f;
 	m_background = NULL;
+	m_sound = NULL;
+	m_sound = CResourceManager::GetAudio();
 }
 
-void CGameState::Pause()
-{
-
-}
 void CGameState::CleanUp()
 {
 
 }
-void CGameState::Resume()
-{
-
-}
-
-
 void CGameState::Update(CInput* _keyboard,float _time,CCamera* _camera)
 {
 
@@ -39,12 +30,13 @@ void CGameState::Update(CInput* _keyboard,float _time,CCamera* _camera)
 
 void CGameState::Draw(LPD3DXSPRITE _spriteHandle,CCamera* _camera)
 {
-	
+
 }
-//GameStateId CGameState::GetGameStateId()
-//{
-//	return this->m_id;
-//}
+void CGameState::StopSoundBackGound()
+{
+	m_sound->StopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP1_ID));
+	m_sound->StopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP2_ID));
+}
 CGameState::~CGameState(void)
 {
 }

@@ -16,6 +16,12 @@ CText::CText(LPDIRECT3DDEVICE9 _device,int _fontSize,CHAR _fontFace)
 	m_fontSize = _fontSize;
 	Init();
 }
+CText::CText(LPDIRECT3DDEVICE9 _device,int _fontSize)
+{
+	m_device = _device;
+	m_fontSize = _fontSize;
+	Init();
+}
 void CText::Init()
 {
 

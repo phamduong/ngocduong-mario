@@ -40,6 +40,7 @@ public:
 	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void UpdateAnimation(CInput*,float);
+	ItemName GetItem(){return m_itemname;}
 };
 
 #endif

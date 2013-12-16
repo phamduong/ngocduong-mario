@@ -34,13 +34,42 @@
 #define SELECT "Resource//Images//Select.png"
 #define ABOUT "Resource//Images//about.png"
 #define OPTION "Resource//Images//option.png"
+#define WIN "Resource//Images//Win.png"
+#define SCORE "Resource//Images//Score.png"
+#define GAMEOVER "Resource//Images//GameOver.png"
+//sounds
 
+#define SOUND_ABOUT "Resource//Sounds//About.wav"
+#define SOUND_BRICKBREAK "Resource//Sounds//BrickBreaked.wav"
+#define SOUND_BRICKSLIDE "Resource//Sounds//BrickSlide.wav" 
+#define SOUND_COIN "Resource//Sounds//Coin.wav"
+#define SOUND_DEATH "Resource//Sounds//Death.wav"
+#define SOUND_ITEMUP "Resource//Sounds//ItemUp.wav"
+#define SOUND_JUMP "Resource//Sounds//Jump.wav"
+#define SOUND_LIFEUP "Resource//Sounds//LifeUp.wav"
+#define SOUND_LOADING "Resource//Sounds//Loading.wav"
+#define SOUND_LOSE "Resource//Sounds//Lose.wav"
+#define SOUND_MAP1 "Resource//Sounds//Map1.wav"
+#define SOUND_MAP2 "Resource//Sounds//Map2.wav"
+#define SOUND_MARIOGROW "Resource//Sounds//MarioGrow.wav"
+#define SOUND_MARIOKICK "Resource//Sounds//MarioKick.wav"
+#define SOUND_MENU "Resource//Sounds//Menu.wav"
+#define SOUND_MUSHROOMDIE "Resource//Sounds//Mushroom Die.wav"
+#define SOUND_OPTIONS "Resource//Sounds//Options.wav"
+#define SOUND_POWERUP "Resource//Sounds//PowerUp.wav"
+#define SOUND_SHOTTED "Resource//Sounds//Shotted.wav"
+#define SOUND_SLIDEPIPE "Resource//Sounds//SlidePipe.wav"
+#define SOUND_STARTGAME "Resource//Sounds//StartGame.wav"
+#define SOUND_TURTLEHEAD "Resource//Sounds//TurTleHead.wav"
+#define SOUND_WIN  "Resource//Sounds//Win.wav"
+#define STAGE_CLEAR  "Resource//Sounds//stage_clear.wav"
+#define SOUND_GAMEOVER  "Resource//Sounds//GameOver.wav"
 
 #include<d3d9.h>
 #include<d3dx9.h>
 #include"Sprite.h"
 #include"Texture.h"
-
+#include"CAudio.h"
 enum ResourceId {
 	MARIOSMALL_ID,
 	MARIOBIG_ID,
@@ -74,7 +103,38 @@ enum ResourceId {
 	MENUOPTION_ID,
 	SELECT_ID,
 	ABOUT_ID,
-	OPTION_ID
+	OPTION_ID,
+	WIN_ID,
+	SCORE_ID,
+	GAMEOVER_ID,
+
+	//Sounds
+	SOUND_ABOUT_ID,
+	SOUND_BRICKBREAK_ID,
+	SOUND_BRICKSLIDE_ID,
+	SOUND_COIN_ID,
+	SOUND_DEATH_ID,
+	SOUND_ITEMUP_ID,
+	SOUND_JUMP_ID,
+	SOUND_LIFEUP_ID,
+	SOUND_LOADING_ID,
+	SOUND_LOSE_ID,
+	SOUND_MAP1_ID,
+	SOUND_MAP2_ID,
+	SOUND_MARIOGROW_ID,
+	SOUND_MARIOKICK_ID,
+	SOUND_MENU_ID,
+	SOUND_MUSHROOMDIE_ID,
+	SOUND_OPTIONS_ID,
+	SOUND_POWERUP_ID,
+	SOUND_SHOTTED_ID,
+	SOUND_SLIDEPIPE_ID,
+	SOUND_STARTGAME_ID,
+	SOUND_TURTLEHEAD_ID,
+	SOUND_WIN_ID,
+	SOUND_STAGECLEAR_ID,
+	SOUND_GAMEOVER_ID
+
 };
 
 class CResourceManager{
@@ -113,11 +173,43 @@ public:
 	CSprite *m_select;
 	CSprite *m_about;
 	CSprite *m_option;
+	CSprite *m_win;
+	CSprite *m_score;
+	CSprite *m_gameover;
+
+
+	//sounds
+	CSound * m_soundAbout;
+	CSound * m_soundBrickBreak;
+	CSound * m_soundBrickSlide;
+	CSound * m_soundCoin;
+	CSound * m_soundDeath;
+	CSound * m_soundItemUp;
+	CSound * m_soundJump;
+	CSound * m_soundLifeUp;
+	CSound * m_soundLoading;
+	CSound * m_soundLose;
+	CSound * m_soundMap1;
+	CSound * m_soundMap2;
+	CSound * m_soundMarioGrow;
+	CSound * m_soundMarioKick;
+	CSound * m_soundMenu;
+	CSound * m_soundMushroomDie;
+	CSound * m_soundOptions;
+	CSound * m_soundPowerUp;
+	CSound * m_soundShotted;
+	CSound * m_soundSlidePipe;
+	CSound * m_soundStartGame;
+	CSound * m_soundTurtleHead;
+	CSound * m_soundWin;
+	CSound * m_soundGameOver;
+	CSound * m_stage_clear;
 
 	CTexture *m_texture;
 	static CResourceManager *m_resource;
 	static LPDIRECT3DDEVICE9 m_pd3device;
 	static HWND  m_wndHandle;
+	static CAudio * m_audio;
 public:
 	CResourceManager(void);
 	~CResourceManager(void);
@@ -126,7 +218,9 @@ public:
 
 
 	CSprite* GetResouce(ResourceId);
+	CSound * GetSound(ResourceId);
 	//static
+	static CAudio * GetAudio();
 	static CResourceManager* GetInstance();
 };
 #endif

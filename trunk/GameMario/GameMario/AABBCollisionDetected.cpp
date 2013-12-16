@@ -24,9 +24,11 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 {
 	_Ob1->SetBound();
 	_Ob2->SetBound();
+	D3DXVECTOR2 v1 = _Ob1->GetVelocity() + _Ob1->GetAccleration()*_time;
+	D3DXVECTOR2 v2 = _Ob2->GetVelocity() + _Ob2->GetAccleration()*_time;
 	/*---------------------------------------------------------*/
 	//tinh so pixels di duoc trong 1 frame
-	D3DXVECTOR2 VelecOb1 = (_Ob1->GetVelocity() - _Ob2->GetVelocity()) * _time;
+	D3DXVECTOR2 VelecOb1 = (v1 - v2) * _time;
 	//Loai bo truong hop hien nhien  khong va cham
 	RECT bound;//hcn bao quanh 2 fram lien tiep
 	if(VelecOb1.x >= 0)

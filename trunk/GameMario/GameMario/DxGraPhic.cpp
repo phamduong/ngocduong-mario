@@ -57,7 +57,7 @@ void CGraphic::BeginRender()
 	if (m_pd3device!=NULL)
 	{
 		m_pd3device->BeginScene();
-		m_pd3device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(67,188,236), 1.0f, 0);
+		m_pd3device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(51,102,255), 1.0f, 0);
 	}
 }
 void CGraphic::EndRender()

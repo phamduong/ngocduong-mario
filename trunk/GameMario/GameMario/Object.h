@@ -9,6 +9,7 @@
 #include<vector>
 #include<algorithm>
 #include"AABBCollisionDetected.h"
+#include"CAudio.h"
 // la doi tuong gi de xet va cham 24/11/2013
 enum ObjectType
 {
@@ -24,7 +25,8 @@ enum ObjectType
 	MUSHROOMTYPE,
 	TURTLETYPE,
 	STARTYPE,
-	COINQUESTIONTYPE
+	COINQUESTIONTYPE,
+	HOUSETYPE
 };
 
 class CGameObject{
@@ -46,6 +48,8 @@ protected :
 	//bo sung loai doi tuong  24/11/2013
 	ObjectType m_type;
 	CAABBCollision * m_collision;
+	//am thanh
+	CAudio *m_sound;
 public:
 	int m_direct;
 	int life;// so mang de quan ly status

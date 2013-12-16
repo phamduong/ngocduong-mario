@@ -17,9 +17,10 @@ public:
 	CBrickExplosions(int,D3DXVECTOR2);
 	~CBrickExplosions();
 	void Init();
-	void Update(CInput*,float,CCamera*);//update vi tri cua object va sprite tuong ung
+	void Update(CInput*,float,CCamera*,vector<CGameObject*>);
 	void Draw(LPD3DXSPRITE,CCamera*);
 	void UpdateAnimation(CInput*,float);
+	void UpdateCollison(CGameObject* , CInput* , float);
 };
 
 #endif

@@ -34,6 +34,7 @@ public:
 	CMap();
 	~CMap();
 	vector<string> SplitString(string str, char ch);
+	vector<CGameObject*> ObjectFromFile(char* filePath);
 	vector<CGameObject*> GetObjectFromFile(char* filePath);
 	int GetWidthMap(){return m_widthmap;};
 	int GetHeightMap(){return m_heightmap;}

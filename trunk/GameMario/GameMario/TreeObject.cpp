@@ -70,6 +70,42 @@ CQNode* CTreeObject::LoadTree(char * filepath)
 	return m_NodeRoot;
 
 }
+CQNode * CTreeObject::CreateTreeObject(CQNode* _noderoot,vector<CGameObject*> Listobject)
+{
+	if (_noderoot->m_ListIdGameObject.size()!=0)
+	{
+		for (int i = 0; i < Listobject.size(); i++)
+		{
+			for (int j = 0; j < _noderoot->m_ListIdGameObject.size(); j++)
+			{
+				if (Listobject[i]->GetId() == _noderoot->m_ListIdGameObject[j])
+				{
+					_noderoot->m_ListGameObject.push_back(Listobject[i]);
+				}
+			}
+
+		}
+	}
+	//
+	if(_noderoot->NodeLeftTop != NULL)
+	{
+		CreateTreeObject(_noderoot->NodeLeftTop,Listobject);
+	}
+	if(_noderoot->NodeLeftBottom != NULL)
+	{
+		CreateTreeObject(_noderoot->NodeLeftBottom,Listobject);
+	}
+	if(_noderoot->NodeRightBottom != NULL)
+	{
+		CreateTreeObject(_noderoot->NodeRightBottom,Listobject);
+	}
+	if(_noderoot->NodeRightTop != NULL)
+	{
+		CreateTreeObject(_noderoot->NodeRightTop,Listobject);
+	}
+
+	return _noderoot;
+}
 void CTreeObject::CreateTree(CQNode *_NodeParent,map<int,CQNode*> _map){
 	//map<int,CQNode*>::
 	if(_map.find(_NodeParent->m_IdNode * 8 + 1) != _map.end())
@@ -135,32 +171,32 @@ vector<CQNode*> CTreeObject::GetListNodeIntersectViewport(CQNode* Noderoot,RECT 
 
 	return ListNodeInViewport;
 }
-vector<int> CTreeObject::GetIDObjectInViewPort(CQNode* noderoot,RECT viewport){
+vector<CGameObject*> CTreeObject::GetObjectInViewPort(CQNode* noderoot,RECT viewport){
 	vector<CQNode*> listnode;
-	vector<int> ListIdGame;
+	vector<CGameObject*> ListGame;
 	ClearListNodeInViewport();/// vi GetListNodeIntersectViewport no cong don cac node nen phai xoa di chu ko no lang game lam'
 	listnode = GetListNodeIntersectViewport(noderoot,viewport);
 	for (int i = 0; i < listnode.size(); i++)
 	{
-		if(listnode[i]->m_ListIdGameObject.size() !=0){
-			for (int j = 0; j < listnode[i]->m_ListIdGameObject.size(); j++)
+		if(listnode[i]->m_ListGameObject.size() !=0){
+			for (int j = 0; j < listnode[i]->m_ListGameObject.size(); j++)
 			{
-				ListIdGame.push_back(listnode[i]->m_ListIdGameObject[j]);
+				ListGame.push_back(listnode[i]->m_ListGameObject[j]);
 			}
 		}
 	}
-	ListIdGame = xoatrung(ListIdGame);//xoa cahoic id trung nhau di, de ve 1 lan thoi
-	return ListIdGame;
+	ListGame = xoatrung(ListGame);//xoa cahoic id trung nhau di, de ve 1 lan thoi
+	return ListGame;
 }
 
-vector<int>CTreeObject::xoatrung(vector<int> list)
+vector<CGameObject*>CTreeObject::xoatrung(vector<CGameObject*> list)
 {
-	vector<int> Listkq;
+	vector<CGameObject*> Listkq;
 	int size =  list.size();
 	for (int i=0;i<size - 1;i++) 
 		for (int j=i+1;j<size;j++) 
 		{ 
-			if (list[i]==list[j]) 
+			if (list[i]->GetId()==list[j]->GetId()) 
 				list[j--]=list[--size];   
 		}
 
@@ -181,17 +217,26 @@ void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _inpu
 {
 	for (int i = 0; i < ListObjectInViewport.size(); i++)
 	{
-		ListObjectInViewport[i]->SetBound();
-		if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+		if (ListObjectInViewport[i]->GetType()==OBJECTTYPE)
 		{
-			if (ListObjectInViewport[i]->GetType()==MUSHROOMBIGTYPE || ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE ||ListObjectInViewport[i]->GetType()==MUSHROOMTYPE
-				|| ListObjectInViewport[i]->GetType()==TURTLETYPE|| ListObjectInViewport[i]->GetType()==COINTYPE)
+			ListObjectInViewport[i]->Update(_input,_time,_camera);
+		}
+		else
+		{
+			//neu la item thi luon luon update ko kan nam torng view port
+			//ko lam cai nay item se bi dung khi ko kon trong view port nua
+			if (ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE )
 			{
 				ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
 			}
 			else
 			{
-				ListObjectInViewport[i]->Update(_input,_time,_camera);
+
+				ListObjectInViewport[i]->SetBound();
+				if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+				{
+					ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+				}
 			}
 		}
 

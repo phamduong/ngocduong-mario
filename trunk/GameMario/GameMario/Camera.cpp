@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include"Mario.h"
 
 CCamera::CCamera(void)
 {
@@ -8,7 +8,11 @@ CCamera::CCamera(void)
 
 void CCamera::Update(D3DXVECTOR2 _pos)
 {
-	m_pos.x = (float)_pos.x - 400;
+	if (_pos.x < CMario::g_widthMap - 400)
+	{
+		m_pos.x = (float)_pos.x - 400;
+
+	}
 
 	if (m_pos.x < 0)
 	{

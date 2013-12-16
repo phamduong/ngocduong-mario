@@ -24,9 +24,9 @@ void CBrickExplosions::Init(){
 	m_brickBreak.push_back(rightbotom);
 	m_type = BRICKTYPE;
 }
-void CBrickExplosions::Update(CInput *_input,float _time,CCamera* _camera){
+void CBrickExplosions::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*> ListObjectInViewPort){
 	/***********************************************************/
-	CGameObject::Update(_input,_time,_camera);
+	CGameObject::Update(_input,_time,_camera,ListObjectInViewPort);
 	if (m_pos.y < StartPostion.y)
 	{
 		m_maxAccelemeter.y = 0;
@@ -60,6 +60,30 @@ void CBrickExplosions::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
 		}
 
 	}
+}
+void CBrickExplosions::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
+{
+	if (m_veloc.y != 0)
+	{
+		float time = m_collision->CheckAABBCollision(this,_orther,_time);
+		if(time<1.0f)
+		{
+			//ListObjectColision
+			switch (_orther->GetType())
+			{
+			case MUSHROOMTYPE:
+			case TURTLETYPE:
+				{
+					_orther->m_EatBulet = true;
+					_orther->m_Islife = false;
+					//_orther->m_direct = m_direct;
+					_orther->SetVelocityY(40.0f);
+					break;
+				}
+			}
+		}
+	}
+
 }
 CBrickExplosions::~CBrickExplosions(){}
 

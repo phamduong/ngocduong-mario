@@ -3,6 +3,7 @@
 #include"Object.h"
 #include"ResourceManager.h"
 #include"Texture.h"
+#include"Score.h"
 #define BULLETSHOWTIME  5.0f
 enum BulletStatus {BULLET_NONE,BULLET_SHOT,BULLET_EXPLOSION};
 class CBullet:public CGameObject

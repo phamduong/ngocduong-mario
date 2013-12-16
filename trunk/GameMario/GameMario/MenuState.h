@@ -11,7 +11,6 @@ private:
 	CSprite *m_menuexit;
 	CSprite *m_menuoption;
 	CSprite *m_menucontinue;
-	CSprite *m_select;
 	D3DXVECTOR2 m_posSelect;// vi tri ve  select 
 
 public:
@@ -20,8 +19,6 @@ public:
 	CMuneState(CGameStateManager* _game);
 	void Init();
 	void CleanUp();
-	void Pause();
-	void Resume();
 	void Update(CInput* ,float,CCamera* _camera);
 	void Draw(LPD3DXSPRITE,CCamera* _camera);
 	GameStateId GetGameStateId();

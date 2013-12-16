@@ -14,7 +14,7 @@ int CGameApp::GameInit(HINSTANCE _hInstance){
 		return 1;
 	}
 
-	CResourceManager::GetInstance()->Init(m_graphic->Get_pd3device(), m_windown->Get_Handle());
+	//CResourceManager::GetInstance()->Init(m_graphic->Get_pd3device(), m_windown->Get_Handle());
 	D3DXCreateSprite(m_graphic->Get_pd3device(), &m_spriteHandler);
 
 	if (m_spriteHandler == NULL)
