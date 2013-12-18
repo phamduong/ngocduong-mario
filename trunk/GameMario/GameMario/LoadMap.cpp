@@ -99,6 +99,14 @@ vector<CGameObject*> CMap::ObjectFromFile(char* filePath)//co the hieu la tao ma
 				CMushroom *_mushroom = new CMushroom(_idObject,D3DXVECTOR2((float)_pos.x,(float)_pos.y));
 				object.push_back(_mushroom);
 			}
+			if(_objecttype=="BOSS"){
+				CBoss *_boss = new CBoss(_idObject,D3DXVECTOR2((float)_pos.x,(float)_pos.y));
+				object.push_back(_boss);
+			}
+			if(_objecttype=="FLAG"){
+				CFlag *_flag = new CFlag(_idObject,D3DXVECTOR2((float)_pos.x,(float)_pos.y));
+				object.push_back(_flag);
+			}
 			//
 			if(_objecttype=="BIGTREE"){
 				CObjectStatic *_objectstatic = new CObjectStatic(_idObject,D3DXVECTOR2((float)_pos.x,(float)_pos.y),NAMEBIGTREE);
@@ -164,29 +172,4 @@ vector<CGameObject*> CMap::GetObjectFromFile(char* filePath)//co the hieu la tao
 	}
 	return object;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 CMap::~CMap(){}

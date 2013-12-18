@@ -1,8 +1,9 @@
 #include"TreeObject.h"
-
+#include"Question.h"
 
 CTreeObject:: CTreeObject()
 {
+	
 }
 
 CTreeObject::~ CTreeObject()
@@ -208,6 +209,7 @@ vector<CGameObject*>CTreeObject::xoatrung(vector<CGameObject*> list)
 }
 void CTreeObject::Draw(vector<CGameObject*> ListObjectInViewport,LPD3DXSPRITE _spriteHandle, CCamera* _camera)
 {
+	
 	for (int i = 0; i < ListObjectInViewport.size(); i++)
 	{
 		ListObjectInViewport[i]->Draw(_spriteHandle,_camera);
@@ -215,9 +217,10 @@ void CTreeObject::Draw(vector<CGameObject*> ListObjectInViewport,LPD3DXSPRITE _s
 }
 void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _input, CCamera* _camera, float _time)
 {
+
 	for (int i = 0; i < ListObjectInViewport.size(); i++)
 	{
-		if (ListObjectInViewport[i]->GetType()==OBJECTTYPE)
+		if (ListObjectInViewport[i]->GetType()==OBJECTTYPE||ListObjectInViewport[i]->GetType()==HOUSETYPE||ListObjectInViewport[i]->GetType()==FLAGTYPE)
 		{
 			ListObjectInViewport[i]->Update(_input,_time,_camera);
 		}
@@ -227,7 +230,21 @@ void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _inpu
 			//ko lam cai nay item se bi dung khi ko kon trong view port nua
 			if (ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE )
 			{
-				ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+				CQuestion * Item = (CQuestion*) ListObjectInViewport[i];
+				if (Item->GetItem()==ITEM_MUSHROOMBIG ||Item->GetItem()==ITEM_MIUSHROOMLIFE||Item->GetItem()==ITEM_STAR)
+				{
+					ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+				}
+				//coin question, hoa
+				else
+				{
+					ListObjectInViewport[i]->SetBound();
+					if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+					{
+						ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+					}
+				}
+
 			}
 			else
 			{

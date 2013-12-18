@@ -38,6 +38,7 @@ void CObjectStatic::Init(){
 		break;
 	case NAMEHOUSE:
 		m_sprite = m_house;
+		m_type = HOUSETYPE;
 		break;
 	case NAMEFENCE:
 		m_sprite = m_fence;

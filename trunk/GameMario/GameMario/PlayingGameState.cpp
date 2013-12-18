@@ -26,7 +26,7 @@ CPLayingGameState::CPLayingGameState(CGameStateManager* _game)
 	this->m_game = _game;
 	m_life = 3;
 	m_coin =0;
-	m_mapWorld = 3;
+	m_mapWorld = 1;
 	m_timePLay = 360;
 	Score = 0;
 	Init();
@@ -64,7 +64,7 @@ void CPLayingGameState::Init()
 	m_text = new CText(m_game->m_graphic->Get_pd3device());
 	m_timePlayCount = 0;
 	m_sound = CResourceManager::GetAudio();
-	if (m_mapWorld > 2)
+	if (m_mapWorld > 3)
 	{
 		m_mapWorld = 1;
 	}
@@ -113,7 +113,7 @@ void CPLayingGameState::Init()
 		}
 	case 3:
 		{
-			m_nodeRoot = m_Tobject->CreateTreeObject(m_Tobject->LoadTree("Resource//map//Map2Tree.txt"),object); 
+			m_nodeRoot = m_Tobject->CreateTreeObject(m_Tobject->LoadTree("Resource//map//Map3Tree.txt"),object); 
 			break;
 		}
 	}

@@ -4,6 +4,7 @@
 int CMario::g_heightMap;
 int CMario::g_widthMap;
 int CMario::Score;
+bool CMario::WinState;
 CScore *CMario::sc;
 CMario::CMario()
 {
@@ -296,9 +297,8 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 	CGameObject::Update(m_input,_time,_camera,ListObjectInViewPort);
 	UpdateAnimation(m_input,_time);
 	_camera->Update(m_pos);
-	if (GetPosition().x > g_widthMap -1000)
+	if (WinState)
 	{
-		WinState = true;
 		SetVelocityX(30);
 	}
 	if (GetPosition().x > g_widthMap -150)
@@ -891,6 +891,62 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 				m_eatStar = true;
 				Score+=500;
 				sc = new CScore(_orther->GetPosition(),NAMTRAM);
+				break;
+			}
+		case BOSSTYPE:
+			{
+				if (m_eatStar== false)
+				{
+					if(m_directCollion == BOTTOM)
+					{
+						if(!CAudio::m_isSoundOff)
+							m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
+						m_pos.y = (int)m_pos.y;
+						SetVelocityY(80);
+						SetBound();
+					}
+					if((m_directCollion== TOP || m_directCollion == RIGHT||m_directCollion == LEFT) && (m_isProtected ==false))
+					{
+
+						life--;
+						if (life!=0)
+						{
+							if(!CAudio::m_isSoundOff)
+								m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MARIOGROW_ID));
+						}
+
+						m_isProtected = true;
+						if (life < 1)
+						{
+							if(!CAudio::m_isSoundOff)
+								m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_DEATH_ID));
+							m_veloc.x = 0;
+							m_veloc.y = 120.0f;
+							m_maxAccelemeter.x = 0;
+						}
+					}
+				}
+				else
+				{
+					_orther->m_EatBulet = true;
+					_orther->m_Islife = false;
+					_orther->m_direct = m_direct;
+					_orther->SetVelocityY(40.0f);
+				}
+
+				break;
+			}
+		case FLAGTYPE:
+			{
+				_orther->m_GrowUp = true;
+				if (!WinState)
+				{					
+					m_pos.x += GetVelocity().x*_time*time -2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+				}
+
 				break;
 			}
 		default:

@@ -23,8 +23,8 @@
 #include"MushroomLife.h"
 #include"MushroomBig.h"
 #include"BrickBreak.h"
-
-
+#include"Boss.h"
+#include"Flag.h"
 using std::vector;
 using namespace std;
 class CMap{

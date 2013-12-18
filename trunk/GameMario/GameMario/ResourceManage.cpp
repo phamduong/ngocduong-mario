@@ -27,6 +27,7 @@ CResourceManager::CResourceManager(void){
 	m_bullet = new CSprite(10,10,340,34);
 	m_item = new CSprite(8,4,200,100);
 	m_brickbreak = new CSprite(1,1,25,25);
+	//state
 	m_loading = new CSprite(1,1,800,800);
 	m_backgroundmenu = new CSprite(1,1,800,800);
 	m_menunewgame = new CSprite(2,2,428,50);
@@ -40,6 +41,12 @@ CResourceManager::CResourceManager(void){
 	m_win = new CSprite(1,1,40,60);
 	m_score = new CSprite(3,3,150,30);
 	m_gameover = new CSprite(1,1,800,800);
+	//boss
+	m_boss = new CSprite(8,4,400,220);
+	m_fireboss = new CSprite(6,3,267,100);
+	m_flag = new CSprite(1,1,100,76);
+	m_flagKhua = new CSprite(1,1,100,75);
+	m_columnflag = new CSprite(1,1,10,600);
 }
 bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_pd3device = _pd3device;
@@ -92,7 +99,12 @@ bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_win->Init(m_texture->GetTexture(WIN));
 	m_score->Init(m_texture->GetTexture(SCORE));
 	m_gameover->Init(m_texture->GetTexture(GAMEOVER));
-
+	m_flag->Init(m_texture->GetTexture(FLAG));
+	m_flagKhua->Init(m_texture->GetTexture(FLAGKHUA));
+	m_columnflag->Init(m_texture->GetTexture(COLUMNFLAG));
+	//boss
+	m_boss->Init(m_texture->GetTexture(BOSS));
+	m_fireboss->Init(m_texture->GetTexture(FIREBOSS));
 	//sounds
 	m_soundAbout = m_audio->LoadSound(SOUND_ABOUT);
 	m_soundBrickBreak = m_audio->LoadSound(SOUND_BRICKBREAK);
@@ -304,6 +316,31 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 	case GAMEOVER_ID:
 		{
 			return new CSprite(*m_gameover);
+			break;
+		}
+	case BOSS_ID:
+		{
+			return new CSprite(*m_boss);
+			break;
+		}
+	case FIREBOSS_ID:
+		{
+			return new CSprite(*m_fireboss);
+			break;
+		}
+	case FLAG_ID:
+		{
+			return new CSprite(*m_flag);
+			break;
+		}
+	case COLUMNFLAG_ID:
+		{
+			return new CSprite(*m_columnflag);
+			break;
+		}
+	case FLAGKHUA_ID:
+		{
+			return new CSprite(*m_flagKhua);
 			break;
 		}
 	default:
