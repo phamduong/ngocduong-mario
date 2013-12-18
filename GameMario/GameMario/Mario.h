@@ -56,7 +56,7 @@ public:
 	int CountCoin;//an tien
 	bool EatLife;//an nam mang
 	static int Score;//diem cong them vao
-	bool WinState;// va cham voi house bao hieu het man
+	static bool WinState;// va cham voi house bao hieu het man
 	vector<CGameObject*> ListItem;
 	static int g_widthMap,g_heightMap;
 	CMario();

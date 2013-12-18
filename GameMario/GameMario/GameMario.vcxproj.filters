@@ -186,6 +186,15 @@
     <ClInclude Include="dxutil.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBoss.h">
+      <Filter>Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>Game Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -319,6 +328,15 @@
     </ClCompile>
     <ClCompile Include="dsutil.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBoss.cpp">
+      <Filter>Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Flag.cpp">
+      <Filter>Game Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

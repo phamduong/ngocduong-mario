@@ -23,6 +23,13 @@
 #define BULLET "Resource//Images//Bullet.png"
 #define ITEM "Resource//Images//item.png"
 #define BRICKBREAK "Resource//Images//BrickBreak.png"
+#define COLUMNFLAG "Resource//Images//ColumnFlag.png"
+#define FLAG "Resource//Images//Flag.png"
+#define FLAGKHUA "Resource//Images//Khua.png"
+//boss
+#define BOSS "Resource//Images//Boss.png"
+#define FIREBOSS "Resource//Images//FireBoss.png"
+
 #define LOADING "Resource//Images//Loading.png"
 // menu
 #define BACKGROUNDMENU "Resource//Images//BackGroundMenu.png"
@@ -94,6 +101,7 @@ enum ResourceId {
 	BULLET_ID,
 	ITEM_ID,
 	BRICKBREAK_ID,
+	//stategame
 	LOADING_ID,
 	BACKGROUNDMENU_ID,
 	MENUABOUT_ID,
@@ -107,6 +115,12 @@ enum ResourceId {
 	WIN_ID,
 	SCORE_ID,
 	GAMEOVER_ID,
+	FLAG_ID,
+	COLUMNFLAG_ID,
+	FLAGKHUA_ID,
+	//boss
+	BOSS_ID,
+	FIREBOSS_ID,
 
 	//Sounds
 	SOUND_ABOUT_ID,
@@ -161,7 +175,12 @@ public:
 	CSprite *m_turtleshield;
 	CSprite *m_bullet;
 	CSprite *m_item;
-	CSprite *m_brickbreak;;
+	CSprite *m_brickbreak;
+	CSprite *m_boss;
+	CSprite *m_fireboss;
+	CSprite *m_columnflag;
+	CSprite *m_flag;
+	CSprite *m_flagKhua;
 	//menu
 	CSprite *m_loading;
 	CSprite *m_backgroundmenu;

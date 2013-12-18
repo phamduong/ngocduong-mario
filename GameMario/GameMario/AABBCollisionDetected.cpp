@@ -25,13 +25,13 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 	_Ob1->SetBound();
 	_Ob2->SetBound();
 	D3DXVECTOR2 v1 = _Ob1->GetVelocity() + _Ob1->GetAccleration()*_time;
-	D3DXVECTOR2 v2 = _Ob2->GetVelocity() + _Ob2->GetAccleration()*_time;
+	D3DXVECTOR2 v2 = _Ob2->GetVelocity();// + _Ob2->GetAccleration()*_time;
 	/*---------------------------------------------------------*/
 	//tinh so pixels di duoc trong 1 frame
 	D3DXVECTOR2 VelecOb1 = (v1 - v2) * _time;
 	//Loai bo truong hop hien nhien  khong va cham
 	RECT bound;//hcn bao quanh 2 fram lien tiep
-	if(VelecOb1.x >= 0)
+	if(VelecOb1.x > 0)
 	{
 		bound.left = _Ob1->GetBound().left;
 		bound.right = _Ob1->GetBound().right + VelecOb1.x;
@@ -42,7 +42,7 @@ float CAABBCollision::CheckAABBCollision(CGameObject* _Ob1,CGameObject* _Ob2,flo
 		bound.left = _Ob1->GetBound().left + VelecOb1.x;
 	}
 
-	if(VelecOb1.y >= 0)
+	if(VelecOb1.y > 0)
 	{
 		bound.bottom = _Ob1->GetBound().bottom;
 		bound.top =_Ob1->GetBound().top + VelecOb1.y;
@@ -182,7 +182,7 @@ bool CAABBCollision::SortObject(CGameObject * a, CGameObject*b)
 	{
 		return a->m_intetsect > b->m_intetsect;
 	}
-
+	
 
 }
 RECT CAABBCollision::CLip(CGameObject * a,CGameObject * b)

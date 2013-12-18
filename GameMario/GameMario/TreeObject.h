@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include"Object.h"
+#include"Boss.h"
+#include"Flag.h"
 using std::map;
 class  CTreeObject
 {
