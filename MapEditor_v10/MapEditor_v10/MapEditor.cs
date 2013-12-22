@@ -30,6 +30,7 @@ namespace MapEditor_v10
         SaveFileDialog saveFile = new SaveFileDialog();
         OpenFileDialog loadFile = new OpenFileDialog();
         TreeObject TreeObjectGame = new TreeObject();
+        QNode NodeRoot = new QNode();
         //  ve hinh chu nhat 
         public static bool CheckDraw = false;
         Point startPos;
@@ -83,133 +84,133 @@ namespace MapEditor_v10
                     if (control.Image == ListImage[0])
                     {
                         w.WriteLine(Id.ToString() + " " + "CLOUD " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[1])
                     {
                         w.WriteLine(Id.ToString() + " " + "GRASS " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[2])
                     {
                         w.WriteLine(Id.ToString() + " " + "BIGTREE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[3])
                     {
                         w.WriteLine(Id.ToString() + " " + "SMALLTREE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[4])
                     {
                         w.WriteLine(Id.ToString() + " " + "BIGPIPE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[5])
                     {
                         w.WriteLine(Id.ToString() + " " + "MEDIUMPIPE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[6])
                     {
                         w.WriteLine(Id.ToString() + " " + "SMALLPIPE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[7])
                     {
                         w.WriteLine(Id.ToString() + " " + "FENCE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[8])
                     {
                         w.WriteLine(Id.ToString() + " " + "MOUNTAIN " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[9])
                     {
                         w.WriteLine(Id.ToString() + " " + "HOUSE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[10])
                     {
                         w.WriteLine(Id.ToString() + " " + "BRICK " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[11])
                     {
                         w.WriteLine(Id.ToString() + " " + "LAND " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[12])
                     {
                         w.WriteLine(Id.ToString() + " " + "COINQUESTION " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[13])
                     {
                         w.WriteLine(Id.ToString() + " " + "COIN " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[14])
                     {
                         w.WriteLine(Id.ToString() + " " + "FLOWER " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[15])
                     {
                         w.WriteLine(Id.ToString() + " " + "STAR " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[16])
                     {
                         w.WriteLine(Id.ToString() + " " + "MUSHROOMBIG " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[17])
                     {
                         w.WriteLine(Id.ToString() + " " + "MUSHROOMLIFE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[18])
                     {
                         w.WriteLine(Id.ToString() + " " + "MUSHROOM " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[19])
                     {
                         w.WriteLine(Id.ToString() + " " + "TURTLE " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[20])
                     {
                         w.WriteLine(Id.ToString() + " " + "BOSS " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                     else if (control.Image == ListImage[21])
                     {
                         w.WriteLine(Id.ToString() + " " + "FLAG " + x.ToString() + " " + y.ToString());
-                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
                 }
@@ -413,11 +414,11 @@ namespace MapEditor_v10
                     break;
                 }
             }
-            TreeObjectGame.m_NodeRoot.m_boundNode.right = (float)WidthTreeRoot;
-            TreeObjectGame.m_NodeRoot.m_boundNode.top = (float)WidthTreeRoot;
+            NodeRoot.m_boundNode.right = (float)WidthTreeRoot;
+            NodeRoot.m_boundNode.top = (float)WidthTreeRoot;
             sw.WriteLine("0 0 " + WidthTreeRoot.ToString() + " " + WidthTreeRoot.ToString() + " 0");//
-            TreeObject.Build(TreeObjectGame.m_NodeRoot);
-            TreeObject.Save(TreeObjectGame.m_NodeRoot, sw);
+            TreeObject.Build(NodeRoot);
+            TreeObject.Save(NodeRoot, sw);
             sw.WriteLine("<End>");
             sw.Close();
         }
@@ -791,7 +792,7 @@ namespace MapEditor_v10
             if (WidthTreeRootGr != 0)
             {
                 DrawTree(e.Graphics, new RECT(0, WidthTreeRootGr, WidthTreeRootGr, 0));
-               
+
             }
 
 
