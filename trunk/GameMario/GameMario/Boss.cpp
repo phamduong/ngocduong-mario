@@ -1,4 +1,6 @@
 #include"Boss.h"
+#include"Mario.h"
+int CBoss::Hit;
 CBoss::CBoss(){
 	m_pos = D3DXVECTOR2(0,0);
 	Init();
@@ -26,7 +28,7 @@ void CBoss::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObjec
 	TimeFire +=_time;
 	m_accel.y = m_maxAccelemeter.y;
 	//Ban dan ra ne
-	if (TimeFire >= 50.0f)
+	if (TimeFire >= 30.0f)
 	{
 		//MessageBox(NULL,"","",MB_OK);
 		CFireBoss *fire = new CFireBoss(m_direct,m_pos);
@@ -43,6 +45,7 @@ void CBoss::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObjec
 			}
 			else
 			{
+				CMario::ListItem.push_back(m_fire[i]);
 				m_fire[i]->Update(_input,_time,_camera,ListObjectInViewPort);
 			}
 		}
@@ -64,7 +67,7 @@ void CBoss::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObjec
 	else
 	{
 		m_veloc.x =  m_maxVelocity.x * m_direct;
-		if (m_TimeShow > 120.0f)
+		if (m_TimeShow > 100.0f)
 		{
 			m_TimeShow =  0 ;
 		}

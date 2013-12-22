@@ -26,7 +26,7 @@ CPLayingGameState::CPLayingGameState(CGameStateManager* _game)
 	this->m_game = _game;
 	m_life = 3;
 	m_coin =0;
-	m_mapWorld = 1;
+	m_mapWorld = 3;
 	m_timePLay = 360;
 	Score = 0;
 	Init();
@@ -102,18 +102,25 @@ void CPLayingGameState::Init()
 	case 1:
 		{
 			m_nodeRoot = m_Tobject->CreateTreeObject(m_Tobject->LoadTree("Resource//map//Map1Tree.txt"),object); 
-			m_sound->LoopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP1_ID));
+			if(!CAudio::m_isSoundOff)
+				m_sound->LoopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP1_ID));
+			CContinueState::Iscontinue = false;
 			break;
 		}
 	case 2:
 		{
 			m_nodeRoot = m_Tobject->CreateTreeObject(m_Tobject->LoadTree("Resource//map//Map2Tree.txt"),object); 
-			m_sound->LoopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP2_ID));
+			if(!CAudio::m_isSoundOff)
+				m_sound->LoopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP2_ID));
+			CContinueState::Iscontinue = false;
 			break;
 		}
 	case 3:
 		{
 			m_nodeRoot = m_Tobject->CreateTreeObject(m_Tobject->LoadTree("Resource//map//Map3Tree.txt"),object); 
+			if(!CAudio::m_isSoundOff)
+				m_sound->LoopSound(CResourceManager::GetInstance()->GetSound(SOUND_MAP1_ID));
+			CContinueState::Iscontinue = false;
 			break;
 		}
 	}
@@ -204,7 +211,7 @@ void CPLayingGameState::Update(CInput* _input,float _time,CCamera* _camera)
 		}
 
 	}
-	//chay qua  g_widthMap - 150 chien thag
+	// chien thag
 	if (m_mario->WinState)
 	{
 		CGameState::StopSoundBackGound();
@@ -233,7 +240,13 @@ void CPLayingGameState::Update(CInput* _input,float _time,CCamera* _camera)
 			m_game->ChangeState( new CWinState(this->m_game));
 		}
 	}
-
+	if (m_coin>=100)
+	{
+		if(!CAudio::m_isSoundOff)
+			m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_LIFEUP_ID));
+		m_life++;
+		m_coin-=100;
+	}
 	CGameState::Update(_input,_time,_camera);
 
 }
@@ -262,23 +275,38 @@ void CPLayingGameState::DrawTextGame()
 	SetRect(&m_textpostion,10,35,190,100);
 	m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
 	//
-	SetRect(&m_textpostion,200,10,400,100);
-	m_text->Draw("COIN",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
-	itoa(m_coin,_text,10);
-	SetRect(&m_textpostion,200,35,400,100);
-	m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
-	//
-	SetRect(&m_textpostion,400,10,600,100);
-	m_text->Draw("WORLD",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
-	itoa(m_mapWorld,_text,10);
-	SetRect(&m_textpostion,400,35,600,100);
-	m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
-
+	if (m_mapWorld!=3)
+	{
+		SetRect(&m_textpostion,200,10,400,100);
+		m_text->Draw("COIN",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+		itoa(m_coin,_text,10);
+		SetRect(&m_textpostion,200,35,400,100);
+		m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+		//
+		SetRect(&m_textpostion,400,10,600,100);
+		m_text->Draw("WORLD",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+		itoa(m_mapWorld,_text,10);
+		SetRect(&m_textpostion,400,35,600,100);
+		m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+	}
 	SetRect(&m_textpostion,600,10,800,100);
 	m_text->Draw("TIME",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
 	itoa(m_timePLay,_text,10);
 	SetRect(&m_textpostion,600,35,800,100);
 	m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+
+	if (m_mapWorld==3)
+	{
+		if (CBoss::Hit<0)
+		{
+			CBoss::Hit=0;
+		}
+		SetRect(&m_textpostion,0,10,800,100);
+		m_text->Draw("HIT",m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+		itoa(CBoss::Hit,_text,10);
+		SetRect(&m_textpostion,0,35,800,100);
+		m_text->Draw(_text,m_textpostion,DT_CENTER,D3DCOLOR_XRGB(255,255,255));
+	}
 }
 CPLayingGameState::~CPLayingGameState()
 {

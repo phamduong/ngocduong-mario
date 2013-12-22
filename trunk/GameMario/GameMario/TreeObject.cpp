@@ -3,7 +3,7 @@
 
 CTreeObject:: CTreeObject()
 {
-	
+
 }
 
 CTreeObject::~ CTreeObject()
@@ -209,7 +209,7 @@ vector<CGameObject*>CTreeObject::xoatrung(vector<CGameObject*> list)
 }
 void CTreeObject::Draw(vector<CGameObject*> ListObjectInViewport,LPD3DXSPRITE _spriteHandle, CCamera* _camera)
 {
-	
+
 	for (int i = 0; i < ListObjectInViewport.size(); i++)
 	{
 		ListObjectInViewport[i]->Draw(_spriteHandle,_camera);
@@ -228,33 +228,33 @@ void CTreeObject::Update(vector<CGameObject*> ListObjectInViewport,CInput* _inpu
 		{
 			//neu la item thi luon luon update ko kan nam torng view port
 			//ko lam cai nay item se bi dung khi ko kon trong view port nua
-			if (ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE )
+			/*if (ListObjectInViewport[i]->GetType()==COINQUESTIONTYPE )
 			{
-				CQuestion * Item = (CQuestion*) ListObjectInViewport[i];
-				if (Item->GetItem()==ITEM_MUSHROOMBIG ||Item->GetItem()==ITEM_MIUSHROOMLIFE||Item->GetItem()==ITEM_STAR)
-				{
-					ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
-				}
-				//coin question, hoa
-				else
-				{
-					ListObjectInViewport[i]->SetBound();
-					if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
-					{
-						ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
-					}
-				}
+			CQuestion * Item = (CQuestion*) ListObjectInViewport[i];
+			if (Item->GetItem()==ITEM_MUSHROOMBIG ||Item->GetItem()==ITEM_MIUSHROOMLIFE||Item->GetItem()==ITEM_STAR)
+			{*/
+			ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+			//	}
+			//	//coin question, hoa
+			//	else
+			//	{
+			//		ListObjectInViewport[i]->SetBound();
+			//		if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+			//		{
+			//			ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+			//		}
+			//	}
 
-			}
-			else
-			{
+			//}
+			//else
+			//{
 
-				ListObjectInViewport[i]->SetBound();
-				if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
-				{
-					ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
-				}
-			}
+			//	ListObjectInViewport[i]->SetBound();
+			//	if (CheckCollision(ListObjectInViewport[i]->GetBound(),_camera->GetBoundCamera()))
+			//	{
+			//		ListObjectInViewport[i]->Update(_input,_time,_camera,ListObjectInViewport);
+			//	}
+			//}
 		}
 
 	}

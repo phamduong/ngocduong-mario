@@ -18,10 +18,10 @@ void CCamera::Update(D3DXVECTOR2 _pos)
 	{
 		m_pos.x =  0;
 	}
-	//// size 1024 x 1024
+	// size 1024 x 1024
 	//if (m_pos.x > 200)
 	//{
-	//	m_boudCamera.left = m_pos.x - 200;
+	//	m_boudCamera.left = m_pos.x - 100;
 	//}
 	//else
 	//{

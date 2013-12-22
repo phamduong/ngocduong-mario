@@ -11,6 +11,7 @@ private:
 	CSprite *m_fireboss;
 
 public:
+	bool CheckCollisionMario;// check vacham roi ko tinh nua
 	CFireBoss();
 	CFireBoss(int,D3DXVECTOR2);
 	~CFireBoss();

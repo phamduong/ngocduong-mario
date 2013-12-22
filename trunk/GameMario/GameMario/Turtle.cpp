@@ -164,6 +164,8 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 			{
 				if (m_GrowUp==true)
 				{
+					if(!CAudio::m_isSoundOff)
+						m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 					_orther->m_EatBulet = true;
 					_orther->m_Islife = false;
 					_orther->m_direct = m_direct;
@@ -176,6 +178,8 @@ void CTurtle::UpdateCollison(CGameObject* _orther, CInput* _input, float _time)
 			{
 				if (m_GrowUp==true)
 				{
+					if(!CAudio::m_isSoundOff)
+						m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 					_orther->m_EatBulet = true;
 					_orther->m_Islife = false;
 					_orther->m_direct = m_direct;

@@ -26,6 +26,7 @@
 #define COLUMNFLAG "Resource//Images//ColumnFlag.png"
 #define FLAG "Resource//Images//Flag.png"
 #define FLAGKHUA "Resource//Images//Khua.png"
+#define ONOFF "Resource//Images//OnOff.png"
 //boss
 #define BOSS "Resource//Images//Boss.png"
 #define FIREBOSS "Resource//Images//FireBoss.png"
@@ -121,7 +122,7 @@ enum ResourceId {
 	//boss
 	BOSS_ID,
 	FIREBOSS_ID,
-
+	ONOFF_ID,
 	//Sounds
 	SOUND_ABOUT_ID,
 	SOUND_BRICKBREAK_ID,
@@ -195,7 +196,7 @@ public:
 	CSprite *m_win;
 	CSprite *m_score;
 	CSprite *m_gameover;
-
+	CSprite *m_onoff;
 
 	//sounds
 	CSound * m_soundAbout;

@@ -11,7 +11,7 @@ private:
 	CSprite *m_boss;
 	vector<CFireBoss*> m_fire;
 public:
-	int Hit;
+	static int Hit;
 	bool BossJump;
 	float TimeFire;//sau thoi gian nay ban ra lua
 	CBoss();

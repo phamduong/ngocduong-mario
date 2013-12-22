@@ -4,7 +4,7 @@
 class COptionState:public CGameState
 {
 private:
-
+	CSprite *m_onoffSound;
 public:
 	COptionState();
 	~COptionState();

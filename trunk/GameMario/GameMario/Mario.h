@@ -57,7 +57,7 @@ public:
 	bool EatLife;//an nam mang
 	static int Score;//diem cong them vao
 	static bool WinState;// va cham voi house bao hieu het man
-	vector<CGameObject*> ListItem;
+	static vector<CGameObject*> ListItem;
 	static int g_widthMap,g_heightMap;
 	CMario();
 	CMario(int,D3DXVECTOR2);
