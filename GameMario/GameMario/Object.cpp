@@ -24,17 +24,17 @@ void CGameObject::Init(){
 	m_collision  =  new CAABBCollision();
 }
 void CGameObject::SetBound(){
-	m_bound.left = (LONG)m_pos.x - m_sprite->GetSpriteWidth()/2;
-	m_bound.bottom = (LONG)m_pos.y - m_sprite->GetSpriteHeight()/2;
+	m_bound.left = (LONG)(m_pos.x - m_sprite->GetSpriteWidth()/2);
+	m_bound.bottom = (LONG)(m_pos.y - m_sprite->GetSpriteHeight()/2);
 	m_bound.right = (LONG)(m_bound.left + m_sprite->GetSpriteWidth());
 	m_bound.top = (LONG)(m_bound.bottom + m_sprite->GetSpriteHeight() -2);
 
 }
 void CGameObject::SetBound(RECT *r){
-	m_bound.left = r->left;//(LONG)m_pos.x - m_sprite->GetSpriteWidth()/2;
-	m_bound.bottom =r->bottom;// (LONG)m_pos.y - m_sprite->GetSpriteHeight()/2;
-	m_bound.right = r->right;//(LONG)(m_bound.left + m_sprite->GetSpriteWidth());
-	m_bound.top = r->top;//(LONG)(m_bound.bottom + m_sprite->GetSpriteHeight());
+	m_bound.left = (LONG)r->left;//(LONG)m_pos.x - m_sprite->GetSpriteWidth()/2;
+	m_bound.bottom =(LONG)r->bottom;// (LONG)m_pos.y - m_sprite->GetSpriteHeight()/2;
+	m_bound.right = (LONG)r->right;//(LONG)(m_bound.left + m_sprite->GetSpriteWidth());
+	m_bound.top = (LONG)r->top;//(LONG)(m_bound.bottom + m_sprite->GetSpriteHeight());
 }
 void CGameObject::UpdatePosition(CInput *m_input,float _time){
 	m_veloc += m_accel * _time;
@@ -45,7 +45,12 @@ void CGameObject::Update(CInput *m_input,float _time,CCamera* _camera){
 	UpdatePosition(m_input,_time);
 }
 void CGameObject::Update(CInput *m_input,float _time,CCamera* _camera,vector<CGameObject*> ListObjectInViewPort){
+	
 	UpdatePosition(m_input,_time);
+	if (GetType()==MARIOTYPE)
+	{
+		_camera->Update(StartPostion);
+	}
 	if (m_Islife == true)
 	{
 		vector<CGameObject*> ListObjectCollision;

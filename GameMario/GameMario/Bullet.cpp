@@ -61,7 +61,7 @@ void CBullet::Explosion(){
 	m_veloc = D3DXVECTOR2(0.0f,0);
 	m_maxAccelemeter = D3DXVECTOR2(0.0f,0);
 	if(!CAudio::m_isSoundOff)
-					m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_BRICKSLIDE_ID));
+		m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_BRICKSLIDE_ID));
 }
 void CBullet::ChangeStatus(){
 	if(m_BulletStatus == BULLET_NONE &&m_nextBulletStatus == BULLET_SHOT){
@@ -85,7 +85,7 @@ void CBullet::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 		case COINQUESTIONTYPE:
 		case BRICKTYPE:
 			{
-				
+
 				if(m_collision->GetDirectCollision() == BOTTOM)
 				{
 					m_pos.y += GetVelocity().y*_time*time +2;
@@ -131,6 +131,26 @@ void CBullet::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 				_orther->m_direct = m_direct;
 				_orther->SetVelocityY(40.0f);
 				m_Islife = false;
+				break;
+			}
+		case BOSSTYPE:
+			{
+				//BAN dang sau con boss ko sao
+				if (m_direct ==_orther->m_direct)
+				{
+					Explosion();
+				}
+				else
+				{
+					m_Islife = false;
+					CBoss::Hit-=1;
+					if (CBoss::Hit<=0 &&_orther->m_Islife)
+					{
+						_orther->SetVelocityY(60);
+						_orther->m_Islife = false;
+						CMario::WinState = true;
+					}
+				}
 				break;
 			}
 		}

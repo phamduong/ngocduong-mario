@@ -10,22 +10,25 @@ CFireBoss::CFireBoss(int _direct,D3DXVECTOR2 pos){
 }
 void CFireBoss::Init(){
 	CGameObject::Init();
-	m_maxVelocity = D3DXVECTOR2(35.0f,0.0f);
+	m_maxVelocity = D3DXVECTOR2(40.0f,0.0f);
 	m_fireboss = CResourceManager::GetInstance()->GetResouce(FIREBOSS_ID);
 	m_sprite = m_fireboss;
-	m_type = BOSSTYPE;
+	m_type = BOSSFIRETYPE;
 	m_IsShow = true;
+	CheckCollisionMario = false;
 }
 void CFireBoss::Update(CInput *_input,float _time,CCamera* _camera,vector<CGameObject*> ListObjectInViewPort){
-	m_veloc.x = m_direct * m_maxVelocity.x;
-	if (m_pos.x < -100 || m_pos.y >1100)
+	if (m_IsShow==true)
 	{
-		m_Islife = false;
-		m_IsShow = false;
+		m_veloc.x = m_direct * m_maxVelocity.x;
+		if (m_pos.x < StartPostion.x -1000 || m_pos.x >StartPostion.x + 1000)
+		{
+			m_Islife = false;
+			m_IsShow = false;
+		}
+		UpdateAnimation(_input,_time);
+		CGameObject::Update(_input,_time,_camera,ListObjectInViewPort);
 	}
-	UpdateAnimation(_input,_time);
-	CGameObject::Update(_input,_time,_camera,ListObjectInViewPort);
-
 	/**************************************************************************************/
 }
 void CFireBoss::UpdateAnimation(CInput *_input,float _time){
@@ -50,44 +53,7 @@ void CFireBoss::Draw(LPD3DXSPRITE _spritehandle,CCamera* _camera){
 }
 void CFireBoss::UpdateCollison(CGameObject* _orther, CInput* _input , float _time)
 {
-	//float time = m_collision->CheckAABBCollision(this,_orther,_time);
-	//if(time<1.0f)
-	//{
-	//	//ListObjectColision
-	//	switch (_orther->GetType())
-	//	{
-	//	case PIPETYPE:
-	//	case LANDTYPE:
-	//	case COINQUESTIONTYPE:
-	//	case BRICKTYPE:
-	//		{
-	//			if(m_collision->GetDirectCollision() == BOTTOM)
-	//			{
-	//				m_pos.y += GetVelocity().y*_time*time +2;
-	//				m_pos.y = (int)m_pos.y;//_orther->GetBound().top + m_sprite->GetSpriteHeight()/2 + 2;
-	//				SetVelocityY(0);
-	//				m_accel.y = 0;
-	//				SetBound();
 
-	//			}
-	//			if(m_collision->GetDirectCollision()== TOP)
-	//			{
-
-	//			}
-	//			if(m_collision->GetDirectCollision() == LEFT)
-	//			{
-
-	//				m_direct = 1;
-	//			}
-
-	//			if(m_collision->GetDirectCollision() == RIGHT)
-	//			{
-	//				m_direct = -1;
-	//			}
-	//			break;
-	//		}
-	//	}
-	//}
 }
 CFireBoss::~CFireBoss(){}
 

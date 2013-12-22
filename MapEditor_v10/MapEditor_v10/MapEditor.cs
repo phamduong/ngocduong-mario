@@ -36,6 +36,9 @@ namespace MapEditor_v10
         Point currentPos;
         bool drawing;
         List<Rectangle> rectangles = new List<Rectangle>();
+        //ve tree len man hjnh
+        Graphics gr;//ve len man hinh
+        int WidthTreeRootGr = 0;//dung lay kich thuoc node goc de ve len man hjnh
         // kthcn
         private Rectangle getRectangle()
         {
@@ -193,8 +196,19 @@ namespace MapEditor_v10
                     }
                     else if (control.Image == ListImage[19])
                     {
-                        w.WriteLine(Id.ToString() + " " + "TURTLE " + x.ToString() + " " + y.ToString());// + " "
-                        // + rect.left.ToString() + " " + rect.top.ToString() + " " + rect.right.ToString() + " " + rect.bottom.ToString());
+                        w.WriteLine(Id.ToString() + " " + "TURTLE " + x.ToString() + " " + y.ToString());
+                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        Id++;
+                    }
+                    else if (control.Image == ListImage[20])
+                    {
+                        w.WriteLine(Id.ToString() + " " + "BOSS " + x.ToString() + " " + y.ToString());
+                        TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
+                        Id++;
+                    }
+                    else if (control.Image == ListImage[21])
+                    {
+                        w.WriteLine(Id.ToString() + " " + "FLAG " + x.ToString() + " " + y.ToString());
                         TreeObjectGame.m_NodeRoot.ListTreeObjectInNode.Add(new TreeObject(Id, rect));
                         Id++;
                     }
@@ -367,6 +381,20 @@ namespace MapEditor_v10
                         ptbContain.Controls.Add(ptb);
 
                     }
+                    else if (NameObject.CompareTo("BOSS") == 0)
+                    {
+                        PictureBoxObject ptb = new PictureBoxObject(ListImage[20], (x - ListImage[20].Width) / 2, (2 * ptbContain.Height - (y + ListImage[20].Height)) / 2);
+                        ptb.BorderStyle = BorderStyle.None;
+                        ptbContain.Controls.Add(ptb);
+
+                    }
+                    else if (NameObject.CompareTo("FLAG") == 0)
+                    {
+                        PictureBoxObject ptb = new PictureBoxObject(ListImage[21], (x - ListImage[21].Width) / 2, (2 * ptbContain.Height - (y + ListImage[21].Height)) / 2);
+                        ptb.BorderStyle = BorderStyle.None;
+                        ptbContain.Controls.Add(ptb);
+
+                    }
 
                 }
             }
@@ -518,7 +546,10 @@ namespace MapEditor_v10
             ListImage.Add(_image);
             _image = Image.FromFile(Application.StartupPath + "\\Resource\\turtle.png");//19
             ListImage.Add(_image);
-
+            _image = Image.FromFile(Application.StartupPath + "\\Resource\\Boss.png");//20
+            ListImage.Add(_image);
+            _image = Image.FromFile(Application.StartupPath + "\\Resource\\cotco.png");//21
+            ListImage.Add(_image);
 
 
 
@@ -642,7 +673,16 @@ namespace MapEditor_v10
             m_image = ListImage[19];
             CheckDraw = false;
         }
-
+        private void btnBoss_Click(object sender, EventArgs e)
+        {
+            m_image = ListImage[20];
+            CheckDraw = false;
+        }
+        private void btnCotCo_Click(object sender, EventArgs e)
+        {
+            m_image = ListImage[21];
+            CheckDraw = false;
+        }
         private void ptbContain_Click(object sender, EventArgs e)
         {
 
@@ -748,6 +788,13 @@ namespace MapEditor_v10
 
         private void ptbContain_Paint(object sender, PaintEventArgs e)
         {
+            if (WidthTreeRootGr != 0)
+            {
+                DrawTree(e.Graphics, new RECT(0, WidthTreeRootGr, WidthTreeRootGr, 0));
+               
+            }
+
+
             if (rectangles.Count > 0)
             {
                 e.Graphics.DrawRectangles(Pens.Black, rectangles.ToArray());
@@ -795,6 +842,115 @@ namespace MapEditor_v10
                 ptbContain.Invalidate();
             }
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int m_wid, m_hei;
+                List<int> wid = new List<int>();
+                List<int> hei = new List<int>();
+                foreach (PictureBoxObject control in ptbContain.Controls)
+                {
+                    wid.Add(2 * control.Location.X + control.Image.Width);
+                    hei.Add(2 * ptbContain.Height - 2 * control.Location.Y - control.Image.Height);
+                }
+                wid.Sort();
+                hei.Sort();
+                m_wid = Math.Max(800, wid[wid.Count - 1]);
+                m_hei = Math.Max(800, hei[hei.Count - 1]);
+                for (int i = 1; i <= 20; i++)
+                {
+
+                    if (Math.Pow(2, i) >= Math.Max(m_wid, m_hei))
+                    {
+                        WidthTreeRootGr = (int)Math.Pow(2, i);
+                        WidthTreeRootGr = WidthTreeRootGr / 2;
+                        break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Chưa Có Đối Tượng nào cả !");
+
+            }
+
+
+
+        }
+        private void DrawTree(Graphics grp, RECT rect)
+        {
+            float width = rect.right - rect.left;
+            float height = rect.top - rect.bottom;
+            if (width > 512)
+            {
+                float MidleWidtd = width / 2 + rect.left;
+                float Midleheight = height / 2 + rect.bottom;
+                try
+                {
+                    //ve cac dong ke mau do
+                    grp.DrawLine(Pens.Red, MidleWidtd, rect.top, MidleWidtd, rect.bottom);
+                    grp.DrawLine(Pens.Red, rect.left, Midleheight, rect.right, Midleheight);
+                    //de qui lai nao
+                    DrawTree(grp, new RECT(rect.left, rect.top, MidleWidtd, Midleheight));
+                    DrawTree(grp, new RECT(rect.left, Midleheight, MidleWidtd, rect.bottom));
+                    DrawTree(grp, new RECT(MidleWidtd, rect.top, rect.right, Midleheight));
+                    DrawTree(grp, new RECT(MidleWidtd, Midleheight, rect.right, rect.bottom));
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Loi roi");
+                }
+            }
+
+
+
+        }
+
+        private void button11_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                ptbContain.Controls.Remove(ObjectSelect);
+
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                int x = MapEditor.ObjectSelect.Location.X;
+                x += 1;
+                MapEditor.ObjectSelect.Left = x;
+                ptbContain.Invalidate();
+
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                int x = MapEditor.ObjectSelect.Location.X;
+                x -= 1;
+                MapEditor.ObjectSelect.Left = x;
+                ptbContain.Invalidate();
+
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                int y = MapEditor.ObjectSelect.Location.Y;
+                y += 1;
+                MapEditor.ObjectSelect.Top = y;
+                ptbContain.Invalidate();
+
+            }
+            if (e.KeyCode == Keys.W)
+            {
+                int y = MapEditor.ObjectSelect.Location.Y;
+                y -= 1;
+                MapEditor.ObjectSelect.Top = y;
+                ptbContain.Invalidate();
+            }
+        }
+
+
+
+
 
 
 

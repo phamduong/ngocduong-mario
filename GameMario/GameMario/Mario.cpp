@@ -6,9 +6,10 @@ int CMario::g_widthMap;
 int CMario::Score;
 bool CMario::WinState;
 CScore *CMario::sc;
+vector<CGameObject*> CMario::ListItem;
 CMario::CMario()
 {
-	m_pos = D3DXVECTOR2(100,600);
+	m_pos = D3DXVECTOR2(18500,600);
 	life = 1;
 	Init();
 }
@@ -44,6 +45,7 @@ void CMario::Init(){
 	m_sriteSmall = CResourceManager::GetInstance()->GetResouce(MARIOSMALL_ID);
 	m_spriteGun = CResourceManager::GetInstance()->GetResouce(MARIOGUN_ID);
 	m_sprite = m_spriteBig;
+	m_type = MARIOTYPE;
 	//m_bullet = NULL;
 	switch(m_start_status){
 	case mariosmall:
@@ -98,6 +100,11 @@ void CMario::ChangeStatus()
 	}
 }
 void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameObject*> ListObjectInViewPort){
+	if (StartPostion.x < m_pos.x)
+	{
+		StartPostion.x = m_pos.x;
+	}
+
 	m_accel.y = m_maxAccelemeter.y;
 	if (m_veloc.y < - m_MaxVeloc.y)
 	{
@@ -156,18 +163,27 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 			}
 		}
 		//
-		else if(m_input->KeyDown(DIK_LEFT)&& m_action != down&&m_pos.x>=25)
+		else if(m_input->KeyDown(DIK_LEFT)&& m_action != down&&m_pos.x>=25 )
 		{
-			m_direct = -1;
-			if(m_veloc.x > m_direct* m_maxVelocity.x)
+			if (m_pos.x >= StartPostion.x-375)
 			{
-				m_accel.x =m_direct* m_maxAccelemeter.x;
+				m_direct = -1;
+				if(m_veloc.x > m_direct* m_maxVelocity.x)
+				{
+					m_accel.x =m_direct* m_maxAccelemeter.x;
+				}
+				if (m_veloc.x <= m_direct*m_maxVelocity.x)
+				{
+					m_veloc.x = m_maxVelocity.x * m_direct;
+					m_accel.x = 0;
+				}
 			}
-			if (m_veloc.x <= m_direct*m_maxVelocity.x)
+			else
 			{
-				m_veloc.x = m_maxVelocity.x * m_direct;
+				m_veloc.x = 0;
 				m_accel.x = 0;
 			}
+
 
 		}
 		else if(m_input->KeyDown(DIK_DOWN) && m_action!=Jump)
@@ -293,10 +309,15 @@ void CMario::Update(CInput *m_input,float _time,CCamera * _camera,vector<CGameOb
 			ListObjectInViewPort.push_back(ListItem[i]);
 		}
 	}
-	// update va va cham voi nhug thu ko fai item
+	//chay ve dich khi chien thag, ko set kai nay co luc no di lui
+	if (WinState==true)
+	{
+		m_direct =1;
+	}
+	//_camera->Update(m_pos);
 	CGameObject::Update(m_input,_time,_camera,ListObjectInViewPort);
 	UpdateAnimation(m_input,_time);
-	_camera->Update(m_pos);
+
 	if (WinState)
 	{
 		SetVelocityX(30);
@@ -434,7 +455,7 @@ void CMario ::UpdateAnimation(CInput *m_input,float _time){
 
 void CMario::Draw(LPD3DXSPRITE _spriteHandler,CCamera* _camera){
 	// chuyen state win g_widthMap - 1000 khong ve Bullet nua 
-	if ( m_pos.x < g_widthMap - 1000)
+	if ( m_pos.x < g_widthMap - 150)
 	{
 		for (int i = 0; i < m_bullet.size(); i++)
 		{
@@ -686,6 +707,8 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 				}
 				else
 				{
+					if(!CAudio::m_isSoundOff)
+						m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 					_orther->m_EatBulet = true;
 					_orther->m_Islife = false;
 					_orther->m_direct = m_direct;
@@ -698,6 +721,8 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 			{
 				if (m_eatStar ==true)
 				{
+					if(!CAudio::m_isSoundOff)
+						m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 					_orther->m_EatBulet = true;
 					_orther->m_Islife = false;
 					_orther->m_direct = m_direct;
@@ -895,6 +920,7 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 			}
 		case BOSSTYPE:
 			{
+
 				if (m_eatStar== false)
 				{
 					if(m_directCollion == BOTTOM)
@@ -903,6 +929,14 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 							m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 						m_pos.y = (int)m_pos.y;
 						SetVelocityY(80);
+						CBoss::Hit-=5;
+						if (CBoss::Hit<=0 &&_orther->m_Islife)
+						{
+							_orther->SetVelocityY(60);
+							_orther->m_Islife = false;
+							WinState = true;
+							m_direct =1;
+						}
 						SetBound();
 					}
 					if((m_directCollion== TOP || m_directCollion == RIGHT||m_directCollion == LEFT) && (m_isProtected ==false))
@@ -928,10 +962,16 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 				}
 				else
 				{
-					_orther->m_EatBulet = true;
-					_orther->m_Islife = false;
-					_orther->m_direct = m_direct;
-					_orther->SetVelocityY(40.0f);
+					CBoss::Hit-=5;
+					if (CBoss::Hit<=0 &&_orther->m_Islife)
+					{
+						_orther->SetVelocityY(60);
+						_orther->m_Islife = false;
+						WinState = true;
+						m_direct =1;
+					}
+					if(!CAudio::m_isSoundOff)
+						m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MUSHROOMDIE_ID));
 				}
 
 				break;
@@ -947,6 +987,43 @@ void CMario::ExecuteCollision(CGameObject* _orther,DirectCollision m_directColli
 					m_accel.x = 0;
 				}
 
+				break;
+			}
+		case HOUSETYPE:
+			{
+				if (!WinState)
+				{					
+					m_pos.x += GetVelocity().x*_time*time -2;
+					m_pos.x = (int)m_pos.x;
+					m_veloc.x = 0;
+					m_accel.x = 0;
+				}
+
+				break;
+			}
+		case BOSSFIRETYPE:
+			{
+				CFireBoss *fire =(CFireBoss*)_orther;
+				if (!fire->CheckCollisionMario)
+				{
+					fire->CheckCollisionMario = true;
+					life--;
+					if (life!=0)
+					{
+						if(!CAudio::m_isSoundOff)
+							m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_MARIOGROW_ID));
+					}
+
+					m_isProtected = true;
+					if (life < 1)
+					{
+						if(!CAudio::m_isSoundOff)
+							m_sound->PlaySoundA(CResourceManager::GetInstance()->GetSound(SOUND_DEATH_ID));
+						m_veloc.x = 0;
+						m_veloc.y = 120.0f;
+						m_maxAccelemeter.x = 0;
+					}
+				}
 				break;
 			}
 		default:

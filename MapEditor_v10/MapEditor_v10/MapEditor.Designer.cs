@@ -62,13 +62,18 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnCotCo = new System.Windows.Forms.Button();
+            this.btnBoss = new System.Windows.Forms.Button();
             this.DrawRect = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.menuGame.SuspendLayout();
             this.PnContain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbContain)).BeginInit();
             this.TabBackGround.SuspendLayout();
             this.BackGround.SuspendLayout();
             this.ObjectGame.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuGame
@@ -170,6 +175,7 @@
             // 
             this.TabBackGround.Controls.Add(this.BackGround);
             this.TabBackGround.Controls.Add(this.ObjectGame);
+            this.TabBackGround.Controls.Add(this.tabPage1);
             this.TabBackGround.Location = new System.Drawing.Point(0, 27);
             this.TabBackGround.Name = "TabBackGround";
             this.TabBackGround.SelectedIndex = 0;
@@ -437,6 +443,40 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.Color.Silver;
+            this.tabPage1.Controls.Add(this.btnCotCo);
+            this.tabPage1.Controls.Add(this.btnBoss);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(192, 430);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "ObjectGame";
+            // 
+            // btnCotCo
+            // 
+            this.btnCotCo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCotCo.BackgroundImage")));
+            this.btnCotCo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCotCo.Location = new System.Drawing.Point(108, 15);
+            this.btnCotCo.Name = "btnCotCo";
+            this.btnCotCo.Size = new System.Drawing.Size(60, 60);
+            this.btnCotCo.TabIndex = 4;
+            this.btnCotCo.UseVisualStyleBackColor = true;
+            this.btnCotCo.Click += new System.EventHandler(this.btnCotCo_Click);
+            // 
+            // btnBoss
+            // 
+            this.btnBoss.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBoss.BackgroundImage")));
+            this.btnBoss.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnBoss.Location = new System.Drawing.Point(21, 15);
+            this.btnBoss.Name = "btnBoss";
+            this.btnBoss.Size = new System.Drawing.Size(60, 60);
+            this.btnBoss.TabIndex = 2;
+            this.btnBoss.UseVisualStyleBackColor = true;
+            this.btnBoss.Click += new System.EventHandler(this.btnBoss_Click);
+            // 
             // DrawRect
             // 
             this.DrawRect.Location = new System.Drawing.Point(247, 49);
@@ -448,11 +488,23 @@
             this.DrawRect.Click += new System.EventHandler(this.DrawRect_Click);
             this.DrawRect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DrawRect_KeyDown);
             // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(455, 49);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(100, 23);
+            this.button11.TabIndex = 8;
+            this.button11.Text = "View Tree";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button11_KeyDown);
+            // 
             // MapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(970, 486);
+            this.Controls.Add(this.button11);
             this.Controls.Add(this.DrawRect);
             this.Controls.Add(this.TabBackGround);
             this.Controls.Add(this.PnContain);
@@ -472,6 +524,7 @@
             this.TabBackGround.ResumeLayout(false);
             this.BackGround.ResumeLayout(false);
             this.ObjectGame.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -512,6 +565,10 @@
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveTreeToolStripMenuItem;
         private System.Windows.Forms.Button DrawRect;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnBoss;
+        private System.Windows.Forms.Button btnCotCo;
+        private System.Windows.Forms.Button button11;
     }
 }
 

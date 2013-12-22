@@ -41,6 +41,7 @@ CResourceManager::CResourceManager(void){
 	m_win = new CSprite(1,1,40,60);
 	m_score = new CSprite(3,3,150,30);
 	m_gameover = new CSprite(1,1,800,800);
+	m_onoff = new CSprite(2,2,374,50);
 	//boss
 	m_boss = new CSprite(8,4,400,220);
 	m_fireboss = new CSprite(6,3,267,100);
@@ -102,6 +103,7 @@ bool CResourceManager::Init(LPDIRECT3DDEVICE9 _pd3device ,HWND _wndHandle){
 	m_flag->Init(m_texture->GetTexture(FLAG));
 	m_flagKhua->Init(m_texture->GetTexture(FLAGKHUA));
 	m_columnflag->Init(m_texture->GetTexture(COLUMNFLAG));
+	m_onoff->Init(m_texture->GetTexture(ONOFF));
 	//boss
 	m_boss->Init(m_texture->GetTexture(BOSS));
 	m_fireboss->Init(m_texture->GetTexture(FIREBOSS));
@@ -341,6 +343,11 @@ CSprite* CResourceManager::GetResouce(ResourceId _id){
 	case FLAGKHUA_ID:
 		{
 			return new CSprite(*m_flagKhua);
+			break;
+		}
+	case ONOFF_ID:
+		{
+			return new CSprite(*m_onoff);
 			break;
 		}
 	default:

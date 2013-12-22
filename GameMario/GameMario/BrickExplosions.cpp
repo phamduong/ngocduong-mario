@@ -12,8 +12,8 @@ void CBrickExplosions::Init(){
 	CGameObject::Init();
 	m_spriteBrick = CResourceManager::GetInstance()->GetResouce(BRICK_ID);
 	m_sprite = m_spriteBrick;
-	D3DXVECTOR2 _veclocBrickBreak(10.0f,10.0f);
-	D3DXVECTOR2 _accelBrickBreak(1.0f,-5.0f);
+	D3DXVECTOR2 _veclocBrickBreak(10.0f,20.0f);
+	D3DXVECTOR2 _accelBrickBreak(1.0f,-10.0f);
 	CBrickBreak *lefttop = new CBrickBreak(D3DXVECTOR2(m_pos.x ,m_pos.y + 25),D3DXVECTOR2(-_veclocBrickBreak.x ,_veclocBrickBreak.y*2),D3DXVECTOR2(-_accelBrickBreak.x ,_accelBrickBreak.y));
 	m_brickBreak.push_back(lefttop);
 	CBrickBreak *leftBottom = new CBrickBreak(D3DXVECTOR2(m_pos.x,m_pos.y),D3DXVECTOR2(-_veclocBrickBreak.x ,_veclocBrickBreak.y),D3DXVECTOR2(-_accelBrickBreak.x ,_accelBrickBreak.y));

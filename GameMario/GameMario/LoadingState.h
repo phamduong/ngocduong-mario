@@ -8,7 +8,7 @@ class CLoadingState:public CGameState
 {
 private:
 	CTexture *m_texture ;
-	
+
 public:
 	CSprite *m_Loading;
 	CLoadingState();
@@ -18,6 +18,5 @@ public:
 	void CleanUp();
 	void Update(CInput* ,float,CCamera*);
 	void Draw(LPD3DXSPRITE,CCamera*);
-	//GameStateId GetGameStateId();
 };
 #endif
