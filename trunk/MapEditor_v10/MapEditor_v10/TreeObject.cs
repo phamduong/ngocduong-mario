@@ -10,15 +10,9 @@ namespace MapEditor_v10
     {
         public RECT m_boundTreeObject;
         public int m_IdTreeObject;
-        public QNode m_NodeRoot;
-        float widthmap = 16000;
-
-
         //khoi tao not Root
         public TreeObject()
         {
-            m_NodeRoot = new QNode(0, 0, widthmap, widthmap, 0);
-            m_NodeRoot.ListTreeObjectInNode = m_NodeRoot.ListTreeObjectInGame;
         }
         public TreeObject(int _id, RECT _bound)
         {
@@ -85,7 +79,7 @@ namespace MapEditor_v10
                     rect.bottom = Object.bottom;
                     rect.top = Node.top;
                 }
-                else 
+                else
                 {
                     rect.bottom = Node.bottom;
                     rect.top = Node.top;

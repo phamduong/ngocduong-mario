@@ -25,3 +25,11 @@ F:\HOC TAP\0.Hoc Ki 1 Nam 4\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.
 F:\HOC TAP\0.Hoc Ki 1 Nam 4\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.exe
 F:\HOC TAP\0.Hoc Ki 1 Nam 4\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.pdb
 F:\HOC TAP\0.Hoc Ki 1 Nam 4\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.csprojResolveAssemblyReference.cache
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\bin\Debug\MapEditor_v10.exe.config
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.exe
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.pdb
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.MapEditor.resources
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.Properties.Resources.resources
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\obj\Debug\MapEditor_v10.csproj.GenerateResource.Cache
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\bin\Debug\MapEditor_v10.exe
+F:\HOC TAP\0.Hoc Ki 1 Nam 4\Game Dang Lam\MapEditor_v10\MapEditor_v10\bin\Debug\MapEditor_v10.pdb

@@ -10,11 +10,12 @@ namespace MapEditor_v10
     {
         public int m_IdNode;// id node
         public RECT m_boundNode;//hcn bao not
-        public List<TreeObject> ListTreeObjectInGame = new List<TreeObject>();//danh sach Tree Object
         public QNode NodeLeftTop, NodeLeftBottom, NodeRightTop, NodeRightBottom;
         public List<TreeObject> ListTreeObjectInNode = new List<TreeObject>();
         public QNode()
         {
+            m_IdNode = 0;
+            m_boundNode = new RECT(0, 0, 0, 0);
         }
         public QNode(int _idnode, float _left, float _top, float _right, float _bottom)
         {
